@@ -461,6 +461,9 @@ kinematics_SOURCE_DIR:STATIC=/home/juanpbm/capstone/Demeter/demeter_ws/src/kinem
 //Path to a library.
 lib:FILEPATH=/opt/ros/noetic/lib/libxmlrpcpp.so
 
+//The directory containing a CMake configuration file for mesage_generation.
+mesage_generation_DIR:PATH=mesage_generation_DIR-NOTFOUND
+
 //The directory containing a CMake configuration file for message_generation.
 message_generation_DIR:PATH=/opt/ros/noetic/share/message_generation/cmake
 

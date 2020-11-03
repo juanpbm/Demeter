@@ -68,6 +68,18 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -78,16 +90,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -111,17 +113,15 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target install
 install: preinstall
@@ -198,81 +198,6 @@ vision_gennodejs/fast:
 .PHONY : vision_gennodejs/fast
 
 # Convenience name for target.
-vision/CMakeFiles/vision_genlisp.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genlisp.dir/rule
-.PHONY : vision/CMakeFiles/vision_genlisp.dir/rule
-
-# Convenience name for target.
-vision_genlisp: vision/CMakeFiles/vision_genlisp.dir/rule
-
-.PHONY : vision_genlisp
-
-# fast build rule for target.
-vision_genlisp/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/build
-.PHONY : vision_genlisp/fast
-
-# Convenience name for target.
-vision/CMakeFiles/vision_generate_messages_lisp.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
-.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
-
-.PHONY : vision_generate_messages_lisp
-
-# fast build rule for target.
-vision_generate_messages_lisp/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/build
-.PHONY : vision_generate_messages_lisp/fast
-
-# Convenience name for target.
-vision/CMakeFiles/vision_geneus.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_geneus.dir/rule
-.PHONY : vision/CMakeFiles/vision_geneus.dir/rule
-
-# Convenience name for target.
-vision_geneus: vision/CMakeFiles/vision_geneus.dir/rule
-
-.PHONY : vision_geneus
-
-# fast build rule for target.
-vision_geneus/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/build
-.PHONY : vision_geneus/fast
-
-# Convenience name for target.
-vision/CMakeFiles/vision_genpy.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genpy.dir/rule
-.PHONY : vision/CMakeFiles/vision_genpy.dir/rule
-
-# Convenience name for target.
-vision_genpy: vision/CMakeFiles/vision_genpy.dir/rule
-
-.PHONY : vision_genpy
-
-# fast build rule for target.
-vision_genpy/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/build
-.PHONY : vision_genpy/fast
-
-# Convenience name for target.
-vision/CMakeFiles/vision_generate_messages_eus.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_eus.dir/rule
-.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus.dir/rule
-
-.PHONY : vision_generate_messages_eus
-
-# fast build rule for target.
-vision_generate_messages_eus/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/build
-.PHONY : vision_generate_messages_eus/fast
-
-# Convenience name for target.
 vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
 .PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
@@ -318,49 +243,19 @@ sensor_msgs_generate_messages_eus/fast:
 .PHONY : sensor_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
-.PHONY : vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+vision/CMakeFiles/vision_genlisp.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genlisp.dir/rule
+.PHONY : vision/CMakeFiles/vision_genlisp.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_eus: vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/rule
+vision_genlisp: vision/CMakeFiles/vision_genlisp.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_eus
+.PHONY : vision_genlisp
 
 # fast build rule for target.
-geometry_msgs_generate_messages_eus/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
-.PHONY : geometry_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-vision/CMakeFiles/vision_gencpp.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_gencpp.dir/rule
-.PHONY : vision/CMakeFiles/vision_gencpp.dir/rule
-
-# Convenience name for target.
-vision_gencpp: vision/CMakeFiles/vision_gencpp.dir/rule
-
-.PHONY : vision_gencpp
-
-# fast build rule for target.
-vision_gencpp/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/build
-.PHONY : vision_gencpp/fast
-
-# Convenience name for target.
-vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-.PHONY : vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-geometry_msgs_generate_messages_lisp: vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : geometry_msgs_generate_messages_lisp
-
-# fast build rule for target.
-geometry_msgs_generate_messages_lisp/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make vision/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
-.PHONY : geometry_msgs_generate_messages_lisp/fast
+vision_genlisp/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/build
+.PHONY : vision_genlisp/fast
 
 # Convenience name for target.
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/rule:
@@ -408,19 +303,19 @@ sensor_msgs_generate_messages_nodejs/fast:
 .PHONY : sensor_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
-.PHONY : vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+.PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_py: vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+sensor_msgs_generate_messages_py: vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_py
+.PHONY : sensor_msgs_generate_messages_py
 
 # fast build rule for target.
-geometry_msgs_generate_messages_py/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make vision/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
-.PHONY : geometry_msgs_generate_messages_py/fast
+sensor_msgs_generate_messages_py/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
+.PHONY : sensor_msgs_generate_messages_py/fast
 
 # Convenience name for target.
 vision/CMakeFiles/vision_generate_messages.dir/rule:
@@ -453,49 +348,79 @@ vision_generate_messages_cpp/fast:
 .PHONY : vision_generate_messages_cpp/fast
 
 # Convenience name for target.
-vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+vision/CMakeFiles/vision_genpy.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genpy.dir/rule
+.PHONY : vision/CMakeFiles/vision_genpy.dir/rule
 
 # Convenience name for target.
-sensor_msgs_generate_messages_py: vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+vision_genpy: vision/CMakeFiles/vision_genpy.dir/rule
 
-.PHONY : sensor_msgs_generate_messages_py
+.PHONY : vision_genpy
 
 # fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
+vision_genpy/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/build
+.PHONY : vision_genpy/fast
 
 # Convenience name for target.
-vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
-.PHONY : vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+vision/CMakeFiles/vision_generate_messages_eus.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_eus.dir/rule
+.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_cpp: vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_cpp
+.PHONY : vision_generate_messages_eus
 
 # fast build rule for target.
-geometry_msgs_generate_messages_cpp/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make vision/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
-.PHONY : geometry_msgs_generate_messages_cpp/fast
+vision_generate_messages_eus/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/build
+.PHONY : vision_generate_messages_eus/fast
 
 # Convenience name for target.
-vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
-.PHONY : vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
+vision/CMakeFiles/vision_gencpp.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_gencpp.dir/rule
+.PHONY : vision/CMakeFiles/vision_gencpp.dir/rule
 
 # Convenience name for target.
-geometry_msgs_generate_messages_nodejs: vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/rule
+vision_gencpp: vision/CMakeFiles/vision_gencpp.dir/rule
 
-.PHONY : geometry_msgs_generate_messages_nodejs
+.PHONY : vision_gencpp
 
 # fast build rule for target.
-geometry_msgs_generate_messages_nodejs/fast:
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make vision/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build
-.PHONY : geometry_msgs_generate_messages_nodejs/fast
+vision_gencpp/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/build
+.PHONY : vision_gencpp/fast
+
+# Convenience name for target.
+vision/CMakeFiles/vision_geneus.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_geneus.dir/rule
+.PHONY : vision/CMakeFiles/vision_geneus.dir/rule
+
+# Convenience name for target.
+vision_geneus: vision/CMakeFiles/vision_geneus.dir/rule
+
+.PHONY : vision_geneus
+
+# fast build rule for target.
+vision_geneus/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/build
+.PHONY : vision_geneus/fast
+
+# Convenience name for target.
+vision/CMakeFiles/vision_generate_messages_lisp.dir/rule:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
+.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
+
+.PHONY : vision_generate_messages_lisp
+
+# fast build rule for target.
+vision_generate_messages_lisp/fast:
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build && $(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/build
+.PHONY : vision_generate_messages_lisp/fast
 
 # Help Target
 help:
@@ -504,34 +429,29 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... vision_generate_messages_py"
 	@echo "... test"
 	@echo "... vision_gennodejs"
-	@echo "... vision_genlisp"
-	@echo "... vision_generate_messages_lisp"
-	@echo "... vision_geneus"
-	@echo "... list_install_components"
-	@echo "... vision_genpy"
-	@echo "... vision_generate_messages_eus"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... _vision_generate_messages_check_deps_image_Pair"
 	@echo "... sensor_msgs_generate_messages_eus"
-	@echo "... install/local"
-	@echo "... geometry_msgs_generate_messages_eus"
-	@echo "... install"
-	@echo "... vision_gencpp"
-	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... vision_genlisp"
 	@echo "... vision_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
-	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... vision_generate_messages"
 	@echo "... vision_generate_messages_cpp"
-	@echo "... sensor_msgs_generate_messages_py"
-	@echo "... geometry_msgs_generate_messages_cpp"
-	@echo "... geometry_msgs_generate_messages_nodejs"
+	@echo "... list_install_components"
+	@echo "... vision_genpy"
+	@echo "... vision_generate_messages_eus"
+	@echo "... install"
+	@echo "... vision_gencpp"
+	@echo "... vision_geneus"
+	@echo "... vision_generate_messages_lisp"
 .PHONY : help
 
 

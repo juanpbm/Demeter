@@ -59,14 +59,14 @@ vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/d
 
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg
-/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from vision/image_Pair.msg"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg
 
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for vision"
-	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision vision std_msgs sensor_msgs
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision vision std_msgs sensor_msgs geometry_msgs
 
 vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus
 vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l

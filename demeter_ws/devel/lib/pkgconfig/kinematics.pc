@@ -3,6 +3,6 @@ prefix=/home/juanpbm/capstone/Demeter/demeter_ws/devel
 Name: kinematics
 Description: Description of kinematics
 Version: 0.0.0
-Cflags: 
+Cflags: -I/home/juanpbm/capstone/Demeter/demeter_ws/devel/include
 Libs: -L${prefix}/lib 
-Requires: 
+Requires: roscpp rospy std_msgs geometr_msgs message_runtime

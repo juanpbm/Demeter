@@ -5,6 +5,8 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt
 from vision.msg import image_Pair 
+from kinematics.msg import data_3D
+
 
 #Stereo Vision calculations
 def stereo(images):
@@ -13,6 +15,7 @@ def stereo(images):
     focal_Length = 18
     print('got it')
     
+    #decompress the images
     array = np.frombuffer(images.left_Img.data, np.uint8)
     imgL = cv2.imdecode(array,cv2.IMREAD_COLOR)
     imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
@@ -20,8 +23,11 @@ def stereo(images):
     array = np.frombuffer(images.right_Img.data, np.uint8)
     imgR = cv2.imdecode(array, cv2.IMREAD_COLOR)
     imgR = cv2.cvtColor(imgR,cv2.COLOR_BGR2GRAY)
-
+    
+    #tuples to array 
     center = np.asarray(images.center, dtype = np.intc)
+    top = np.asarray(images.top, dtype = np.intc)
+    bottom = np.asarray(images.bottom, dtype= np.intc)
 
     """
     #show the iamges 
@@ -33,42 +39,54 @@ def stereo(images):
     """
     #Disparity map calculation 
     stereo = cv2.StereoSGBM_create(minDisparity = 16,
-                                numDisparities=64, 
-                                blockSize=16) 
-    #is it necesary to compute the map? whats the num of disp and size 
+                                   numDisparities=64, 
+                                   blockSize=16) 
+     
     disparity = stereo.compute(imgL,imgR).astype(np.float32) / 16
-    #h, w = imgL.shape[:2]
-    #Q = np.float32([[1, 0, 0, -0.5*w],
-     #           [0, -1, 0, 0.5*h],
-      #          [0, 0, 0, focal_Length],
-       #         [0, 0, 1, 0]])
-    #points = cv2.reprojectImageTo3D(disparity, Q)
+    h, w = imgL.shape[:2]
+    Q = np.float32([[1, 0, 0, -0.5*w],
+                   [0, -1, 0, 0.5*h],
+                   [0, 0, 0, focal_Length*w],
+                   [0, 0, 1, 0]])
+    points = cv2.reprojectImageTo3D(disparity, Q)
+    #msg init 
+    point_Data = data_3D()
 
-    #Depth Calculation 
-    center_Depth = (base_Line * focal_Length) / disparity[center[0], center[1]]
-    print(type(disparity))
+    #center Calculation 
+    point_Data.center.z = (base_Line * focal_Length) / disparity[center[0], center[1]]
+    point_Data.center.x = (point_Data.center.z * center[0]) / focal_Length
+    point_Data.center.y = (point_Data.center.z * center[1]) / focal_Length
+    
+    #top 
+    point_Data.top.z = (base_Line * focal_Length) / disparity[top[0], top[1]]
+    point_Data.top.x = (point_Data.top.z * top[0]) / focal_Length
+    point_Data.top.y = (point_Data.top.z * top[1]) / focal_Length
+    
+    #bottom 
+    point_Data.bottom.z = (base_Line * focal_Length) / disparity[bottom[0], bottom[1]]
+    point_Data.bottom.x = (point_Data.bottom.z * bottom[0]) / focal_Length
+    point_Data.bottom.y = (point_Data.bottom.z * bottom[1]) / focal_Length
+    
 
-    print(center)
-    print("Z = ", center_Depth)
-
-    #Position Calculation 
-    x = (center_Depth*images.center[0])/focal_Length
-    y = (center_Depth*images.center[1])/focal_Length
-
-    print("X = ", x)
-    print("Y = ", y)
-
+    print(point_Data.center)
+    print(points[center[0], center[1]])
     plt.imshow(disparity,'gray')
-    plt.show()
+    plt.show() 
+    publish_3D_Data(point_Data)
+
 
 #ROS subscribing to Rec_image 
-def subscriber ():
+def subscribe_Rec_Image():
     rospy.init_node('Stereo_Vision', anonymous=True)
     rospy.Subscriber('Rec_Image',image_Pair,stereo)
     rospy.spin()
 
-
 #TODO ROS publishing of 3D_Data
+def publish_3D_Data(data_3D):
+    pub = rospy.Publisher('Kinematics_Data', data_3D, queue_size=10)
+    r = rospy.Rate(10)
+    pub.publish(data_3D)
 
 if __name__ == '__main__':
-    subscriber()
+    
+    subscribe_Rec_Image()
