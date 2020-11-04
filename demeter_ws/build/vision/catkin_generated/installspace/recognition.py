@@ -8,8 +8,17 @@ from matplotlib import pyplot as plt
 from vision.msg import image_Pair 
 from sensor_msgs.msg import CompressedImage
 
-#TODO CCN goes here
-#def CNN():
+#TODO how will it know when the arm is ready in position 
+#to take the pics of the next pepper
+
+#TODO publish to next flag topic 
+
+#TODO take images or subscribe to the camera topic
+
+#TODO CNN
+
+#TODO How is the robot gonna know/inform there are no more ppepers (END) 
+#would it go here on in the previous package
 
 def gen_Image_Pair():
     
@@ -31,24 +40,20 @@ def gen_Image_Pair():
     images.bottom = (2,3)
 
     input('wait')
-    return(images)
-
-def publisher():
-    
-    pub = rospy.Publisher('Rec_Image', image_Pair, queue_size=10)
-    rospy.init_node('Recognition',anonymous=True)
-    r = rospy.Rate(10)  
-
-    while not rospy.is_shutdown():
-
-        images = gen_Image_Pair()
-        #rospy.loginfo(images)
-        pub.publish(images)
-        r.sleep()
+    pub.publish(images)
+    #return(images)
 
     
 if __name__ == '__main__':
     try: 
-        publisher()
+        
+        rospy.init_node('Recognition',anonymous=True)
+        pub = rospy.Publisher('Rec_Image', image_Pair, queue_size=10)
+        r = rospy.Rate(10)  
+        
+        while not rospy.is_shutdown():
+            gen_Image_Pair()
+            r.sleep()
+
     except rospy.ROSInterruptException:
         pass

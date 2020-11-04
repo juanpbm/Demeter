@@ -70,23 +70,19 @@ def stereo(images):
 
     print(point_Data.center)
     print(points[center[0], center[1]])
-    plt.imshow(disparity,'gray')
-    plt.show() 
-    publish_3D_Data(point_Data)
-
-
-#ROS subscribing to Rec_image 
-def subscribe_Rec_Image():
-    rospy.init_node('Stereo_Vision', anonymous=True)
-    rospy.Subscriber('Rec_Image',image_Pair,stereo)
-    rospy.spin()
-
-#TODO ROS publishing of 3D_Data
-def publish_3D_Data(data_3D):
-    pub = rospy.Publisher('Kinematics_Data', data_3D, queue_size=10)
-    r = rospy.Rate(10)
-    pub.publish(data_3D)
+    #plt.imshow(disparity,'gray')
+    #plt.show() 
+    
+    pub.publish(point_Data)
 
 if __name__ == '__main__':
-    
-    subscribe_Rec_Image()
+    try:   
+
+        rospy.init_node('Stereo_Vision', anonymous=True)
+        pub = rospy.Publisher('Kinematics_Data', data_3D, queue_size=10)
+        r = rospy.Rate(10)
+        rospy.Subscriber('Rec_Image',image_Pair,stereo)
+        rospy.spin()
+
+    except rospy.ROSInterruptException:
+        pass
