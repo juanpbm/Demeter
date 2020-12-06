@@ -1,0 +1,3 @@
+[submodule "demeter_melodic_ws/src/kinova-ros"]
+	path = demeter_melodic_ws/src/kinova-ros
+	url = https://github.com/Kinovarobotics/kinova-ros.git
