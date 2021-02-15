@@ -4,7 +4,9 @@ import numpy as np
 import rospy
 import cv2
 from matplotlib import pyplot as plt 
-#import keras 
+#import keras
+import subprocess 
+import os 
 from vision.msg import image_Pair 
 from sensor_msgs.msg import CompressedImage
 
@@ -16,6 +18,17 @@ from sensor_msgs.msg import CompressedImage
 #TODO take images or subscribe to the camera topic
 
 #TODO CNN
+
+
+#YOLO option TODO how to integrate it with the rest of the code 
+def yolo():
+    wd = os.getcwd()
+    os.chdir("yolo/darknet/")
+    yoloCmd =["./darknet", "detect", "cfg/yolov3.cfg", "yolov3.weights", "data/dog.jpg"]
+    process = subprocess.Popen(yoloCmd, stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    print(output)
+    os.chdir(wd)
 
 #TODO How is the robot gonna know/inform there are no more ppepers (END) 
 #would it go here on in the previous package
@@ -35,7 +48,7 @@ def gen_Image_Pair():
     images.right_Img.format = 'jpg'
     images.right_Img.data = np.array(cv2.imencode('.jpg',imgR)[1]).tostring()
 
-    images.center = (820,810)
+    images.center = (0,0)
     images.top = (1,2)
     images.bottom = (2,3)
 
@@ -45,6 +58,7 @@ def gen_Image_Pair():
 
     
 if __name__ == '__main__':
+   
     try: 
         
         rospy.init_node('Recognition',anonymous=True)

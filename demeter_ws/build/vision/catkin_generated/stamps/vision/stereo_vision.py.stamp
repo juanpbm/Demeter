@@ -46,9 +46,12 @@ def stereo(images):
     h, w = imgL.shape[:2]
     Q = np.float32([[1, 0, 0, -0.5*w],
                    [0, -1, 0, 0.5*h],
-                   [0, 0, 0, focal_Length*w],
+                   [0, 0, 0, focal_Length],
                    [0, 0, 1, 0]])
+    
     points = cv2.reprojectImageTo3D(disparity, Q)
+
+
     #msg init 
     point_Data = data_3D()
 
