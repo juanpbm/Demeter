@@ -27,40 +27,22 @@ struct image_Pair_
 
   image_Pair_()
     : center()
-    , top()
-    , bottom()
     , left_Img()
     , right_Img()  {
       center.assign(0.0);
-
-      top.assign(0.0);
-
-      bottom.assign(0.0);
   }
   image_Pair_(const ContainerAllocator& _alloc)
     : center()
-    , top()
-    , bottom()
     , left_Img(_alloc)
     , right_Img(_alloc)  {
   (void)_alloc;
       center.assign(0.0);
-
-      top.assign(0.0);
-
-      bottom.assign(0.0);
   }
 
 
 
-   typedef boost::array<float, 2>  _center_type;
+   typedef boost::array<float, 4>  _center_type;
   _center_type center;
-
-   typedef boost::array<float, 2>  _top_type;
-  _top_type top;
-
-   typedef boost::array<float, 2>  _bottom_type;
-  _bottom_type bottom;
 
    typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _left_Img_type;
   _left_Img_type left_Img;
@@ -98,8 +80,6 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::vision::image_Pair_<ContainerAllocator1> & lhs, const ::vision::image_Pair_<ContainerAllocator2> & rhs)
 {
   return lhs.center == rhs.center &&
-    lhs.top == rhs.top &&
-    lhs.bottom == rhs.bottom &&
     lhs.left_Img == rhs.left_Img &&
     lhs.right_Img == rhs.right_Img;
 }
@@ -158,12 +138,12 @@ struct MD5Sum< ::vision::image_Pair_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "b1eeb80bf925ed72664782dd8a9603fe";
+    return "b64fa04f706d93801fa4dc20bbfdd0fa";
   }
 
   static const char* value(const ::vision::image_Pair_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xb1eeb80bf925ed72ULL;
-  static const uint64_t static_value2 = 0x664782dd8a9603feULL;
+  static const uint64_t static_value1 = 0xb64fa04f706d9380ULL;
+  static const uint64_t static_value2 = 0x1fa4dc20bbfdd0faULL;
 };
 
 template<class ContainerAllocator>
@@ -182,12 +162,9 @@ struct Definition< ::vision::image_Pair_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32[2] center\n"
-"float32[2] top\n"
-"float32[2] bottom\n"
+    return "float32[4] center\n"
 "sensor_msgs/CompressedImage left_Img\n"
 "sensor_msgs/CompressedImage right_Img\n"
-"\n"
 "\n"
 "================================================================================\n"
 "MSG: sensor_msgs/CompressedImage\n"
@@ -239,8 +216,6 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.center);
-      stream.next(m.top);
-      stream.next(m.bottom);
       stream.next(m.left_Img);
       stream.next(m.right_Img);
     }
@@ -266,18 +241,6 @@ struct Printer< ::vision::image_Pair_<ContainerAllocator> >
     {
       s << indent << "  center[" << i << "]: ";
       Printer<float>::stream(s, indent + "  ", v.center[i]);
-    }
-    s << indent << "top[]" << std::endl;
-    for (size_t i = 0; i < v.top.size(); ++i)
-    {
-      s << indent << "  top[" << i << "]: ";
-      Printer<float>::stream(s, indent + "  ", v.top[i]);
-    }
-    s << indent << "bottom[]" << std::endl;
-    for (size_t i = 0; i < v.bottom.size(); ++i)
-    {
-      s << indent << "  bottom[" << i << "]: ";
-      Printer<float>::stream(s, indent + "  ", v.bottom[i]);
     }
     s << indent << "left_Img: ";
     s << std::endl;

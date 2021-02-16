@@ -6,7 +6,7 @@ import cv2
 from matplotlib import pyplot as plt
 from vision.msg import image_Pair 
 from kinematics.msg import data_3D
-
+from mpl_toolkits.mplot3d import Axes3D
 
 #Stereo Vision calculations
 def stereo(images):
@@ -50,8 +50,24 @@ def stereo(images):
                    [0, 0, 1, 0]])
     
     points = cv2.reprojectImageTo3D(disparity, Q)
+    
 
+    fig3d = plt.figure()
+    plot3d = fig3d.add_subplot(111, projection = "3d")
+    x= np.array(())
+    y= np.array(())
+    z= np.array(())
 
+    for row in points:
+        for pixel in row :
+            z = np.append(z,pixel[0])
+            x = np.append(x,pixel[1])
+            y = np.append(y,pixel[2])
+    print(x)
+    input('stop')
+
+    plot3d.scatter(x, y, z, c='r', marker='o')
+    plt.show()
     #msg init 
     point_Data = data_3D()
 

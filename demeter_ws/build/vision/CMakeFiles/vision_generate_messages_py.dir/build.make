@@ -54,7 +54,9 @@ CMAKE_BINARY_DIR = /home/juanpbm/capstone/Demeter/demeter_ws/build
 include vision/CMakeFiles/vision_generate_messages_py.dir/progress.make
 
 vision/CMakeFiles/vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/_image_Pair.py
+vision/CMakeFiles/vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py
 vision/CMakeFiles/vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/__init__.py
+vision/CMakeFiles/vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/__init__.py
 
 
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/_image_Pair.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
@@ -64,14 +66,30 @@ vision/CMakeFiles/vision_generate_messages_py: /home/juanpbm/capstone/Demeter/de
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG vision/image_Pair"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg
 
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python code from SRV vision/Rec"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv
+
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/__init__.py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/_image_Pair.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for vision"
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/__init__.py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python msg __init__.py for vision"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg --initpy
+
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/__init__.py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/_image_Pair.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/__init__.py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python srv __init__.py for vision"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv --initpy
 
 vision_generate_messages_py: vision/CMakeFiles/vision_generate_messages_py
 vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/_image_Pair.py
+vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/_Rec.py
 vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/msg/__init__.py
+vision_generate_messages_py: /home/juanpbm/capstone/Demeter/demeter_ws/devel/lib/python3/dist-packages/vision/srv/__init__.py
 vision_generate_messages_py: vision/CMakeFiles/vision_generate_messages_py.dir/build.make
 
 .PHONY : vision_generate_messages_py

@@ -20,8 +20,6 @@ class image_Pair {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.center = null;
-      this.top = null;
-      this.bottom = null;
       this.left_Img = null;
       this.right_Img = null;
     }
@@ -30,19 +28,7 @@ class image_Pair {
         this.center = initObj.center
       }
       else {
-        this.center = new Array(2).fill(0);
-      }
-      if (initObj.hasOwnProperty('top')) {
-        this.top = initObj.top
-      }
-      else {
-        this.top = new Array(2).fill(0);
-      }
-      if (initObj.hasOwnProperty('bottom')) {
-        this.bottom = initObj.bottom
-      }
-      else {
-        this.bottom = new Array(2).fill(0);
+        this.center = new Array(4).fill(0);
       }
       if (initObj.hasOwnProperty('left_Img')) {
         this.left_Img = initObj.left_Img
@@ -62,23 +48,11 @@ class image_Pair {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type image_Pair
     // Check that the constant length array field [center] has the right length
-    if (obj.center.length !== 2) {
-      throw new Error('Unable to serialize array field center - length must be 2')
+    if (obj.center.length !== 4) {
+      throw new Error('Unable to serialize array field center - length must be 4')
     }
     // Serialize message field [center]
-    bufferOffset = _arraySerializer.float32(obj.center, buffer, bufferOffset, 2);
-    // Check that the constant length array field [top] has the right length
-    if (obj.top.length !== 2) {
-      throw new Error('Unable to serialize array field top - length must be 2')
-    }
-    // Serialize message field [top]
-    bufferOffset = _arraySerializer.float32(obj.top, buffer, bufferOffset, 2);
-    // Check that the constant length array field [bottom] has the right length
-    if (obj.bottom.length !== 2) {
-      throw new Error('Unable to serialize array field bottom - length must be 2')
-    }
-    // Serialize message field [bottom]
-    bufferOffset = _arraySerializer.float32(obj.bottom, buffer, bufferOffset, 2);
+    bufferOffset = _arraySerializer.float32(obj.center, buffer, bufferOffset, 4);
     // Serialize message field [left_Img]
     bufferOffset = sensor_msgs.msg.CompressedImage.serialize(obj.left_Img, buffer, bufferOffset);
     // Serialize message field [right_Img]
@@ -91,11 +65,7 @@ class image_Pair {
     let len;
     let data = new image_Pair(null);
     // Deserialize message field [center]
-    data.center = _arrayDeserializer.float32(buffer, bufferOffset, 2)
-    // Deserialize message field [top]
-    data.top = _arrayDeserializer.float32(buffer, bufferOffset, 2)
-    // Deserialize message field [bottom]
-    data.bottom = _arrayDeserializer.float32(buffer, bufferOffset, 2)
+    data.center = _arrayDeserializer.float32(buffer, bufferOffset, 4)
     // Deserialize message field [left_Img]
     data.left_Img = sensor_msgs.msg.CompressedImage.deserialize(buffer, bufferOffset);
     // Deserialize message field [right_Img]
@@ -107,7 +77,7 @@ class image_Pair {
     let length = 0;
     length += sensor_msgs.msg.CompressedImage.getMessageSize(object.left_Img);
     length += sensor_msgs.msg.CompressedImage.getMessageSize(object.right_Img);
-    return length + 24;
+    return length + 16;
   }
 
   static datatype() {
@@ -117,18 +87,15 @@ class image_Pair {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'b1eeb80bf925ed72664782dd8a9603fe';
+    return 'b64fa04f706d93801fa4dc20bbfdd0fa';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    float32[2] center
-    float32[2] top
-    float32[2] bottom
+    float32[4] center
     sensor_msgs/CompressedImage left_Img
     sensor_msgs/CompressedImage right_Img
-    
     
     ================================================================================
     MSG: sensor_msgs/CompressedImage
@@ -175,21 +142,7 @@ class image_Pair {
       resolved.center = msg.center;
     }
     else {
-      resolved.center = new Array(2).fill(0)
-    }
-
-    if (msg.top !== undefined) {
-      resolved.top = msg.top;
-    }
-    else {
-      resolved.top = new Array(2).fill(0)
-    }
-
-    if (msg.bottom !== undefined) {
-      resolved.bottom = msg.bottom;
-    }
-    else {
-      resolved.bottom = new Array(2).fill(0)
+      resolved.center = new Array(4).fill(0)
     }
 
     if (msg.left_Img !== undefined) {

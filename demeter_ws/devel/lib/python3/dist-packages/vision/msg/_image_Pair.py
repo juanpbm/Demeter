@@ -10,15 +10,12 @@ import sensor_msgs.msg
 import std_msgs.msg
 
 class image_Pair(genpy.Message):
-  _md5sum = "b1eeb80bf925ed72664782dd8a9603fe"
+  _md5sum = "b64fa04f706d93801fa4dc20bbfdd0fa"
   _type = "vision/image_Pair"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float32[2] center
-float32[2] top
-float32[2] bottom
+  _full_text = """float32[4] center
 sensor_msgs/CompressedImage left_Img
 sensor_msgs/CompressedImage right_Img
-
 
 ================================================================================
 MSG: sensor_msgs/CompressedImage
@@ -52,8 +49,8 @@ time stamp
 #Frame this data is associated with
 string frame_id
 """
-  __slots__ = ['center','top','bottom','left_Img','right_Img']
-  _slot_types = ['float32[2]','float32[2]','float32[2]','sensor_msgs/CompressedImage','sensor_msgs/CompressedImage']
+  __slots__ = ['center','left_Img','right_Img']
+  _slot_types = ['float32[4]','sensor_msgs/CompressedImage','sensor_msgs/CompressedImage']
 
   def __init__(self, *args, **kwds):
     """
@@ -63,7 +60,7 @@ string frame_id
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       center,top,bottom,left_Img,right_Img
+       center,left_Img,right_Img
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -73,19 +70,13 @@ string frame_id
       super(image_Pair, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
       if self.center is None:
-        self.center = [0.] * 2
-      if self.top is None:
-        self.top = [0.] * 2
-      if self.bottom is None:
-        self.bottom = [0.] * 2
+        self.center = [0.] * 4
       if self.left_Img is None:
         self.left_Img = sensor_msgs.msg.CompressedImage()
       if self.right_Img is None:
         self.right_Img = sensor_msgs.msg.CompressedImage()
     else:
-      self.center = [0.] * 2
-      self.top = [0.] * 2
-      self.bottom = [0.] * 2
+      self.center = [0.] * 4
       self.left_Img = sensor_msgs.msg.CompressedImage()
       self.right_Img = sensor_msgs.msg.CompressedImage()
 
@@ -101,9 +92,7 @@ string frame_id
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_get_struct_2f().pack(*self.center))
-      buff.write(_get_struct_2f().pack(*self.top))
-      buff.write(_get_struct_2f().pack(*self.bottom))
+      buff.write(_get_struct_4f().pack(*self.center))
       _x = self
       buff.write(_get_struct_3I().pack(_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs))
       _x = self.left_Img.header.frame_id
@@ -162,14 +151,8 @@ string frame_id
         self.right_Img = sensor_msgs.msg.CompressedImage()
       end = 0
       start = end
-      end += 8
-      self.center = _get_struct_2f().unpack(str[start:end])
-      start = end
-      end += 8
-      self.top = _get_struct_2f().unpack(str[start:end])
-      start = end
-      end += 8
-      self.bottom = _get_struct_2f().unpack(str[start:end])
+      end += 16
+      self.center = _get_struct_4f().unpack(str[start:end])
       _x = self
       start = end
       end += 12
@@ -239,8 +222,6 @@ string frame_id
     """
     try:
       buff.write(self.center.tostring())
-      buff.write(self.top.tostring())
-      buff.write(self.bottom.tostring())
       _x = self
       buff.write(_get_struct_3I().pack(_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs))
       _x = self.left_Img.header.frame_id
@@ -300,14 +281,8 @@ string frame_id
         self.right_Img = sensor_msgs.msg.CompressedImage()
       end = 0
       start = end
-      end += 8
-      self.center = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
-      start = end
-      end += 8
-      self.top = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
-      start = end
-      end += 8
-      self.bottom = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
+      end += 16
+      self.center = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=4)
       _x = self
       start = end
       end += 12
@@ -372,15 +347,15 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2f = None
-def _get_struct_2f():
-    global _struct_2f
-    if _struct_2f is None:
-        _struct_2f = struct.Struct("<2f")
-    return _struct_2f
 _struct_3I = None
 def _get_struct_3I():
     global _struct_3I
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
+_struct_4f = None
+def _get_struct_4f():
+    global _struct_4f
+    if _struct_4f is None:
+        _struct_4f = struct.Struct("<4f")
+    return _struct_4f

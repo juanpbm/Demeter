@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/gennodejs/ros/vision/msg/image_Pair.js"
+  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/gennodejs/ros/vision/srv/Rec.js"
   "CMakeFiles/vision_generate_messages_nodejs"
 )
 

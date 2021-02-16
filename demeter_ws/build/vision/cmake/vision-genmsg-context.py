@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg"
-services_str = ""
+services_str = "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
 pkg_name = "vision"
 dependencies_str = "std_msgs;sensor_msgs;geometry_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

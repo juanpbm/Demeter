@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "vision: 1 messages, 0 services")
+message(STATUS "vision: 1 messages, 1 services")
 
 set(MSG_I_FLAGS "-Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg")
 
@@ -22,6 +22,11 @@ add_custom_target(_vision_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "vision" "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" "std_msgs/Header:sensor_msgs/CompressedImage"
 )
 
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
+add_custom_target(_vision_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "vision" "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" "std_msgs/Header:sensor_msgs/CompressedImage"
+)
+
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
@@ -36,6 +41,12 @@ _generate_msg_cpp(vision
 )
 
 ### Generating Services
+_generate_srv_cpp(vision
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/CompressedImage.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/vision
+)
 
 ### Generating Module File
 _generate_module_cpp(vision
@@ -50,6 +61,8 @@ add_dependencies(vision_generate_messages vision_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" NAME_WE)
+add_dependencies(vision_generate_messages_cpp _vision_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
 add_dependencies(vision_generate_messages_cpp _vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -69,6 +82,12 @@ _generate_msg_eus(vision
 )
 
 ### Generating Services
+_generate_srv_eus(vision
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/CompressedImage.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/vision
+)
 
 ### Generating Module File
 _generate_module_eus(vision
@@ -83,6 +102,8 @@ add_dependencies(vision_generate_messages vision_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" NAME_WE)
+add_dependencies(vision_generate_messages_eus _vision_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
 add_dependencies(vision_generate_messages_eus _vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -102,6 +123,12 @@ _generate_msg_lisp(vision
 )
 
 ### Generating Services
+_generate_srv_lisp(vision
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/CompressedImage.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/vision
+)
 
 ### Generating Module File
 _generate_module_lisp(vision
@@ -116,6 +143,8 @@ add_dependencies(vision_generate_messages vision_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" NAME_WE)
+add_dependencies(vision_generate_messages_lisp _vision_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
 add_dependencies(vision_generate_messages_lisp _vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -135,6 +164,12 @@ _generate_msg_nodejs(vision
 )
 
 ### Generating Services
+_generate_srv_nodejs(vision
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/CompressedImage.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/vision
+)
 
 ### Generating Module File
 _generate_module_nodejs(vision
@@ -149,6 +184,8 @@ add_dependencies(vision_generate_messages vision_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" NAME_WE)
+add_dependencies(vision_generate_messages_nodejs _vision_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
 add_dependencies(vision_generate_messages_nodejs _vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -168,6 +205,12 @@ _generate_msg_py(vision
 )
 
 ### Generating Services
+_generate_srv_py(vision
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/CompressedImage.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/vision
+)
 
 ### Generating Module File
 _generate_module_py(vision
@@ -182,6 +225,8 @@ add_dependencies(vision_generate_messages vision_generate_messages_py)
 
 # add dependencies to all check dependencies targets
 get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg" NAME_WE)
+add_dependencies(vision_generate_messages_py _vision_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Rec.srv" NAME_WE)
 add_dependencies(vision_generate_messages_py _vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

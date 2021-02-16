@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Rec.h"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/image_Pair.h"
   "CMakeFiles/vision_generate_messages_cpp"
 )
