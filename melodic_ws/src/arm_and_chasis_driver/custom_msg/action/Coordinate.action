@@ -1,0 +1,7 @@
+# Goal
+geometry_msgs/Point kinova_goal
+---
+# Result
+bool bsuccess
+---
+# Feedback message
