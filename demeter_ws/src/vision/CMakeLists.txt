@@ -58,7 +58,11 @@ add_message_files(
 ## Generate services in the 'srv' folder
 add_service_files(
    FILES
-   Rec.srv
+   Recognition_Rec.srv
+   Reposition.srv
+   Stereo_Rec.srv
+   Take_Img.srv
+   Harvest.srv
 )
 
 ## Generate actions in the 'action' folder

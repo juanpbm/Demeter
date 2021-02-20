@@ -10,11 +10,15 @@ from sensor_msgs.msg import CompressedImage
 class Camera_Driver_node:
 
     def __init__(self):
-        #TODO msg or service ?
+        #TODO start and service servers?
     
-    def capture():
+    def video_Capture():
         #TODO capture of video and processing of frame
         pass
+
+    def img_Capture():
+        #TODO capture image and senf it back
+        pass 
 
     def red_Finder(img):
 

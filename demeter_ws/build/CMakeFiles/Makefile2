@@ -290,22 +290,26 @@ vision/preinstall:
 # Recursive "clean" directory target.
 vision/clean: vision/CMakeFiles/vision_generate_messages_py.dir/clean
 vision/clean: vision/CMakeFiles/vision_gennodejs.dir/clean
-vision/clean: vision/CMakeFiles/vision_genlisp.dir/clean
-vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
-vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
-vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/clean
-vision/clean: vision/CMakeFiles/vision_generate_messages_nodejs.dir/clean
-vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
-vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/clean
-vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
-vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/clean
-vision/clean: vision/CMakeFiles/vision_generate_messages.dir/clean
-vision/clean: vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
+vision/clean: vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
+vision/clean: vision/CMakeFiles/vision_geneus.dir/clean
 vision/clean: vision/CMakeFiles/vision_genpy.dir/clean
 vision/clean: vision/CMakeFiles/vision_generate_messages_eus.dir/clean
 vision/clean: vision/CMakeFiles/vision_gencpp.dir/clean
-vision/clean: vision/CMakeFiles/vision_geneus.dir/clean
-vision/clean: vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
+vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
+vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/clean
+vision/clean: vision/CMakeFiles/vision_generate_messages_nodejs.dir/clean
+vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
+vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/clean
+vision/clean: vision/CMakeFiles/vision_generate_messages.dir/clean
+vision/clean: vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/clean
+vision/clean: vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/clean
+vision/clean: vision/CMakeFiles/vision_genlisp.dir/clean
+vision/clean: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/clean
 
 .PHONY : vision/clean
 
@@ -889,7 +893,7 @@ kinematics/CMakeFiles/kinematics_geneus.dir/all: kinematics/CMakeFiles/kinematic
 
 # Build rule for subdir invocation for target.
 kinematics/CMakeFiles/kinematics_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 kinematics/CMakeFiles/kinematics_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinematics/CMakeFiles/kinematics_geneus.dir/rule
@@ -1111,7 +1115,7 @@ kinematics/CMakeFiles/kinematics_genlisp.dir/all: kinematics/CMakeFiles/kinemati
 
 # Build rule for subdir invocation for target.
 kinematics/CMakeFiles/kinematics_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 kinematics/CMakeFiles/kinematics_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinematics/CMakeFiles/kinematics_genlisp.dir/rule
@@ -1382,12 +1386,12 @@ kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/all: kinematics/CMake
 kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
 	$(MAKE) -f kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/build.make kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/depend
 	$(MAKE) -f kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/build.make kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=4 "Built target kinematics_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target kinematics_generate_messages_eus"
 .PHONY : kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinematics/CMakeFiles/kinematics_generate_messages_eus.dir/rule
@@ -1411,12 +1415,12 @@ kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/all: kinematics/CMak
 kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/all: kinematics/CMakeFiles/_kinematics_generate_messages_check_deps_data_3D.dir/all
 	$(MAKE) -f kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/build.make kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/depend
 	$(MAKE) -f kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/build.make kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target kinematics_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=4 "Built target kinematics_generate_messages_lisp"
 .PHONY : kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinematics/CMakeFiles/kinematics_generate_messages_lisp.dir/rule
@@ -1487,12 +1491,12 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/all: kinova_msgs/CMa
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/all: kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir/all
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/depend
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95 "Built target kinova_msgs_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88 "Built target kinova_msgs_generate_messages_py"
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 17
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_py.dir/rule
@@ -1563,7 +1567,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/all: kinova_msgs
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/all: kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir/all
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76 "Built target kinova_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71 "Built target kinova_msgs_generate_messages_nodejs"
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1595,7 +1599,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_genlisp.dir/all: kinova_msgs/CMakeFiles/kinov
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_genlisp.dir/rule
@@ -1666,12 +1670,12 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/all: kinova_msgs/C
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/all: kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir/all
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 "Built target kinova_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54 "Built target kinova_msgs_generate_messages_lisp"
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_lisp.dir/rule
@@ -1698,7 +1702,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_geneus.dir/all: kinova_msgs/CMakeFiles/kinova
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 17
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_geneus.dir/rule
@@ -1725,7 +1729,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_genpy.dir/all: kinova_msgs/CMakeFiles/kinova_
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 17
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_genpy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_genpy.dir/rule
@@ -1796,12 +1800,12 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/all: kinova_msgs/CM
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/all: kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir/all
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Built target kinova_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 "Built target kinova_msgs_generate_messages_cpp"
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_cpp.dir/rule
@@ -2368,7 +2372,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_gencpp.dir/all: kinova_msgs/CMakeFiles/kinova
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 16
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_gencpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_gencpp.dir/rule
@@ -2777,7 +2781,7 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages.dir/all: kinova_msgs/CMakeF
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 90
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 83
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages.dir/rule
@@ -3145,12 +3149,12 @@ kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/all: kinova_msgs/CM
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/all: kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir/all
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/build.make kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 "Built target kinova_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38 "Built target kinova_msgs_generate_messages_eus"
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 18
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 17
 	$(MAKE) -f CMakeFiles/Makefile2 kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : kinova_msgs/CMakeFiles/kinova_msgs_generate_messages_eus.dir/rule
@@ -3577,16 +3581,20 @@ kinova_msgs/CMakeFiles/_kinova_msgs_generate_messages_check_deps_ZeroTorques.dir
 vision/CMakeFiles/vision_generate_messages_py.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
 vision/CMakeFiles/vision_generate_messages_py.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_py.dir/all
 vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
 vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
-vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_py.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
 	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_py.dir/build.make vision/CMakeFiles/vision_generate_messages_py.dir/depend
 	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_py.dir/build.make vision/CMakeFiles/vision_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=99,100 "Built target vision_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=98,99,100 "Built target vision_generate_messages_py"
 .PHONY : vision/CMakeFiles/vision_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 vision/CMakeFiles/vision_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : vision/CMakeFiles/vision_generate_messages_py.dir/rule
@@ -3613,7 +3621,7 @@ vision/CMakeFiles/vision_gennodejs.dir/all: vision/CMakeFiles/vision_generate_me
 
 # Build rule for subdir invocation for target.
 vision/CMakeFiles/vision_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_gennodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : vision/CMakeFiles/vision_gennodejs.dir/rule
@@ -3629,31 +3637,155 @@ vision/CMakeFiles/vision_gennodejs.dir/clean:
 .PHONY : vision/CMakeFiles/vision_gennodejs.dir/clean
 
 #=============================================================================
-# Target rules for target vision/CMakeFiles/vision_genlisp.dir
+# Target rules for target vision/CMakeFiles/vision_generate_messages_lisp.dir
 
 # All Build rule for target.
-vision/CMakeFiles/vision_genlisp.dir/all: vision/CMakeFiles/vision_generate_messages_lisp.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_genlisp"
-.PHONY : vision/CMakeFiles/vision_genlisp.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=94,95 "Built target vision_generate_messages_lisp"
+.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_genlisp.dir/rule: cmake_check_build_system
+vision/CMakeFiles/vision_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genlisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_genlisp.dir/rule
+.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
-vision_genlisp: vision/CMakeFiles/vision_genlisp.dir/rule
+vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
 
-.PHONY : vision_genlisp
+.PHONY : vision_generate_messages_lisp
 
 # clean rule for target.
-vision/CMakeFiles/vision_genlisp.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/clean
-.PHONY : vision/CMakeFiles/vision_genlisp.dir/clean
+vision/CMakeFiles/vision_generate_messages_lisp.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
+.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_geneus.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_geneus.dir/all: vision/CMakeFiles/vision_generate_messages_eus.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_geneus"
+.PHONY : vision/CMakeFiles/vision_geneus.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_geneus.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_geneus.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_geneus.dir/rule
+
+# Convenience name for target.
+vision_geneus: vision/CMakeFiles/vision_geneus.dir/rule
+
+.PHONY : vision_geneus
+
+# clean rule for target.
+vision/CMakeFiles/vision_geneus.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/clean
+.PHONY : vision/CMakeFiles/vision_geneus.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_genpy.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_genpy.dir/all: vision/CMakeFiles/vision_generate_messages_py.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_genpy"
+.PHONY : vision/CMakeFiles/vision_genpy.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_genpy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genpy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_genpy.dir/rule
+
+# Convenience name for target.
+vision_genpy: vision/CMakeFiles/vision_genpy.dir/rule
+
+.PHONY : vision_genpy
+
+# clean rule for target.
+vision/CMakeFiles/vision_genpy.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/clean
+.PHONY : vision/CMakeFiles/vision_genpy.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_generate_messages_eus.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=91,92,93 "Built target vision_generate_messages_eus"
+.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_generate_messages_eus.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_eus.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus.dir/rule
+
+.PHONY : vision_generate_messages_eus
+
+# clean rule for target.
+vision/CMakeFiles/vision_generate_messages_eus.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/clean
+.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_gencpp.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_gencpp.dir/all: vision/CMakeFiles/vision_generate_messages_cpp.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_gencpp"
+.PHONY : vision/CMakeFiles/vision_gencpp.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_gencpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_gencpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_gencpp.dir/rule
+
+# Convenience name for target.
+vision_gencpp: vision/CMakeFiles/vision_gencpp.dir/rule
+
+.PHONY : vision_gencpp
+
+# clean rule for target.
+vision/CMakeFiles/vision_gencpp.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/clean
+.PHONY : vision/CMakeFiles/vision_gencpp.dir/clean
 
 #=============================================================================
 # Target rules for target vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir
@@ -3683,33 +3815,6 @@ vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean:
 .PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 
 #=============================================================================
-# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir
-
-# All Build rule for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all:
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/depend
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_image_Pair"
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule
-
-# Convenience name for target.
-_vision_generate_messages_check_deps_image_Pair: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule
-
-.PHONY : _vision_generate_messages_check_deps_image_Pair
-
-# clean rule for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
-
-#=============================================================================
 # Target rules for target vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir
 
 # All Build rule for target.
@@ -3737,22 +3842,80 @@ vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/clean:
 .PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/clean
 
 #=============================================================================
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir
+
+# All Build rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_image_Pair"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule
+
+# Convenience name for target.
+_vision_generate_messages_check_deps_image_Pair: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/rule
+
+.PHONY : _vision_generate_messages_check_deps_image_Pair
+
+# clean rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir
+
+# All Build rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Harvest"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/rule
+
+# Convenience name for target.
+_vision_generate_messages_check_deps_Harvest: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/rule
+
+.PHONY : _vision_generate_messages_check_deps_Harvest
+
+# clean rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/clean
+
+#=============================================================================
 # Target rules for target vision/CMakeFiles/vision_generate_messages_nodejs.dir
 
 # All Build rule for target.
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
-vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_nodejs.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
 	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_nodejs.dir/build.make vision/CMakeFiles/vision_generate_messages_nodejs.dir/depend
 	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_nodejs.dir/build.make vision/CMakeFiles/vision_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=98 "Built target vision_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=96,97 "Built target vision_generate_messages_nodejs"
 .PHONY : vision/CMakeFiles/vision_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 vision/CMakeFiles/vision_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
 .PHONY : vision/CMakeFiles/vision_generate_messages_nodejs.dir/rule
@@ -3822,6 +3985,126 @@ vision/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/clean:
 .PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/clean
 
 #=============================================================================
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir
+
+# All Build rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Reposition"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/rule
+
+# Convenience name for target.
+_vision_generate_messages_check_deps_Reposition: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/rule
+
+.PHONY : _vision_generate_messages_check_deps_Reposition
+
+# clean rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_generate_messages.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_py.dir/all
+vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_lisp.dir/all
+vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_eus.dir/all
+vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_nodejs.dir/all
+vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_cpp.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_generate_messages"
+.PHONY : vision/CMakeFiles/vision_generate_messages.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_generate_messages.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 12
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_generate_messages.dir/rule
+
+# Convenience name for target.
+vision_generate_messages: vision/CMakeFiles/vision_generate_messages.dir/rule
+
+.PHONY : vision_generate_messages
+
+# clean rule for target.
+vision/CMakeFiles/vision_generate_messages.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/clean
+.PHONY : vision/CMakeFiles/vision_generate_messages.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/vision_generate_messages_cpp.dir
+
+# All Build rule for target.
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Harvest.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Reposition.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
+vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=89,90 "Built target vision_generate_messages_cpp"
+.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/vision_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+vision_generate_messages_cpp: vision/CMakeFiles/vision_generate_messages_cpp.dir/rule
+
+.PHONY : vision_generate_messages_cpp
+
+# clean rule for target.
+vision/CMakeFiles/vision_generate_messages_cpp.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
+.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
+
+#=============================================================================
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir
+
+# All Build rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Recognition_Rec"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+
+# Build rule for subdir invocation for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/rule
+
+# Convenience name for target.
+_vision_generate_messages_check_deps_Recognition_Rec: vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/rule
+
+.PHONY : _vision_generate_messages_check_deps_Recognition_Rec
+
+# clean rule for target.
+vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Recognition_Rec.dir/clean
+
+#=============================================================================
 # Target rules for target vision/CMakeFiles/sensor_msgs_generate_messages_py.dir
 
 # All Build rule for target.
@@ -3849,236 +4132,85 @@ vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean:
 .PHONY : vision/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
 
 #=============================================================================
-# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir
 
 # All Build rule for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all:
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/depend
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Rec"
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
+vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Stereo_Rec"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
 
 # Build rule for subdir invocation for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/rule: cmake_check_build_system
+vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/rule
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/rule
 
 # Convenience name for target.
-_vision_generate_messages_check_deps_Rec: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/rule
+_vision_generate_messages_check_deps_Stereo_Rec: vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/rule
 
-.PHONY : _vision_generate_messages_check_deps_Rec
-
-# clean rule for target.
-vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/clean
-.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/clean
-
-#=============================================================================
-# Target rules for target vision/CMakeFiles/vision_generate_messages.dir
-
-# All Build rule for target.
-vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_py.dir/all
-vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_nodejs.dir/all
-vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_cpp.dir/all
-vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_eus.dir/all
-vision/CMakeFiles/vision_generate_messages.dir/all: vision/CMakeFiles/vision_generate_messages_lisp.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_generate_messages"
-.PHONY : vision/CMakeFiles/vision_generate_messages.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 5
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_generate_messages.dir/rule
-
-# Convenience name for target.
-vision_generate_messages: vision/CMakeFiles/vision_generate_messages.dir/rule
-
-.PHONY : vision_generate_messages
+.PHONY : _vision_generate_messages_check_deps_Stereo_Rec
 
 # clean rule for target.
-vision/CMakeFiles/vision_generate_messages.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages.dir/build.make vision/CMakeFiles/vision_generate_messages.dir/clean
-.PHONY : vision/CMakeFiles/vision_generate_messages.dir/clean
+vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Stereo_Rec.dir/clean
 
 #=============================================================================
-# Target rules for target vision/CMakeFiles/vision_generate_messages_cpp.dir
+# Target rules for target vision/CMakeFiles/vision_genlisp.dir
 
 # All Build rule for target.
-vision/CMakeFiles/vision_generate_messages_cpp.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
-vision/CMakeFiles/vision_generate_messages_cpp.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
-vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
-vision/CMakeFiles/vision_generate_messages_cpp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_generate_messages_cpp"
-.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/all
+vision/CMakeFiles/vision_genlisp.dir/all: vision/CMakeFiles/vision_generate_messages_lisp.dir/all
+	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/depend
+	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_genlisp"
+.PHONY : vision/CMakeFiles/vision_genlisp.dir/all
 
 # Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_cpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-vision_generate_messages_cpp: vision/CMakeFiles/vision_generate_messages_cpp.dir/rule
-
-.PHONY : vision_generate_messages_cpp
-
-# clean rule for target.
-vision/CMakeFiles/vision_generate_messages_cpp.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_cpp.dir/build.make vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
-.PHONY : vision/CMakeFiles/vision_generate_messages_cpp.dir/clean
-
-#=============================================================================
-# Target rules for target vision/CMakeFiles/vision_genpy.dir
-
-# All Build rule for target.
-vision/CMakeFiles/vision_genpy.dir/all: vision/CMakeFiles/vision_generate_messages_py.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_genpy"
-.PHONY : vision/CMakeFiles/vision_genpy.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_genpy.dir/rule: cmake_check_build_system
+vision/CMakeFiles/vision_genlisp.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genpy.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_genpy.dir/rule
+.PHONY : vision/CMakeFiles/vision_genlisp.dir/rule
 
 # Convenience name for target.
-vision_genpy: vision/CMakeFiles/vision_genpy.dir/rule
+vision_genlisp: vision/CMakeFiles/vision_genlisp.dir/rule
 
-.PHONY : vision_genpy
+.PHONY : vision_genlisp
 
 # clean rule for target.
-vision/CMakeFiles/vision_genpy.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_genpy.dir/build.make vision/CMakeFiles/vision_genpy.dir/clean
-.PHONY : vision/CMakeFiles/vision_genpy.dir/clean
+vision/CMakeFiles/vision_genlisp.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/vision_genlisp.dir/build.make vision/CMakeFiles/vision_genlisp.dir/clean
+.PHONY : vision/CMakeFiles/vision_genlisp.dir/clean
 
 #=============================================================================
-# Target rules for target vision/CMakeFiles/vision_generate_messages_eus.dir
+# Target rules for target vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir
 
 # All Build rule for target.
-vision/CMakeFiles/vision_generate_messages_eus.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-vision/CMakeFiles/vision_generate_messages_eus.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
-vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
-vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
-vision/CMakeFiles/vision_generate_messages_eus.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=96,97 "Built target vision_generate_messages_eus"
-.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/all
+vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/depend
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target _vision_generate_messages_check_deps_Take_Img"
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
 
 # Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_eus.dir/all
+vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/rule
+	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/rule
 
 # Convenience name for target.
-vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus.dir/rule
+_vision_generate_messages_check_deps_Take_Img: vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/rule
 
-.PHONY : vision_generate_messages_eus
-
-# clean rule for target.
-vision/CMakeFiles/vision_generate_messages_eus.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_eus.dir/build.make vision/CMakeFiles/vision_generate_messages_eus.dir/clean
-.PHONY : vision/CMakeFiles/vision_generate_messages_eus.dir/clean
-
-#=============================================================================
-# Target rules for target vision/CMakeFiles/vision_gencpp.dir
-
-# All Build rule for target.
-vision/CMakeFiles/vision_gencpp.dir/all: vision/CMakeFiles/vision_generate_messages_cpp.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_gencpp"
-.PHONY : vision/CMakeFiles/vision_gencpp.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_gencpp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_gencpp.dir/rule
-
-# Convenience name for target.
-vision_gencpp: vision/CMakeFiles/vision_gencpp.dir/rule
-
-.PHONY : vision_gencpp
+.PHONY : _vision_generate_messages_check_deps_Take_Img
 
 # clean rule for target.
-vision/CMakeFiles/vision_gencpp.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_gencpp.dir/build.make vision/CMakeFiles/vision_gencpp.dir/clean
-.PHONY : vision/CMakeFiles/vision_gencpp.dir/clean
-
-#=============================================================================
-# Target rules for target vision/CMakeFiles/vision_geneus.dir
-
-# All Build rule for target.
-vision/CMakeFiles/vision_geneus.dir/all: vision/CMakeFiles/vision_generate_messages_eus.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_geneus"
-.PHONY : vision/CMakeFiles/vision_geneus.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_geneus.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_geneus.dir/rule
-
-# Convenience name for target.
-vision_geneus: vision/CMakeFiles/vision_geneus.dir/rule
-
-.PHONY : vision_geneus
-
-# clean rule for target.
-vision/CMakeFiles/vision_geneus.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_geneus.dir/build.make vision/CMakeFiles/vision_geneus.dir/clean
-.PHONY : vision/CMakeFiles/vision_geneus.dir/clean
-
-#=============================================================================
-# Target rules for target vision/CMakeFiles/vision_generate_messages_lisp.dir
-
-# All Build rule for target.
-vision/CMakeFiles/vision_generate_messages_lisp.dir/all: kinematics/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
-vision/CMakeFiles/vision_generate_messages_lisp.dir/all: kinematics/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_image_Pair.dir/all
-vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
-vision/CMakeFiles/vision_generate_messages_lisp.dir/all: vision/CMakeFiles/_vision_generate_messages_check_deps_Rec.dir/all
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/depend
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num= "Built target vision_generate_messages_lisp"
-.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/all
-
-# Build rule for subdir invocation for target.
-vision/CMakeFiles/vision_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 vision/CMakeFiles/vision_generate_messages_lisp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles 0
-.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp.dir/rule
-
-.PHONY : vision_generate_messages_lisp
-
-# clean rule for target.
-vision/CMakeFiles/vision_generate_messages_lisp.dir/clean:
-	$(MAKE) -f vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
-.PHONY : vision/CMakeFiles/vision_generate_messages_lisp.dir/clean
+vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/clean:
+	$(MAKE) -f vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/build.make vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/clean
+.PHONY : vision/CMakeFiles/_vision_generate_messages_check_deps_Take_Img.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

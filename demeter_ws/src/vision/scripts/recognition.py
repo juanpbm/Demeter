@@ -5,7 +5,7 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt 
 import os 
-from vision.srv import Rec, RecResponse  
+import vision.srv  
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
 
@@ -31,15 +31,16 @@ class Recognition_Server:
 
         if np.count_nonzero(thresh_img > 0) <= (len(thresh_img)*len(thresh_img[0])*0.2):
             
-            print('there are no peppers')
+            print('ERROR!! something went wrong please check')
             #TODO return -1 srv responce 
         else:
             
             #Continue to find the pepper
             coord = box_finder(img_L, thresh_img)
-            single_pepper, pepper_contour = contour_finder(thresh_img, coord)
+            single_pepper, pepper_contours = contour_finder(thresh_img, coord)
             
             #TODO return what the arm needs to reposition
+            #TODO are we moving a set distance or to the center of the box
             if coord[0] < 10:
                 print ("move camera to the left")
             elif coord[1] < 10:
