@@ -140,10 +140,7 @@ class Recognition_Server:
         images.right_Img.data = np.array(cv2.imencode('.jpg',img_R)[1]).tostring()
         
         #TODO change the msg to include coordinates instead 
-        images.center = (0,0)
-        images.top = (1,2)
-        images.bottom = (2,3)
-
+        images.coordinates = coords
         return(images)
 
 if __name__ == '__main__':

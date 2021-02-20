@@ -16,23 +16,23 @@
 
 (defclass vision::image_Pair
   :super ros::object
-  :slots (_center _left_Img _right_Img ))
+  :slots (_coordinates _left_Img _right_Img ))
 
 (defmethod vision::image_Pair
   (:init
    (&key
-    ((:center __center) (make-array 4 :initial-element 0.0 :element-type :float))
+    ((:coordinates __coordinates) (make-array 4 :initial-element 0.0 :element-type :float))
     ((:left_Img __left_Img) (instance sensor_msgs::CompressedImage :init))
     ((:right_Img __right_Img) (instance sensor_msgs::CompressedImage :init))
     )
    (send-super :init)
-   (setq _center __center)
+   (setq _coordinates __coordinates)
    (setq _left_Img __left_Img)
    (setq _right_Img __right_Img)
    self)
-  (:center
-   (&optional __center)
-   (if __center (setq _center __center)) _center)
+  (:coordinates
+   (&optional __coordinates)
+   (if __coordinates (setq _coordinates __coordinates)) _coordinates)
   (:left_Img
    (&rest __left_Img)
    (if (keywordp (car __left_Img))
@@ -50,7 +50,7 @@
   (:serialization-length
    ()
    (+
-    ;; float32[4] _center
+    ;; float32[4] _coordinates
     (* 4    4)
     ;; sensor_msgs/CompressedImage _left_Img
     (send _left_Img :serialization-length)
@@ -61,9 +61,9 @@
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; float32[4] _center
+     ;; float32[4] _coordinates
      (dotimes (i 4)
-       (sys::poke (elt _center i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
+       (sys::poke (elt _coordinates i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
        )
      ;; sensor_msgs/CompressedImage _left_Img
        (send _left_Img :serialize s)
@@ -73,9 +73,9 @@
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; float32[4] _center
-   (dotimes (i (length _center))
-     (setf (elt _center i) (sys::peek buf ptr- :float)) (incf ptr- 4)
+   ;; float32[4] _coordinates
+   (dotimes (i (length _coordinates))
+     (setf (elt _coordinates i) (sys::peek buf ptr- :float)) (incf ptr- 4)
      )
    ;; sensor_msgs/CompressedImage _left_Img
      (send _left_Img :deserialize buf ptr-) (incf ptr- (send _left_Img :serialization-length))
@@ -85,10 +85,10 @@
    self)
   )
 
-(setf (get vision::image_Pair :md5sum-) "b64fa04f706d93801fa4dc20bbfdd0fa")
+(setf (get vision::image_Pair :md5sum-) "0a5b719fb83215a32d44d000eec56a67")
 (setf (get vision::image_Pair :datatype-) "vision/image_Pair")
 (setf (get vision::image_Pair :definition-)
-      "float32[4] center
+      "float32[4] coordinates
 sensor_msgs/CompressedImage left_Img
 sensor_msgs/CompressedImage right_Img
 
@@ -128,6 +128,6 @@ string frame_id
 
 
 
-(provide :vision/image_Pair "b64fa04f706d93801fa4dc20bbfdd0fa")
+(provide :vision/image_Pair "0a5b719fb83215a32d44d000eec56a67")
 
 
