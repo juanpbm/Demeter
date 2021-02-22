@@ -8,6 +8,11 @@ import os
 import vision.srv  
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
+from keras.preprocessing import image as image_utils
+from keras.applications.imagenet_utils import decode_predictions
+from keras.applications.imagenet_utils import preprocess_input
+from keras.applications import VGG16
+
 
 class Recognition_Server:
 
@@ -15,6 +20,7 @@ class Recognition_Server:
         rospy.init_node("Recognition", anonymous = True)
         s == rospy.Sevice("Recognition_System", Rec, pepper_Finder)
         rospy.spin()
+        self.model = VGG16(weights="imagenet")
 
     def pepper_Finder(req):
         #Decode the incoming images 
@@ -50,8 +56,14 @@ class Recognition_Server:
             elif coord[3] > len(img_L)-10:
                 print("move camera down")
             else:
-                print("the pepper is in the picture")
-                #TODO ML model to see if the peper is ready
+                #unsure if it will read the image properly
+                image = image_utils.imresize(img_L, size=(224, 224), interpolate='bilinear', channel_first=False, **kwargs)
+                image = image_utils.img_to_array(image)
+                image = np.expand_dims(image, axis=0)
+                image = preprocess_input(image)
+                preds = self.model.predict(image)
+                P = decode_predictions(preds)[0]
+                print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
                 #TODO stereo srv call 
 
     def red_Finder(img):
