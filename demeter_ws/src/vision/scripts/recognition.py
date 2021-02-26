@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 import os 
 import vision.srv  
 from vision.msg import image_Pair
+from camera_driver import Camera_Driver_node as CDN
+
 from sensor_msgs.msg import CompressedImage
 from keras.preprocessing import image as image_utils
 from keras.applications.imagenet_utils import decode_predictions
@@ -18,9 +20,9 @@ class Recognition_Server:
 
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
-        s == rospy.Sevice("Recognition_System", Rec, pepper_Finder)
-        rospy.spin()
         self.model = VGG16(weights="imagenet")
+        camera = CDN()
+        print ("the camera is good to go")
 
     def pepper_Finder(req):
         #Decode the incoming images 
@@ -159,7 +161,7 @@ class Recognition_Server:
 if __name__ == '__main__':
    
     try:
-        rec_server = Recognition()
+        rec_system = Recognition()
 
     except rospy.ROSInterruptException:
         pass
