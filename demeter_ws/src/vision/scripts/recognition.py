@@ -5,11 +5,12 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt 
 import os 
-import vision.srv  
-from vision.msg import image_Pair
 from camera_driver import Camera_Driver_node as CDN
 
+import vision.srv  
+from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
+
 from keras.preprocessing import image as image_utils
 from keras.applications.imagenet_utils import decode_predictions
 from keras.applications.imagenet_utils import preprocess_input
@@ -24,26 +25,16 @@ class Recognition_Server:
         camera = CDN()
         print ("the camera is good to go")
 
-    def pepper_Finder(req):
-        #Decode the incoming images 
-        array = np.frombuffer(req.left_Img.data, np.uint8)
-        img_L = cv2.imdecode(array,cv2.IMREAD_COLOR)
-        img_L = cv2.cvtColor(img_L, cv2.COLOR_BGR2RGB)
-        
-        array = np.frombuffer(req.right_Img.data, np.uint8)
-        img_R = cv2.imdecode(array, cv2.IMREAD_COLOR)
-        img_R = cv2.cvtColor(imgR,cv2.COLOR_BGR2RGB)
-        
-        #Find if there is enough read in the image 
+    def pepper_Finder():
+        #TODO captrure video and split images
+
+        #Find if there is enough read in the frames
         thresh_img = red_Finder(img_L)
 
-        if np.count_nonzero(thresh_img > 0) <= (len(thresh_img)*len(thresh_img[0])*0.2):
-            
-            print('ERROR!! something went wrong please check')
-            #TODO return -1 srv responce 
-        else:
-            
-            #Continue to find the pepper
+        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
+            #TODO captrure single image or take the frame from the video 
+
+            #TODO add amrits code here 
             coord = box_finder(img_L, thresh_img)
             single_pepper, pepper_contours = contour_finder(thresh_img, coord)
             
@@ -161,7 +152,9 @@ class Recognition_Server:
 if __name__ == '__main__':
    
     try:
+        print("Welcmoe to Demeter the Bell Pepper Harvester")
+        print('Init')
         rec_system = Recognition()
-
+        rec_system.pepper_finder()
     except rospy.ROSInterruptException:
         pass
