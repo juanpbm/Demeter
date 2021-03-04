@@ -5,38 +5,38 @@ from matplotlib import pyplot as plt
 import numpy as np
 import os
 import subprocess 
+import time 
 
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
-
-import picamera
-from picamera import PiCamera
-import time
-from datetime import datetime
 
 class Camera_Driver_node:
 
     def __init__(self, out_path, res):
         self.out_path = out_path 
         self.res = res #in the from of #x#
-        self.command = "sudo fswebcam -r " + res + " -S 40 " + out_path 
+        self.command = "sudo fswebcam -r " + res + " -S 15 " + out_path 
 
     def video_Capture(self):
         #TODO capture of video and processing of frame
         
-        self.commad += "video.jpg"
+        self.command += "video.jpg"
         red = 0
         while not red:
             process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
             output, error = process.communicate()
+            
             img = cv2.imread(self.out_path+"video.jpg")
             img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
             red = self.red_Finder(img)
-            plt.imshow(img)
-            plt.show(block=False)
-            plt.pause(0.5)
+            #plt.imshow(img)
+            #plt.show(block=False)
+            #plt.pause(0.1)
+        img_L, img_R = img
         print("pepper found exiting video capture")
-            
+        #TODO split 
+        return(img_L, img_R)
+
     def img_Capture(self):
         #TODO capture image and senf it backi
         self.command += "img.jpg"
@@ -89,8 +89,3 @@ class Camera_Driver_node:
             
         images.coordinates = coords            
         return(images)
-
-
-
-
-

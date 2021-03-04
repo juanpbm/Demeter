@@ -22,18 +22,18 @@ class Recognition_Server:
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
         self.model = VGG16(weights="imagenet")
-        camera = CDN()
+        slef.camera = CDN("camera_out/", "640x480")
         print ("the camera is good to go")
 
     def pepper_Finder():
         #TODO captrure video and split images
-
+        img_L,_ = slef.camera.video_Capture()
+        print("got left img")
         #Find if there is enough read in the frames
         thresh_img = red_Finder(img_L)
 
         if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
-            #TODO captrure single image or take the frame from the video 
-
+            
             #TODO add amrits code here 
             coord = box_finder(img_L, thresh_img)
             single_pepper, pepper_contours = contour_finder(thresh_img, coord)
