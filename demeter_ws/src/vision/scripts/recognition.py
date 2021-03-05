@@ -11,35 +11,36 @@ import vision.srv
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
 
-from keras.preprocessing import image as image_utils
-from keras.applications.imagenet_utils import decode_predictions
-from keras.applications.imagenet_utils import preprocess_input
-from keras.applications import VGG16
+#from keras.preprocessing import image as image_utils
+#from keras.applications.imagenet_utils import decode_predictions
+#from keras.applications.imagenet_utils import preprocess_input
+#from keras.applications import VGG16
 
 
-class Recognition_Server:
+class Recognition:
 
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
-        self.model = VGG16(weights="imagenet")
-        slef.camera = CDN("camera_out/", "640x480")
+ #       self.model = VGG16(weights="imagenet")
+        self.camera = CDN("camera_out/", "640x480")
         print ("the camera is good to go")
 
-    def pepper_Finder():
+    def pepper_Finder(self):
         #TODO captrure video and split images
-        img_L,_ = slef.camera.video_Capture()
+        img_L,_ = self.camera.video_Capture()
         print("got left img")
         #Find if there is enough read in the frames
-        thresh_img = red_Finder(img_L)
-
+        thresh_img = self.red_Finder(img_L)
+        print('got threshold')
         if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
-            
+            coord = [1,10,100,150]
             #TODO add amrits code here 
-            coord = box_finder(img_L, thresh_img)
-            single_pepper, pepper_contours = contour_finder(thresh_img, coord)
-            
+            left, top, right, bottom, rows, cols = self.box_Finder(img_L, thresh_img)
+            single_pepper, pepper_contours = self.contour_Finder(thresh_img, coord)
+            print("all done")
             #TODO return what the arm needs to reposition
             #TODO are we moving a set distance or to the center of the box
+            '''
             if coord[0] < 10:
                 print ("move camera to the left")
             elif coord[1] < 10:
@@ -49,6 +50,7 @@ class Recognition_Server:
             elif coord[3] > len(img_L)-10:
                 print("move camera down")
             else:
+                
                 #unsure if it will read the image properly
                 image = image_utils.imresize(img_L, size=(224, 224), interpolate='bilinear', channel_first=False, **kwargs)
                 image = image_utils.img_to_array(image)
@@ -57,9 +59,10 @@ class Recognition_Server:
                 preds = self.model.predict(image)
                 P = decode_predictions(preds)[0]
                 print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
+                '''
                 #TODO stereo srv call 
 
-    def red_Finder(img):
+    def red_Finder(slef, img):
 
         #Bluring 
         kernel = np.ones((5,5),np.float32)/25
@@ -78,7 +81,7 @@ class Recognition_Server:
         #plt.show()
         return(thresh_img)        
 
-    def box_Finder(img, imgt):
+    def box_Finder(self, img, imgt):
         
         #Find edges
         edges = cv2.Canny(imgt, 800, 50, L2gradient = True)
@@ -102,9 +105,9 @@ class Recognition_Server:
         plt.imshow(img)
         plt.show()
     
-        return (coord)
+        return left, top, right, bottom, rows, cols
 
-    def contour_Finder(img, coord):
+    def contour_Finder(self, img, coord):
 
         crop_img = img[coord[1]:coord[3], coord[0]:coord[2]]
         #plt.imshow(crop_img)        
@@ -133,7 +136,7 @@ class Recognition_Server:
             #TODO what can be done if many 
             return(False, pepper_cont)
 
-    def gen_Image_Pair(img_L, img_R, coords):
+    def gen_Image_Pair(self, img_L, img_R, coords):
     
         images = image_Pair()
 
@@ -155,6 +158,6 @@ if __name__ == '__main__':
         print("Welcmoe to Demeter the Bell Pepper Harvester")
         print('Init')
         rec_system = Recognition()
-        rec_system.pepper_finder()
+        rec_system.pepper_Finder()
     except rospy.ROSInterruptException:
         pass

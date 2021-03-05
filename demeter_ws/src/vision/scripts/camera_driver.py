@@ -15,37 +15,38 @@ class Camera_Driver_node:
     def __init__(self, out_path, res):
         self.out_path = out_path 
         self.res = res #in the from of #x#
-        self.command = "sudo fswebcam -r " + res + " -S 15 " + out_path 
+        self.command = "sudo fswebcam -q -r " + res + " -S 15 " + out_path 
 
     def video_Capture(self):
-        #TODO capture of video and processing of frame
-        
+        #Capture video and processing of each frame
+        print("video Capture is On:") 
         self.command += "video.jpg"
         red = 0
+        our_count = 0
         while not red:
+            print("-")
             process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
             output, error = process.communicate()
             
             img = cv2.imread(self.out_path+"video.jpg")
             img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
             red = self.red_Finder(img)
-            #plt.imshow(img)
-            #plt.show(block=False)
-            #plt.pause(0.1)
-        img_L, img_R = img
-        print("pepper found exiting video capture")
-        #TODO split 
+            
+        print("Red Found in the Frame. End video capture")
+        #split 
+        img_L, img_R = self.split_Img(img)  
         return(img_L, img_R)
 
     def img_Capture(self):
-        #TODO capture image and senf it backi
+        #Capture image and senf it backi
         self.command += "img.jpg"
         process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
         img = cv2.imread(self.out_path+"img.jpg")
-        plt.imshow(img)
-        plt.show(block=False)
-        plt.pause(0.5)
+        img_L, img_R = self.split_Img(img) 
+        print("Image Capture Complete")
+        return(img_L, img_R)
+
 
     def red_Finder(self, img):
 
@@ -67,13 +68,17 @@ class Camera_Driver_node:
             print('there may be peppers')
             return(True)
         else:
-            print("no red")
+            #print("no red")
             return(False)   
     
-    def split_Img(slef,img):
-        #TODO insert split function here
-        #return(img_L, img_R)
-        pass
+    def split_Img(self,img):
+    
+        img_width = int(self.res.split('x')[0])//2
+        img_height = int(self.res.split('x')[1])
+        img_L = img[0:img_height,0:img_width] #Y+H and X+W
+        img_R = img[0:img_height,img_width:img_width*2]
+        return(img_L, img_R)
+
 
     def gen_Image_Pair(img_L, img_R, coords):
                 
