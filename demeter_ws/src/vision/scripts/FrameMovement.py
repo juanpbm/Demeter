@@ -88,42 +88,64 @@ def image_show(image, nrows=1, ncols=1, cmap='gray'):
     return fig, ax
 rightLeft = [0,2]
 upDown = [1,3]
-for i in range(0,math.ceil(fullImg.shape[0]/75)):
-    for j in range(0,math.ceil(fullImg.shape[1]/75)): 
-        initials = np.array([i*75,j*75,min((i+1)*75,fullImg.shape[0]),min((j+1)*75,fullImg.shape[1])])
-        imgSeg = fullImg[initials[1]:initials[3],initials[0]:initials[2]]
-        movements = np.array([True,False,False,False])
+frameSize = 75
+for i in range(0,math.ceil(fullImg.shape[1]/frameSize)):
+    for j in range(0,math.ceil(fullImg.shape[0]/frameSize)): 
+        initials = np.array([i*frameSize,j*frameSize,min((i+1)*frameSize,fullImg.shape[0]),min((j+1)*frameSize,fullImg.shape[1])])
+        imgSeg = fullImg[initials[1]:initials[3]-1,initials[0]:initials[2]-1]
+        print('Moving From this Frame')
+        print(initials)
+        plt.imshow(imgSeg)
+        plt.show()
+        movements = np.array([0,0,0,0])
         stop = False
         attempt = 0
-        while((sum(movements)>=1)&(stop == False)):
-            movements = np.array([False,False,False,False])
-            attempt+=1
-            imgt = red_Finder(imgSeg)
-            print(initials)
-            #Find edges
+        while(((sum(movements!=0)>=1)|(attempt == 0))&(stop == False)):
+            movements = np.array([0,0,0,0])
             try:
-                left, top, right, bottom = box_Finder(img, imgt)
+                imgt = red_Finder(imgSeg)
+                #Find edges
+            except:
+                stop = True
+            try:
+                left, top, right, bottom = box_Finder(imgSeg, imgt)
             except:
                 stop == True
-            if not(stop):    
+            if not(stop):
+                print(f'Attempt {attempt}')
+                attempt+=1
                 if left ==0:
-                    movements[0] = True
+                    print('left')
+                    movements[0] = -10
+                    movements[2] = -10
                 elif  top == 0:
-                    movements[1] = True
+                    print('top')
+                    movements[1] = -10
+                    movements[3] = -10
                 elif right == imgSeg.shape[0]-1:
-                    movements[2] = True
+                    print('right')
+                    movements[2] = 10
+                    movements[0] = 10
                 elif  bottom == imgSeg.shape[1]-1:
-                    movements[3] = True
-                movements = movements*-10
-                for i in np.where(movements<0)[0]:
-                    if i in rightLeft:
-                        movements[rightLeft[int(not(rightLeft.index(i)))]]+=10
-                    elif i in upDown:
-                        movements[upDown[int(not(upDown.index(i)))]]+=10
-                initials = initials + movements
-                stop = len(np.where(initials<0)[0])>0
+                    print('bottom')
+                    movements[3] = 10
+                    movements[1] = 10
+                print(f'Initials 1: {initials}')
+                initials = initials+movements
                 initials = np.array(list(map(lambda x: max(x,0),initials)))
-                imgSeg = fullImg[initials[1]:initials[3],initials[0]:initials[2]]
+                imgSeg = fullImg[initials[1]:initials[3]-1,initials[0]:initials[2]-1]
+                print(movements)
+                print(f'Initials 2: {initials}')
+                stop = len(np.where(initials<0)[0])>0
                 cv2.imwrite(f'/Users/amieramie/Desktop/Capstone\ Computer\ Vision/testImages/{i}_{j}_try{attempt}.jpg',imgSeg)
                 plt.imshow(imgSeg)
                 plt.show()
+        
+        if (attempt>0)&(stop==False):
+            print('Full Pepper Found')
+        else:
+            print('No Pepper in Frame')
+#         left, top, right, bottom = box_Finder(imgSeg, imgt)
+#         coord = [left,top,right,bottom]
+#         cv2.rectangle(imgSeg,(left,top),(right,bottom),(0,255,0),1)
+#         plt.imshow(imgSeg)
