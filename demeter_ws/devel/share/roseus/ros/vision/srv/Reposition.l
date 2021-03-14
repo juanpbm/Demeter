@@ -14,60 +14,86 @@
 
 (in-package "ROS")
 
+(if (not (find-package "GEOMETRY_MSGS"))
+  (ros::roseus-add-msgs "geometry_msgs"))
 
 
 
 
 (defclass vision::RepositionRequest
   :super ros::object
-  :slots ())
+  :slots (_Location ))
 
 (defmethod vision::RepositionRequest
   (:init
    (&key
+    ((:Location __Location) (instance geometry_msgs::Vector3 :init))
     )
    (send-super :init)
+   (setq _Location __Location)
    self)
+  (:Location
+   (&rest __Location)
+   (if (keywordp (car __Location))
+       (send* _Location __Location)
+     (progn
+       (if __Location (setq _Location (car __Location)))
+       _Location)))
   (:serialization-length
    ()
    (+
-    0
+    ;; geometry_msgs/Vector3 _Location
+    (send _Location :serialization-length)
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
+     ;; geometry_msgs/Vector3 _Location
+       (send _Location :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
+   ;; geometry_msgs/Vector3 _Location
+     (send _Location :deserialize buf ptr-) (incf ptr- (send _Location :serialization-length))
    ;;
    self)
   )
 
 (defclass vision::RepositionResponse
   :super ros::object
-  :slots ())
+  :slots (_Ack ))
 
 (defmethod vision::RepositionResponse
   (:init
    (&key
+    ((:Ack __Ack) nil)
     )
    (send-super :init)
+   (setq _Ack __Ack)
    self)
+  (:Ack
+   (&optional (__Ack :null))
+   (if (not (eq __Ack :null)) (setq _Ack __Ack)) _Ack)
   (:serialization-length
    ()
    (+
-    0
+    ;; bool _Ack
+    1
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
+     ;; bool _Ack
+       (if _Ack (write-byte -1 s) (write-byte 0 s))
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
+   ;; bool _Ack
+     (setq _Ack (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
    ;;
    self)
   )
@@ -76,7 +102,7 @@
   :super ros::object
   :slots ())
 
-(setf (get vision::Reposition :md5sum-) "d41d8cd98f00b204e9800998ecf8427e")
+(setf (get vision::Reposition :md5sum-) "47be5df2ac38fbdb1ce8731a7f11ea4b")
 (setf (get vision::Reposition :datatype-) "vision/Reposition")
 (setf (get vision::Reposition :request) vision::RepositionRequest)
 (setf (get vision::Reposition :response) vision::RepositionResponse)
@@ -84,22 +110,52 @@
 (defmethod vision::RepositionRequest
   (:response () (instance vision::RepositionResponse :init)))
 
-(setf (get vision::RepositionRequest :md5sum-) "d41d8cd98f00b204e9800998ecf8427e")
+(setf (get vision::RepositionRequest :md5sum-) "47be5df2ac38fbdb1ce8731a7f11ea4b")
 (setf (get vision::RepositionRequest :datatype-) "vision/RepositionRequest")
 (setf (get vision::RepositionRequest :definition-)
       "
+geometry_msgs/Vector3 Location 
+
+================================================================================
+MSG: geometry_msgs/Vector3
+# This represents a vector in free space. 
+# It is only meant to represent a direction. Therefore, it does not
+# make sense to apply a translation to it (e.g., when applying a 
+# generic rigid transformation to a Vector3, tf2 will only apply the
+# rotation). If you want your data to be translatable too, use the
+# geometry_msgs/Point message instead.
+
+float64 x
+float64 y
 ---
+bool Ack
+
 ")
 
-(setf (get vision::RepositionResponse :md5sum-) "d41d8cd98f00b204e9800998ecf8427e")
+(setf (get vision::RepositionResponse :md5sum-) "47be5df2ac38fbdb1ce8731a7f11ea4b")
 (setf (get vision::RepositionResponse :datatype-) "vision/RepositionResponse")
 (setf (get vision::RepositionResponse :definition-)
       "
+geometry_msgs/Vector3 Location 
+
+================================================================================
+MSG: geometry_msgs/Vector3
+# This represents a vector in free space. 
+# It is only meant to represent a direction. Therefore, it does not
+# make sense to apply a translation to it (e.g., when applying a 
+# generic rigid transformation to a Vector3, tf2 will only apply the
+# rotation). If you want your data to be translatable too, use the
+# geometry_msgs/Point message instead.
+
+float64 x
+float64 y
 ---
+bool Ack
+
 ")
 
 
 
-(provide :vision/Reposition "d41d8cd98f00b204e9800998ecf8427e")
+(provide :vision/Reposition "47be5df2ac38fbdb1ce8731a7f11ea4b")
 
 

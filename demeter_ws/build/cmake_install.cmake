@@ -131,7 +131,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/juanpbm/capstone/Demeter/demeter_ws/build/gtest/cmake_install.cmake")
-  include("/home/juanpbm/capstone/Demeter/demeter_ws/build/kinematics/cmake_install.cmake")
   include("/home/juanpbm/capstone/Demeter/demeter_ws/build/kinova_msgs/cmake_install.cmake")
   include("/home/juanpbm/capstone/Demeter/demeter_ws/build/vision/cmake_install.cmake")
 

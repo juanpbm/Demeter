@@ -15,6 +15,7 @@
 #include <ros/builtin_message_traits.h>
 #include <ros/message_operations.h>
 
+#include <geometry_msgs/Vector3.h>
 
 namespace vision
 {
@@ -24,14 +25,17 @@ struct RepositionRequest_
   typedef RepositionRequest_<ContainerAllocator> Type;
 
   RepositionRequest_()
-    {
+    : Location()  {
     }
   RepositionRequest_(const ContainerAllocator& _alloc)
-    {
+    : Location(_alloc)  {
   (void)_alloc;
     }
 
 
+
+   typedef  ::geometry_msgs::Vector3_<ContainerAllocator>  _Location_type;
+  _Location_type Location;
 
 
 
@@ -56,6 +60,19 @@ std::ostream& operator<<(std::ostream& s, const ::vision::RepositionRequest_<Con
 {
 ros::message_operations::Printer< ::vision::RepositionRequest_<ContainerAllocator> >::stream(s, "", v);
 return s;
+}
+
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator==(const ::vision::RepositionRequest_<ContainerAllocator1> & lhs, const ::vision::RepositionRequest_<ContainerAllocator2> & rhs)
+{
+  return lhs.Location == rhs.Location;
+}
+
+template<typename ContainerAllocator1, typename ContainerAllocator2>
+bool operator!=(const ::vision::RepositionRequest_<ContainerAllocator1> & lhs, const ::vision::RepositionRequest_<ContainerAllocator2> & rhs)
+{
+  return !(lhs == rhs);
 }
 
 
@@ -106,12 +123,12 @@ struct MD5Sum< ::vision::RepositionRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d41d8cd98f00b204e9800998ecf8427e";
+    return "42bda7d7fa622f066e545e9d3f38c04e";
   }
 
   static const char* value(const ::vision::RepositionRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd41d8cd98f00b204ULL;
-  static const uint64_t static_value2 = 0xe9800998ecf8427eULL;
+  static const uint64_t static_value1 = 0x42bda7d7fa622f06ULL;
+  static const uint64_t static_value2 = 0x6e545e9d3f38c04eULL;
 };
 
 template<class ContainerAllocator>
@@ -131,6 +148,20 @@ struct Definition< ::vision::RepositionRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "\n"
+"geometry_msgs/Vector3 Location \n"
+"\n"
+"================================================================================\n"
+"MSG: geometry_msgs/Vector3\n"
+"# This represents a vector in free space. \n"
+"# It is only meant to represent a direction. Therefore, it does not\n"
+"# make sense to apply a translation to it (e.g., when applying a \n"
+"# generic rigid transformation to a Vector3, tf2 will only apply the\n"
+"# rotation). If you want your data to be translatable too, use the\n"
+"# geometry_msgs/Point message instead.\n"
+"\n"
+"float64 x\n"
+"float64 y\n"
+"float64 z\n"
 ;
   }
 
@@ -147,8 +178,10 @@ namespace serialization
 
   template<class ContainerAllocator> struct Serializer< ::vision::RepositionRequest_<ContainerAllocator> >
   {
-    template<typename Stream, typename T> inline static void allInOne(Stream&, T)
-    {}
+    template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
+    {
+      stream.next(m.Location);
+    }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
   }; // struct RepositionRequest_
@@ -164,8 +197,12 @@ namespace message_operations
 template<class ContainerAllocator>
 struct Printer< ::vision::RepositionRequest_<ContainerAllocator> >
 {
-  template<typename Stream> static void stream(Stream&, const std::string&, const ::vision::RepositionRequest_<ContainerAllocator>&)
-  {}
+  template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::vision::RepositionRequest_<ContainerAllocator>& v)
+  {
+    s << indent << "Location: ";
+    s << std::endl;
+    Printer< ::geometry_msgs::Vector3_<ContainerAllocator> >::stream(s, indent + "  ", v.Location);
+  }
 };
 
 } // namespace message_operations

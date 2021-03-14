@@ -1,4 +1,0 @@
-sensor_msgs/CompressedImage left_Img
-sensor_msgs/CompressedImage right_Img
----
-float32[4] coordinates 

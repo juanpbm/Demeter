@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::vision::Reposition > {
   static const char* value()
   {
-    return "d41d8cd98f00b204e9800998ecf8427e";
+    return "47be5df2ac38fbdb1ce8731a7f11ea4b";
   }
 
   static const char* value(const ::vision::Reposition&) { return value(); }

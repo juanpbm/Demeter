@@ -11,6 +11,7 @@ const _deserializer = _ros_msg_utils.Deserialize;
 const _arrayDeserializer = _deserializer.Array;
 const _finder = _ros_msg_utils.Find;
 const _getByteLength = _ros_msg_utils.getByteLength;
+let geometry_msgs = _finder('geometry_msgs');
 
 //-----------------------------------------------------------
 
@@ -21,13 +22,22 @@ class RepositionRequest {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
+      this.Location = null;
     }
     else {
+      if (initObj.hasOwnProperty('Location')) {
+        this.Location = initObj.Location
+      }
+      else {
+        this.Location = new geometry_msgs.msg.Vector3();
+      }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type RepositionRequest
+    // Serialize message field [Location]
+    bufferOffset = geometry_msgs.msg.Vector3.serialize(obj.Location, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -35,11 +45,13 @@ class RepositionRequest {
     //deserializes a message object of type RepositionRequest
     let len;
     let data = new RepositionRequest(null);
+    // Deserialize message field [Location]
+    data.Location = geometry_msgs.msg.Vector3.deserialize(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 0;
+    return 24;
   }
 
   static datatype() {
@@ -49,14 +61,27 @@ class RepositionRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd41d8cd98f00b204e9800998ecf8427e';
+    return '42bda7d7fa622f066e545e9d3f38c04e';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     
+    geometry_msgs/Vector3 Location 
     
+    ================================================================================
+    MSG: geometry_msgs/Vector3
+    # This represents a vector in free space. 
+    # It is only meant to represent a direction. Therefore, it does not
+    # make sense to apply a translation to it (e.g., when applying a 
+    # generic rigid transformation to a Vector3, tf2 will only apply the
+    # rotation). If you want your data to be translatable too, use the
+    # geometry_msgs/Point message instead.
+    
+    float64 x
+    float64 y
+    float64 z
     `;
   }
 
@@ -66,6 +91,13 @@ class RepositionRequest {
       msg = {};
     }
     const resolved = new RepositionRequest(null);
+    if (msg.Location !== undefined) {
+      resolved.Location = geometry_msgs.msg.Vector3.Resolve(msg.Location)
+    }
+    else {
+      resolved.Location = new geometry_msgs.msg.Vector3()
+    }
+
     return resolved;
     }
 };
@@ -74,13 +106,22 @@ class RepositionResponse {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
+      this.Ack = null;
     }
     else {
+      if (initObj.hasOwnProperty('Ack')) {
+        this.Ack = initObj.Ack
+      }
+      else {
+        this.Ack = false;
+      }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type RepositionResponse
+    // Serialize message field [Ack]
+    bufferOffset = _serializer.bool(obj.Ack, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -88,11 +129,13 @@ class RepositionResponse {
     //deserializes a message object of type RepositionResponse
     let len;
     let data = new RepositionResponse(null);
+    // Deserialize message field [Ack]
+    data.Ack = _deserializer.bool(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 0;
+    return 1;
   }
 
   static datatype() {
@@ -102,12 +145,14 @@ class RepositionResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'd41d8cd98f00b204e9800998ecf8427e';
+    return '62ae02024e7918414d8b66756f34a1c6';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
+    bool Ack
+    
     
     `;
   }
@@ -118,6 +163,13 @@ class RepositionResponse {
       msg = {};
     }
     const resolved = new RepositionResponse(null);
+    if (msg.Ack !== undefined) {
+      resolved.Ack = msg.Ack;
+    }
+    else {
+      resolved.Ack = false
+    }
+
     return resolved;
     }
 };
@@ -125,6 +177,6 @@ class RepositionResponse {
 module.exports = {
   Request: RepositionRequest,
   Response: RepositionResponse,
-  md5sum() { return 'd41d8cd98f00b204e9800998ecf8427e'; },
+  md5sum() { return '47be5df2ac38fbdb1ce8731a7f11ea4b'; },
   datatype() { return 'vision/Reposition'; }
 };

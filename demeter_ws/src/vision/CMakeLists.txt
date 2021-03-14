@@ -58,11 +58,8 @@ add_message_files(
 ## Generate services in the 'srv' folder
 add_service_files(
    FILES
-   Recognition_Rec.srv
+   Action.srv
    Reposition.srv
-   Stereo_Rec.srv
-   Take_Img.srv
-   Harvest.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -167,7 +164,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/recognition.py scripts/stereo_vision.py
+  scripts/recognition.py 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

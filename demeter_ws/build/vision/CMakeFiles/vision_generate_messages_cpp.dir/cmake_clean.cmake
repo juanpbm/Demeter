@@ -1,9 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Harvest.h"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Recognition_Rec.h"
+  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Action.h"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Reposition.h"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Stereo_Rec.h"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/Take_Img.h"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include/vision/image_Pair.h"
   "CMakeFiles/vision_generate_messages_cpp"
 )

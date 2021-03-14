@@ -43,11 +43,8 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/vision/srv" TYPE FILE FILES
-    "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Recognition_Rec.srv"
+    "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Action.srv"
     "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Reposition.srv"
-    "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Stereo_Rec.srv"
-    "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Take_Img.srv"
-    "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Harvest.srv"
     )
 endif()
 
@@ -100,9 +97,5 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/vision" TYPE PROGRAM FILES "/home/juanpbm/capstone/Demeter/demeter_ws/build/vision/catkin_generated/installspace/recognition.py")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/vision" TYPE PROGRAM FILES "/home/juanpbm/capstone/Demeter/demeter_ws/build/vision/catkin_generated/installspace/stereo_vision.py")
 endif()
 

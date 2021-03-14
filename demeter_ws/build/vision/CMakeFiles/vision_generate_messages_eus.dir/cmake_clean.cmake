@@ -1,11 +1,8 @@
 file(REMOVE_RECURSE
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Harvest.l"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Recognition_Rec.l"
+  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Action.l"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Stereo_Rec.l"
-  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Take_Img.l"
   "CMakeFiles/vision_generate_messages_eus"
 )
 
