@@ -56,6 +56,7 @@ include vision/CMakeFiles/vision_generate_messages_eus.dir/progress.make
 vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l
 vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Action.l
 vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l
+vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l
 vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l
 
 
@@ -73,18 +74,26 @@ vision/CMakeFiles/vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/d
 
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Reposition.srv
-/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp code from vision/Reposition.srv"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Reposition.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv
 
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/ML.srv
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp code from vision/ML.srv"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/ML.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv
+
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating EusLisp manifest code for vision"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp manifest code for vision"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision vision std_msgs sensor_msgs geometry_msgs
 
 vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus
 vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l
 vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Action.l
 vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l
+vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l
 vision_generate_messages_eus: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l
 vision_generate_messages_eus: vision/CMakeFiles/vision_generate_messages_eus.dir/build.make
 

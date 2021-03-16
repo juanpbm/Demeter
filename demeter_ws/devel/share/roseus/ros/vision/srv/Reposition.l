@@ -27,7 +27,7 @@
 (defmethod vision::RepositionRequest
   (:init
    (&key
-    ((:Location __Location) (instance geometry_msgs::Vector3 :init))
+    ((:Location __Location) (instance geometry_msgs::Point :init))
     )
    (send-super :init)
    (setq _Location __Location)
@@ -42,20 +42,20 @@
   (:serialization-length
    ()
    (+
-    ;; geometry_msgs/Vector3 _Location
+    ;; geometry_msgs/Point _Location
     (send _Location :serialization-length)
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; geometry_msgs/Vector3 _Location
+     ;; geometry_msgs/Point _Location
        (send _Location :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; geometry_msgs/Vector3 _Location
+   ;; geometry_msgs/Point _Location
      (send _Location :deserialize buf ptr-) (incf ptr- (send _Location :serialization-length))
    ;;
    self)
@@ -114,19 +114,14 @@
 (setf (get vision::RepositionRequest :datatype-) "vision/RepositionRequest")
 (setf (get vision::RepositionRequest :definition-)
       "
-geometry_msgs/Vector3 Location 
+geometry_msgs/Point Location 
 
 ================================================================================
-MSG: geometry_msgs/Vector3
-# This represents a vector in free space. 
-# It is only meant to represent a direction. Therefore, it does not
-# make sense to apply a translation to it (e.g., when applying a 
-# generic rigid transformation to a Vector3, tf2 will only apply the
-# rotation). If you want your data to be translatable too, use the
-# geometry_msgs/Point message instead.
-
+MSG: geometry_msgs/Point
+# This contains the position of a point in free space
 float64 x
 float64 y
+float64 z
 ---
 bool Ack
 
@@ -136,19 +131,14 @@ bool Ack
 (setf (get vision::RepositionResponse :datatype-) "vision/RepositionResponse")
 (setf (get vision::RepositionResponse :definition-)
       "
-geometry_msgs/Vector3 Location 
+geometry_msgs/Point Location 
 
 ================================================================================
-MSG: geometry_msgs/Vector3
-# This represents a vector in free space. 
-# It is only meant to represent a direction. Therefore, it does not
-# make sense to apply a translation to it (e.g., when applying a 
-# generic rigid transformation to a Vector3, tf2 will only apply the
-# rotation). If you want your data to be translatable too, use the
-# geometry_msgs/Point message instead.
-
+MSG: geometry_msgs/Point
+# This contains the position of a point in free space
 float64 x
 float64 y
+float64 z
 ---
 bool Ack
 

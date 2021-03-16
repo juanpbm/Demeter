@@ -15,7 +15,7 @@
 #include <ros/builtin_message_traits.h>
 #include <ros/message_operations.h>
 
-#include <geometry_msgs/Vector3.h>
+#include <geometry_msgs/Point.h>
 
 namespace vision
 {
@@ -34,7 +34,7 @@ struct RepositionRequest_
 
 
 
-   typedef  ::geometry_msgs::Vector3_<ContainerAllocator>  _Location_type;
+   typedef  ::geometry_msgs::Point_<ContainerAllocator>  _Location_type;
   _Location_type Location;
 
 
@@ -148,17 +148,11 @@ struct Definition< ::vision::RepositionRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "\n"
-"geometry_msgs/Vector3 Location \n"
+"geometry_msgs/Point Location \n"
 "\n"
 "================================================================================\n"
-"MSG: geometry_msgs/Vector3\n"
-"# This represents a vector in free space. \n"
-"# It is only meant to represent a direction. Therefore, it does not\n"
-"# make sense to apply a translation to it (e.g., when applying a \n"
-"# generic rigid transformation to a Vector3, tf2 will only apply the\n"
-"# rotation). If you want your data to be translatable too, use the\n"
-"# geometry_msgs/Point message instead.\n"
-"\n"
+"MSG: geometry_msgs/Point\n"
+"# This contains the position of a point in free space\n"
 "float64 x\n"
 "float64 y\n"
 "float64 z\n"
@@ -201,7 +195,7 @@ struct Printer< ::vision::RepositionRequest_<ContainerAllocator> >
   {
     s << indent << "Location: ";
     s << std::endl;
-    Printer< ::geometry_msgs::Vector3_<ContainerAllocator> >::stream(s, indent + "  ", v.Location);
+    Printer< ::geometry_msgs::Point_<ContainerAllocator> >::stream(s, indent + "  ", v.Location);
   }
 };
 

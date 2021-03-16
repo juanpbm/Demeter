@@ -10,8 +10,8 @@
   ((Location
     :reader Location
     :initarg :Location
-    :type geometry_msgs-msg:Vector3
-    :initform (cl:make-instance 'geometry_msgs-msg:Vector3)))
+    :type geometry_msgs-msg:Point
+    :initform (cl:make-instance 'geometry_msgs-msg:Point)))
 )
 
 (cl:defclass Reposition-request (<Reposition-request>)
@@ -49,10 +49,10 @@
   "47be5df2ac38fbdb1ce8731a7f11ea4b")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Reposition-request>)))
   "Returns full string definition for message of type '<Reposition-request>"
-  (cl:format cl:nil "~%geometry_msgs/Vector3 Location ~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
+  (cl:format cl:nil "~%geometry_msgs/Point Location ~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Reposition-request)))
   "Returns full string definition for message of type 'Reposition-request"
-  (cl:format cl:nil "~%geometry_msgs/Vector3 Location ~%~%================================================================================~%MSG: geometry_msgs/Vector3~%# This represents a vector in free space. ~%# It is only meant to represent a direction. Therefore, it does not~%# make sense to apply a translation to it (e.g., when applying a ~%# generic rigid transformation to a Vector3, tf2 will only apply the~%# rotation). If you want your data to be translatable too, use the~%# geometry_msgs/Point message instead.~%~%float64 x~%float64 y~%float64 z~%~%"))
+  (cl:format cl:nil "~%geometry_msgs/Point Location ~%~%================================================================================~%MSG: geometry_msgs/Point~%# This contains the position of a point in free space~%float64 x~%float64 y~%float64 z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Reposition-request>))
   (cl:+ 0
      (roslisp-msg-protocol:serialization-length (cl:slot-value msg 'Location))

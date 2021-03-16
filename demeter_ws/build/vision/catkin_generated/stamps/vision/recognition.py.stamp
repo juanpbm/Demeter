@@ -5,7 +5,7 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt 
 import os 
-from camera_driver import Camera_Driver_node as CDN
+from camera_driver.py import Camera_Driver_node as CDN
 
 import vision.srv  
 from vision.msg import image_Pair
@@ -23,15 +23,27 @@ class Recognition:
         rospy.init_node("Recognition", anonymous = True)
  #       self.model = VGG16(weights="imagenet")
         self.camera = CDN("camera_out/", "640x480")
-        print ("the camera is good to go")
+        self.stop_srv = rospy.ServiceProxy('stop', Action)
+        self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
+        self.harvest_srv = rospy.ServiceProxy('harvest',Reposition)
+
+        print ("Recognition Node has been setup")
 
     def pepper_Finder(self):
-        #TODO captrure video and split images
+        
+        #Captrure video and split images
         img_L,_ = self.camera.video_Capture()
         print("got left img")
+        
+        #ask the arm to stop if it gets a false back keep asking until it stops
+        while (True):
+            if(self.stop_srv(True)):
+                break 
+
         #Find if there is enough read in the frames
         thresh_img = self.red_Finder(img_L)
         print('got threshold')
+        
         if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
             coord = [1,10,100,150]
             #TODO add amrits code here 
@@ -147,8 +159,7 @@ class Recognition:
         images.right_Img.header.stamp = rospy.Time.now()
         images.right_Img.format = 'jpg'
         images.right_Img.data = np.array(cv2.imencode('.jpg',img_R)[1]).tostring()
-        
-        #TODO change the msg to include coordinates instead 
+         
         images.coordinates = coords
         return(images)
 
@@ -158,6 +169,7 @@ if __name__ == '__main__':
         print("Welcmoe to Demeter the Bell Pepper Harvester")
         print('Init')
         rec_system = Recognition()
+        #rospy.wait_for_service('stop')
         rec_system.pepper_Finder()
     except rospy.ROSInterruptException:
-        pass
+        print('!!!!!!!!!There has been an Unknown Error')

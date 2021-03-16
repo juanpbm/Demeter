@@ -13,22 +13,17 @@ class RepositionRequest(genpy.Message):
   _type = "vision/RepositionRequest"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """
-geometry_msgs/Vector3 Location 
+geometry_msgs/Point Location 
 
 ================================================================================
-MSG: geometry_msgs/Vector3
-# This represents a vector in free space. 
-# It is only meant to represent a direction. Therefore, it does not
-# make sense to apply a translation to it (e.g., when applying a 
-# generic rigid transformation to a Vector3, tf2 will only apply the
-# rotation). If you want your data to be translatable too, use the
-# geometry_msgs/Point message instead.
-
+MSG: geometry_msgs/Point
+# This contains the position of a point in free space
 float64 x
 float64 y
-float64 z"""
+float64 z
+"""
   __slots__ = ['Location']
-  _slot_types = ['geometry_msgs/Vector3']
+  _slot_types = ['geometry_msgs/Point']
 
   def __init__(self, *args, **kwds):
     """
@@ -48,9 +43,9 @@ float64 z"""
       super(RepositionRequest, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
       if self.Location is None:
-        self.Location = geometry_msgs.msg.Vector3()
+        self.Location = geometry_msgs.msg.Point()
     else:
-      self.Location = geometry_msgs.msg.Vector3()
+      self.Location = geometry_msgs.msg.Point()
 
   def _get_types(self):
     """
@@ -77,7 +72,7 @@ float64 z"""
     codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       if self.Location is None:
-        self.Location = geometry_msgs.msg.Vector3()
+        self.Location = geometry_msgs.msg.Point()
       end = 0
       _x = self
       start = end
@@ -109,7 +104,7 @@ float64 z"""
     codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       if self.Location is None:
-        self.Location = geometry_msgs.msg.Vector3()
+        self.Location = geometry_msgs.msg.Point()
       end = 0
       _x = self
       start = end

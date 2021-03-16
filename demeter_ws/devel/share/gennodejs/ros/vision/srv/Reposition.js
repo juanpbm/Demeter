@@ -29,7 +29,7 @@ class RepositionRequest {
         this.Location = initObj.Location
       }
       else {
-        this.Location = new geometry_msgs.msg.Vector3();
+        this.Location = new geometry_msgs.msg.Point();
       }
     }
   }
@@ -37,7 +37,7 @@ class RepositionRequest {
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type RepositionRequest
     // Serialize message field [Location]
-    bufferOffset = geometry_msgs.msg.Vector3.serialize(obj.Location, buffer, bufferOffset);
+    bufferOffset = geometry_msgs.msg.Point.serialize(obj.Location, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -46,7 +46,7 @@ class RepositionRequest {
     let len;
     let data = new RepositionRequest(null);
     // Deserialize message field [Location]
-    data.Location = geometry_msgs.msg.Vector3.deserialize(buffer, bufferOffset);
+    data.Location = geometry_msgs.msg.Point.deserialize(buffer, bufferOffset);
     return data;
   }
 
@@ -68,20 +68,15 @@ class RepositionRequest {
     // Returns full string definition for message
     return `
     
-    geometry_msgs/Vector3 Location 
+    geometry_msgs/Point Location 
     
     ================================================================================
-    MSG: geometry_msgs/Vector3
-    # This represents a vector in free space. 
-    # It is only meant to represent a direction. Therefore, it does not
-    # make sense to apply a translation to it (e.g., when applying a 
-    # generic rigid transformation to a Vector3, tf2 will only apply the
-    # rotation). If you want your data to be translatable too, use the
-    # geometry_msgs/Point message instead.
-    
+    MSG: geometry_msgs/Point
+    # This contains the position of a point in free space
     float64 x
     float64 y
     float64 z
+    
     `;
   }
 
@@ -92,10 +87,10 @@ class RepositionRequest {
     }
     const resolved = new RepositionRequest(null);
     if (msg.Location !== undefined) {
-      resolved.Location = geometry_msgs.msg.Vector3.Resolve(msg.Location)
+      resolved.Location = geometry_msgs.msg.Point.Resolve(msg.Location)
     }
     else {
-      resolved.Location = new geometry_msgs.msg.Vector3()
+      resolved.Location = new geometry_msgs.msg.Point()
     }
 
     return resolved;

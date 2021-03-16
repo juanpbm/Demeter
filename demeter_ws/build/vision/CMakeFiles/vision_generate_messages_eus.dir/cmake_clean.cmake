@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/manifest.l"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/msg/image_Pair.l"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Action.l"
+  "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/ML.l"
   "/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/roseus/ros/vision/srv/Reposition.l"
   "CMakeFiles/vision_generate_messages_eus"
 )

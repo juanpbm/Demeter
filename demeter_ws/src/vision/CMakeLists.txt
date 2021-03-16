@@ -60,6 +60,7 @@ add_service_files(
    FILES
    Action.srv
    Reposition.srv
+   ML.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -164,7 +165,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/recognition.py 
+  scripts/recognition.py scripts/camera_driver.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
