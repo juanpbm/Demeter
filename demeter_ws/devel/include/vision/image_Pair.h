@@ -27,14 +27,14 @@ struct image_Pair_
 
   image_Pair_()
     : coordinates()
-    , left_Img()
-    , right_Img()  {
+    , Left_Img()
+    , Right_Img()  {
       coordinates.assign(0.0);
   }
   image_Pair_(const ContainerAllocator& _alloc)
     : coordinates()
-    , left_Img(_alloc)
-    , right_Img(_alloc)  {
+    , Left_Img(_alloc)
+    , Right_Img(_alloc)  {
   (void)_alloc;
       coordinates.assign(0.0);
   }
@@ -44,11 +44,11 @@ struct image_Pair_
    typedef boost::array<float, 4>  _coordinates_type;
   _coordinates_type coordinates;
 
-   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _left_Img_type;
-  _left_Img_type left_Img;
+   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _Left_Img_type;
+  _Left_Img_type Left_Img;
 
-   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _right_Img_type;
-  _right_Img_type right_Img;
+   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _Right_Img_type;
+  _Right_Img_type Right_Img;
 
 
 
@@ -80,8 +80,8 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::vision::image_Pair_<ContainerAllocator1> & lhs, const ::vision::image_Pair_<ContainerAllocator2> & rhs)
 {
   return lhs.coordinates == rhs.coordinates &&
-    lhs.left_Img == rhs.left_Img &&
-    lhs.right_Img == rhs.right_Img;
+    lhs.Left_Img == rhs.Left_Img &&
+    lhs.Right_Img == rhs.Right_Img;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -138,12 +138,12 @@ struct MD5Sum< ::vision::image_Pair_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "0a5b719fb83215a32d44d000eec56a67";
+    return "3be3bcf9d563c8bf7eb1783df2858352";
   }
 
   static const char* value(const ::vision::image_Pair_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x0a5b719fb83215a3ULL;
-  static const uint64_t static_value2 = 0x2d44d000eec56a67ULL;
+  static const uint64_t static_value1 = 0x3be3bcf9d563c8bfULL;
+  static const uint64_t static_value2 = 0x7eb1783df2858352ULL;
 };
 
 template<class ContainerAllocator>
@@ -163,8 +163,8 @@ struct Definition< ::vision::image_Pair_<ContainerAllocator> >
   static const char* value()
   {
     return "float32[4] coordinates\n"
-"sensor_msgs/CompressedImage left_Img\n"
-"sensor_msgs/CompressedImage right_Img\n"
+"sensor_msgs/CompressedImage Left_Img\n"
+"sensor_msgs/CompressedImage Right_Img\n"
 "\n"
 "================================================================================\n"
 "MSG: sensor_msgs/CompressedImage\n"
@@ -216,8 +216,8 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.coordinates);
-      stream.next(m.left_Img);
-      stream.next(m.right_Img);
+      stream.next(m.Left_Img);
+      stream.next(m.Right_Img);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -242,12 +242,12 @@ struct Printer< ::vision::image_Pair_<ContainerAllocator> >
       s << indent << "  coordinates[" << i << "]: ";
       Printer<float>::stream(s, indent + "  ", v.coordinates[i]);
     }
-    s << indent << "left_Img: ";
+    s << indent << "Left_Img: ";
     s << std::endl;
-    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.left_Img);
-    s << indent << "right_Img: ";
+    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.Left_Img);
+    s << indent << "Right_Img: ";
     s << std::endl;
-    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.right_Img);
+    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.Right_Img);
   }
 };
 

@@ -16,46 +16,46 @@
 
 (defclass vision::image_Pair
   :super ros::object
-  :slots (_coordinates _left_Img _right_Img ))
+  :slots (_coordinates _Left_Img _Right_Img ))
 
 (defmethod vision::image_Pair
   (:init
    (&key
     ((:coordinates __coordinates) (make-array 4 :initial-element 0.0 :element-type :float))
-    ((:left_Img __left_Img) (instance sensor_msgs::CompressedImage :init))
-    ((:right_Img __right_Img) (instance sensor_msgs::CompressedImage :init))
+    ((:Left_Img __Left_Img) (instance sensor_msgs::CompressedImage :init))
+    ((:Right_Img __Right_Img) (instance sensor_msgs::CompressedImage :init))
     )
    (send-super :init)
    (setq _coordinates __coordinates)
-   (setq _left_Img __left_Img)
-   (setq _right_Img __right_Img)
+   (setq _Left_Img __Left_Img)
+   (setq _Right_Img __Right_Img)
    self)
   (:coordinates
    (&optional __coordinates)
    (if __coordinates (setq _coordinates __coordinates)) _coordinates)
-  (:left_Img
-   (&rest __left_Img)
-   (if (keywordp (car __left_Img))
-       (send* _left_Img __left_Img)
+  (:Left_Img
+   (&rest __Left_Img)
+   (if (keywordp (car __Left_Img))
+       (send* _Left_Img __Left_Img)
      (progn
-       (if __left_Img (setq _left_Img (car __left_Img)))
-       _left_Img)))
-  (:right_Img
-   (&rest __right_Img)
-   (if (keywordp (car __right_Img))
-       (send* _right_Img __right_Img)
+       (if __Left_Img (setq _Left_Img (car __Left_Img)))
+       _Left_Img)))
+  (:Right_Img
+   (&rest __Right_Img)
+   (if (keywordp (car __Right_Img))
+       (send* _Right_Img __Right_Img)
      (progn
-       (if __right_Img (setq _right_Img (car __right_Img)))
-       _right_Img)))
+       (if __Right_Img (setq _Right_Img (car __Right_Img)))
+       _Right_Img)))
   (:serialization-length
    ()
    (+
     ;; float32[4] _coordinates
     (* 4    4)
-    ;; sensor_msgs/CompressedImage _left_Img
-    (send _left_Img :serialization-length)
-    ;; sensor_msgs/CompressedImage _right_Img
-    (send _right_Img :serialization-length)
+    ;; sensor_msgs/CompressedImage _Left_Img
+    (send _Left_Img :serialization-length)
+    ;; sensor_msgs/CompressedImage _Right_Img
+    (send _Right_Img :serialization-length)
     ))
   (:serialize
    (&optional strm)
@@ -65,10 +65,10 @@
      (dotimes (i 4)
        (sys::poke (elt _coordinates i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
        )
-     ;; sensor_msgs/CompressedImage _left_Img
-       (send _left_Img :serialize s)
-     ;; sensor_msgs/CompressedImage _right_Img
-       (send _right_Img :serialize s)
+     ;; sensor_msgs/CompressedImage _Left_Img
+       (send _Left_Img :serialize s)
+     ;; sensor_msgs/CompressedImage _Right_Img
+       (send _Right_Img :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
@@ -77,20 +77,20 @@
    (dotimes (i (length _coordinates))
      (setf (elt _coordinates i) (sys::peek buf ptr- :float)) (incf ptr- 4)
      )
-   ;; sensor_msgs/CompressedImage _left_Img
-     (send _left_Img :deserialize buf ptr-) (incf ptr- (send _left_Img :serialization-length))
-   ;; sensor_msgs/CompressedImage _right_Img
-     (send _right_Img :deserialize buf ptr-) (incf ptr- (send _right_Img :serialization-length))
+   ;; sensor_msgs/CompressedImage _Left_Img
+     (send _Left_Img :deserialize buf ptr-) (incf ptr- (send _Left_Img :serialization-length))
+   ;; sensor_msgs/CompressedImage _Right_Img
+     (send _Right_Img :deserialize buf ptr-) (incf ptr- (send _Right_Img :serialization-length))
    ;;
    self)
   )
 
-(setf (get vision::image_Pair :md5sum-) "0a5b719fb83215a32d44d000eec56a67")
+(setf (get vision::image_Pair :md5sum-) "3be3bcf9d563c8bf7eb1783df2858352")
 (setf (get vision::image_Pair :datatype-) "vision/image_Pair")
 (setf (get vision::image_Pair :definition-)
       "float32[4] coordinates
-sensor_msgs/CompressedImage left_Img
-sensor_msgs/CompressedImage right_Img
+sensor_msgs/CompressedImage Left_Img
+sensor_msgs/CompressedImage Right_Img
 
 ================================================================================
 MSG: sensor_msgs/CompressedImage
@@ -128,6 +128,6 @@ string frame_id
 
 
 
-(provide :vision/image_Pair "0a5b719fb83215a32d44d000eec56a67")
+(provide :vision/image_Pair "3be3bcf9d563c8bf7eb1783df2858352")
 
 

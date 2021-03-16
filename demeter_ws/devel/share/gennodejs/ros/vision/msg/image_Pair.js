@@ -20,8 +20,8 @@ class image_Pair {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.coordinates = null;
-      this.left_Img = null;
-      this.right_Img = null;
+      this.Left_Img = null;
+      this.Right_Img = null;
     }
     else {
       if (initObj.hasOwnProperty('coordinates')) {
@@ -30,17 +30,17 @@ class image_Pair {
       else {
         this.coordinates = new Array(4).fill(0);
       }
-      if (initObj.hasOwnProperty('left_Img')) {
-        this.left_Img = initObj.left_Img
+      if (initObj.hasOwnProperty('Left_Img')) {
+        this.Left_Img = initObj.Left_Img
       }
       else {
-        this.left_Img = new sensor_msgs.msg.CompressedImage();
+        this.Left_Img = new sensor_msgs.msg.CompressedImage();
       }
-      if (initObj.hasOwnProperty('right_Img')) {
-        this.right_Img = initObj.right_Img
+      if (initObj.hasOwnProperty('Right_Img')) {
+        this.Right_Img = initObj.Right_Img
       }
       else {
-        this.right_Img = new sensor_msgs.msg.CompressedImage();
+        this.Right_Img = new sensor_msgs.msg.CompressedImage();
       }
     }
   }
@@ -53,10 +53,10 @@ class image_Pair {
     }
     // Serialize message field [coordinates]
     bufferOffset = _arraySerializer.float32(obj.coordinates, buffer, bufferOffset, 4);
-    // Serialize message field [left_Img]
-    bufferOffset = sensor_msgs.msg.CompressedImage.serialize(obj.left_Img, buffer, bufferOffset);
-    // Serialize message field [right_Img]
-    bufferOffset = sensor_msgs.msg.CompressedImage.serialize(obj.right_Img, buffer, bufferOffset);
+    // Serialize message field [Left_Img]
+    bufferOffset = sensor_msgs.msg.CompressedImage.serialize(obj.Left_Img, buffer, bufferOffset);
+    // Serialize message field [Right_Img]
+    bufferOffset = sensor_msgs.msg.CompressedImage.serialize(obj.Right_Img, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -66,17 +66,17 @@ class image_Pair {
     let data = new image_Pair(null);
     // Deserialize message field [coordinates]
     data.coordinates = _arrayDeserializer.float32(buffer, bufferOffset, 4)
-    // Deserialize message field [left_Img]
-    data.left_Img = sensor_msgs.msg.CompressedImage.deserialize(buffer, bufferOffset);
-    // Deserialize message field [right_Img]
-    data.right_Img = sensor_msgs.msg.CompressedImage.deserialize(buffer, bufferOffset);
+    // Deserialize message field [Left_Img]
+    data.Left_Img = sensor_msgs.msg.CompressedImage.deserialize(buffer, bufferOffset);
+    // Deserialize message field [Right_Img]
+    data.Right_Img = sensor_msgs.msg.CompressedImage.deserialize(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
-    length += sensor_msgs.msg.CompressedImage.getMessageSize(object.left_Img);
-    length += sensor_msgs.msg.CompressedImage.getMessageSize(object.right_Img);
+    length += sensor_msgs.msg.CompressedImage.getMessageSize(object.Left_Img);
+    length += sensor_msgs.msg.CompressedImage.getMessageSize(object.Right_Img);
     return length + 16;
   }
 
@@ -87,15 +87,15 @@ class image_Pair {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '0a5b719fb83215a32d44d000eec56a67';
+    return '3be3bcf9d563c8bf7eb1783df2858352';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     float32[4] coordinates
-    sensor_msgs/CompressedImage left_Img
-    sensor_msgs/CompressedImage right_Img
+    sensor_msgs/CompressedImage Left_Img
+    sensor_msgs/CompressedImage Right_Img
     
     ================================================================================
     MSG: sensor_msgs/CompressedImage
@@ -145,18 +145,18 @@ class image_Pair {
       resolved.coordinates = new Array(4).fill(0)
     }
 
-    if (msg.left_Img !== undefined) {
-      resolved.left_Img = sensor_msgs.msg.CompressedImage.Resolve(msg.left_Img)
+    if (msg.Left_Img !== undefined) {
+      resolved.Left_Img = sensor_msgs.msg.CompressedImage.Resolve(msg.Left_Img)
     }
     else {
-      resolved.left_Img = new sensor_msgs.msg.CompressedImage()
+      resolved.Left_Img = new sensor_msgs.msg.CompressedImage()
     }
 
-    if (msg.right_Img !== undefined) {
-      resolved.right_Img = sensor_msgs.msg.CompressedImage.Resolve(msg.right_Img)
+    if (msg.Right_Img !== undefined) {
+      resolved.Right_Img = sensor_msgs.msg.CompressedImage.Resolve(msg.Right_Img)
     }
     else {
-      resolved.right_Img = new sensor_msgs.msg.CompressedImage()
+      resolved.Right_Img = new sensor_msgs.msg.CompressedImage()
     }
 
     return resolved;
