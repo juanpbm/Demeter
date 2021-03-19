@@ -36,6 +36,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/package.xml"
   "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/scripts/camera_driver.py"
   "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/scripts/recognition.py"
+  "/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/scripts/srv_test.py"
   "/opt/ros/noetic/share/actionlib/cmake/actionlib-msg-extras.cmake"
   "/opt/ros/noetic/share/actionlib/cmake/actionlibConfig-version.cmake"
   "/opt/ros/noetic/share/actionlib/cmake/actionlibConfig.cmake"

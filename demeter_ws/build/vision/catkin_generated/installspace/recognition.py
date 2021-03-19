@@ -5,9 +5,9 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt 
 import os 
-from camera_driver.py import Camera_Driver_node as CDN
+from camera_driver import Camera_Driver_node
 
-import vision.srv  
+from vision.srv import * 
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
 
@@ -22,17 +22,17 @@ class Recognition:
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
  #       self.model = VGG16(weights="imagenet")
-        self.camera = CDN("camera_out/", "640x480")
+ #       self.camera = Camera_Driver_node("camera_out/", "640x480")
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
-        self.harvest_srv = rospy.ServiceProxy('harvest',Reposition)
+        self.harvest_srv = rospy.ServiceProxy('harvest', Reposition)
 
         print ("Recognition Node has been setup")
 
     def pepper_Finder(self):
         
         #Captrure video and split images
-        img_L,_ = self.camera.video_Capture()
+        #img_L,_ = self.camera.video_Capture()
         print("got left img")
         
         #ask the arm to stop if it gets a false back keep asking until it stops
@@ -172,4 +172,4 @@ if __name__ == '__main__':
         #rospy.wait_for_service('stop')
         rec_system.pepper_Finder()
     except rospy.ROSInterruptException:
-        print('!!!!!!!!!There has been an Unknown Error')
+               print('!!!!!!!!!There has been an Unknown Error')
