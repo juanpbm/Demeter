@@ -116,7 +116,7 @@ if(NOT "/home/juanpbm/capstone/Demeter/demeter_ws/devel/include " STREQUAL " ")
   endforeach()
 endif()
 
-set(libraries "vision;camera_driver")
+set(libraries "")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")

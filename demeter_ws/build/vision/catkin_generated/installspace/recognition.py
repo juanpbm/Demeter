@@ -5,8 +5,7 @@ import rospy
 import cv2
 from matplotlib import pyplot as plt 
 import os 
-from camera_driver import Camera_Driver_node
-
+import camera_driver as CD 
 from vision.srv import * 
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
@@ -22,57 +21,66 @@ class Recognition:
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
  #       self.model = VGG16(weights="imagenet")
-        self.camera = Camera_Driver_node("camera_out/", "640x480")
+        self.camera = CD.Camera_Driver_node("camera_out/", "640x480")
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
         self.harvest_srv = rospy.ServiceProxy('harvest', Reposition)
-
+        self.s = rospy.Service('start', Action, self.start)
         print ("Recognition Node has been setup")
 
     def pepper_Finder(self):
         
-        #Captrure video and split images
-        #img_L,_ = self.camera.video_Capture()
-        print("got left img")
-        
-        #ask the arm to stop if it gets a false back keep asking until it stops
-        while (True):
-            if(self.stop_srv(True)):
-                break 
+        print("Recognition system initialized")
 
-        #Find if there is enough read in the frames
-        thresh_img = self.red_Finder(img_L)
-        print('got threshold')
-        
-        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
-            coord = [1,10,100,150]
-            #TODO add amrits code here 
-            left, top, right, bottom, rows, cols = self.box_Finder(img_L, thresh_img)
-            single_pepper, pepper_contours = self.contour_Finder(thresh_img, coord)
-            print("all done")
-            #TODO return what the arm needs to reposition
-            #TODO are we moving a set distance or to the center of the box
-            '''
-            if coord[0] < 10:
-                print ("move camera to the left")
-            elif coord[1] < 10:
-                print("move camera up")
-            elif coord[2] > len(img_L[0])-10:
-                print("move camera to the right")
-            elif coord[3] > len(img_L)-10:
-                print("move camera down")
-            else:
-                
-                #unsure if it will read the image properly
-                image = image_utils.imresize(img_L, size=(224, 224), interpolate='bilinear', channel_first=False, **kwargs)
-                image = image_utils.img_to_array(image)
-                image = np.expand_dims(image, axis=0)
-                image = preprocess_input(image)
-                preds = self.model.predict(image)
-                P = decode_predictions(preds)[0]
-                print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
+        while(True): 
+            
+            #Captrure video and split images
+            #img_L,_ = self.camera.video_Capture()
+            print("got left img")
+            
+            #ask the arm to stop if it gets a false back keep asking until it stops
+            while (True):
+                if(self.stop_srv(True)):
+                    break 
+            
+            #Take a new image in case the are moved
+            img_L, img_R = self.camera.img_Capture();      
+            
+            #Find if there is enough read in the frames
+            thresh_img = self.red_Finder(img_L)
+         
+            if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
+                coord = [1,10,100,150]
+                #TODO add amrits code here 
+                left, top, right, bottom, rows, cols = self.box_Finder(img_L, thresh_img)
+                single_pepper, pepper_contours = self.contour_Finder(thresh_img, coord)
+                print("all done")
+                #TODO return what the arm needs to reposition
+                #TODO are we moving a set distance or to the center of the box
                 '''
-                #TODO stereo srv call 
+                if coord[0] < 10:
+                    print ("move camera to the left")
+                elif coord[1] < 10:
+                    print("move camera up")
+                elif coord[2] > len(img_L[0])-10:
+                    print("move camera to the right")
+                elif coord[3] > len(img_L)-10:
+                    print("move camera down")
+                else:
+                    
+                    #unsure if it will read the image properly
+                    image = image_utils.imresize(img_L, size=(224, 224), interpolate='bilinear', channel_first=False, **kwargs)
+                    image = image_utils.img_to_array(image)
+                    image = np.expand_dims(image, axis=0)
+                    image = preprocess_input(image)
+                    preds = self.model.predict(image)
+                    P = decode_predictions(preds)[0]
+                    print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
+                    '''
+                    #TODO stereo srv call 
+            else:
+                #tell the arm to go back since it moved after possible pepper was found 
+                pass
 
     def red_Finder(slef, img):
 
@@ -162,14 +170,20 @@ class Recognition:
          
         images.coordinates = coords
         return(images)
+    
+    def start(self,req):
+        return ActionResponce(True)
 
 if __name__ == '__main__':
    
     try:
         print("Welcmoe to Demeter the Bell Pepper Harvester")
-        print('Init')
         rec_system = Recognition()
-        #rospy.wait_for_service('stop')
+        
+        print("Waiting for the arm driver to be online")
+        rospy.wait_for_service('stop')
+        
+        print("arm driver detected")
         rec_system.pepper_Finder()
     except rospy.ROSInterruptException:
                print('!!!!!!!!!There has been an Unknown Error')
