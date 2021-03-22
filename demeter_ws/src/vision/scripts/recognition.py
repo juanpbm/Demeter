@@ -12,10 +12,6 @@ from vision.srv import *
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
 
-#from keras.preprocessing import image as image_utils
-#from keras.applications.imagenet_utils import decode_predictions
-#from keras.applications.imagenet_utils import preprocess_input
-#from keras.applications import VGG16
 
 class Camera_Driver_node:
 
@@ -91,7 +87,7 @@ class Recognition:
 
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
- #       self.model = VGG16(weights="imagenet")
+
         self.camera = Camera_Driver_node("camera_out/", "640x480")
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
