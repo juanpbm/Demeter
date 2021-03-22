@@ -12,3 +12,9 @@ from keras.applications import VGG16
  preds = self.model.predict(image)
  P = decode_predictions(preds)[0]
  print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
+
+ def decompress(Left_Img):     
+    array = np.frombuffer(images.Left_Img.data, np.uint8)
+    img = cv2.imdecode(array,cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
+    return(img)
