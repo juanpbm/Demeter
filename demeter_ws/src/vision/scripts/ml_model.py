@@ -1,6 +1,7 @@
 
 import cv2
 import rospy
+import numpy as np
 
 from vision.srv import ML 
 
