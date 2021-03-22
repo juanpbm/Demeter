@@ -119,31 +119,8 @@ class Recognition:
             if threshold:
                 
                 #TODO add amrits code here 
-                
-        
-                #TODO return what the arm needs to reposition
-                #TODO are we moving a set distance or to the center of the box
-                '''
-                if coord[0] < 10:
-                    print ("move camera to the left")
-                elif coord[1] < 10:
-                    print("move camera up")
-                elif coord[2] > len(img_L[0])-10:
-                    print("move camera to the right")
-                elif coord[3] > len(img_L)-10:
-                    print("move camera down")
-                else:
-                    
-                    #unsure if it will read the image properly
-                    image = image_utils.imresize(img_L, size=(224, 224), interpolate='bilinear', channel_first=False, **kwargs)
-                    image = image_utils.img_to_array(image)
-                    image = np.expand_dims(image, axis=0)
-                    image = preprocess_input(image)
-                    preds = self.model.predict(image)
-                    P = decode_predictions(preds)[0]
-                    print(f"the pepper is in the picture with a prob of: {P[['bell_pepper'  in i for i in P].index(True)][2]}")
-                    '''
-                    #TODO stereo srv call 
+
+                #TODO stereo srv call 
             else:
                 #tell the arm to go back since it moved after possible pepper was found 
                 pass
