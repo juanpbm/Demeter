@@ -106,7 +106,7 @@ class Recognition:
         while(True): 
             
             #Captrure video and split images
-            #img_L,_ = self.camera.video_Capture()
+            img_L,_ = self.camera.video_Capture()
             print("got left img")
             
             #ask the arm to stop if it gets a false back keep asking until it stops
@@ -115,7 +115,7 @@ class Recognition:
                     break 
             
             #Take a new image in case the are moved
-            #img_L, img_R = self.camera.img_Capture();      
+            img_L, img_R = self.camera.img_Capture();      
             
             #Find if there is enough read in the frames
             treshold, thresh_img = self.camera.red_Finder(img_L)

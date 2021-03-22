@@ -109,8 +109,8 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   #INCLUDE_DIRS include
-  #LIBRARIES vision camera_driver
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs camera_driver
+  #LIBRARIES vision 
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs 
 #  DEPENDS system_lib
 )
 
@@ -165,7 +165,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/recognition.py scripts/camera_driver.py scripts/srv_test.py
+  scripts/recognition.py scripts/srv_test.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
