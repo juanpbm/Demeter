@@ -4,5 +4,5 @@ Name: vision
 Description: Description of vision
 Version: 0.0.0
 Cflags: -I/home/juanpbm/capstone/Demeter/demeter_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs
+Libs: -L${prefix}/lib -lvision -lcamera_driver
+Requires: roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs camera_driver

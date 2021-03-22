@@ -109,8 +109,8 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   #INCLUDE_DIRS include
-  #LIBRARIES vision
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs
+  LIBRARIES vision camera_driver
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime sensor_msgs geometry_msgs camera_driver
 #  DEPENDS system_lib
 )
 

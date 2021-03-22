@@ -22,7 +22,7 @@ class Recognition:
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
  #       self.model = VGG16(weights="imagenet")
- #       self.camera = Camera_Driver_node("camera_out/", "640x480")
+        self.camera = Camera_Driver_node("camera_out/", "640x480")
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
         self.harvest_srv = rospy.ServiceProxy('harvest', Reposition)
