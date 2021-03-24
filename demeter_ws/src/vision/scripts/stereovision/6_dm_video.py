@@ -23,7 +23,6 @@
 # 
 
 
-from picamera import PiCamera
 import time
 import cv2
 import numpy as np
@@ -127,8 +126,7 @@ load_map_settings ("3dmap_set.txt")
 
 # capture frames from the camera
 while(True):
-    # Capture frame-by-frame
-    ret, frame = cap.read()
+    ret,frame=cap.read()
     t1 = datetime.now()
     pair_img = cv2.cvtColor (frame, cv2.COLOR_BGR2GRAY)
     imgLeft = pair_img [0:img_height,0:int(img_width/2)] #Y+H and X+W

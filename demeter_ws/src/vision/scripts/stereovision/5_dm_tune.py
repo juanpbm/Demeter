@@ -25,8 +25,6 @@
 
 import cv2
 import os
-from picamera.array import PiRGBArray
-from picamera import PiCamera
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Slider, Button
 import numpy as np

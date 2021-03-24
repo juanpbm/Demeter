@@ -25,8 +25,6 @@
 import os
 import time
 from datetime import datetime
-import picamera
-from picamera import PiCamera
 import cv2
 import numpy as np
 
@@ -54,19 +52,18 @@ capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
 print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
 
 # Initialize the camera
-cap = cv2.VideoCapture(0)
-
-# camera.resolution=(cam_width, cam_height)
-# camera.framerate = 20
-# camera.hflip = True
+cap=cv2.VideoCapture(0)
+#camera.resolution=(cam_width, cam_height)
+#camera.framerate = 20
+#camera.hflip = True
 
 # Lets start taking photos! 
 counter = 0
 t2 = datetime.now()
 print ("Starting photo sequence")
 while(True):
-    ret, frame = cap.read()
-    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    ret,frame = cap.read()
     t1 = datetime.now()
     cntdwn_timer = countdown - int ((t1-t2).total_seconds())
     # If cowntdown is zero - let's record next image
@@ -81,8 +78,8 @@ while(True):
       cntdwn_timer = 0      # To avoid "-1" timer display 
       next
     # Draw cowntdown counter, seconds
-    cv2.putText(ret, str(cntdwn_timer), (50,50), font, 2.0, (0,0,255),4, cv2.LINE_AA)
-    cv2.imshow("frame", rgb)
+    cv2.putText(frame, str(cntdwn_timer), (50,50), font, 2.0, (0,0,255),4, cv2.LINE_AA)
+    cv2.imshow("pair", frame)
     key = cv2.waitKey(1) & 0xFF
     
     # Press 'Q' key to quit, or wait till all photos are taken
