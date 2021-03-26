@@ -14,7 +14,9 @@ import numpy as np
 import argparse
 import cv2
 
-def PredictPepperImage(imgArr):
+def PredictPepperImage(req):
+    image = decompress(req.Left_Img)
+    
     image = np.expand_dims(imageArr, axis=0)
     image = preprocess_input(imageArr)
     model = VGG16(weights="imagenet")
@@ -24,3 +26,16 @@ def PredictPepperImage(imgArr):
         if (i==0)&(label == 'bell_pepper')&(prob>.9):
             this_is_a_pepper = True
     return this_is_a_pepper
+
+ def decompress(Left_Img): 
+    #to decompress the image from ros srv dont change
+    array = np.frombuffer(Left_Img.data, np.uint8)
+    img = cv2.imdecode(array,cv2.IMREAD_COLOR)
+    img = cv2.cvtColor(imgL, cv2.COLOR_BGR2RGB)
+    return(img)
+
+if __name__ == '__main__':
+   
+    rospy.init_node('ML_Model', anonymous=True)
+    s = rospy.Service('ML_req', ML, PredictPepperImage)
+    rospy.spin()
