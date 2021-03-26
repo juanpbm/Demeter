@@ -106,7 +106,8 @@ class Recognition:
     def pepper_Finder(self):
         
         print("Recognition system initialized")
-
+        position = geometry_msgs.msg.Point()
+        
         while(True): 
             
             #Captrure video and split images
@@ -169,14 +170,26 @@ class Recognition:
                             if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
                                 #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
                                 print('Zoom out')
+                                position.x = 0
+                                position.y = 0
+                                position.z = -10
+                                position_ack= self.reposition_srv(position)
                             else:
                                 #!!!!TODO: implement how this will actually feedback to the coordinates the arm is tracking
                                 X_coord+=(movements[0]+movements[2])
                                 Y_coord+=(movements[1]+movements[3])
+                                position.x = X_coord
+                                position.y = Y_coord
+                                position.z = 0
+                                position_ack= self.reposition_srv(position)
                             if attempt>5:
                                 #!!!!!TODO: might be worth it to implement a zoom out system here as well since
                                 #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
                                 #direction
+                                position.x = 0
+                                position.y = 0
+                                position.z = -10
+                                position_ack= self.reposition_srv(position)
                                 stop = True
                             else:
                                 #attempting to reposition arm based on coordinates take another image and go through the
@@ -184,8 +197,7 @@ class Recognition:
                                 #!!!!!TODO: Syntax might be wrong here for commincation with the arm and camera
                                 #change if wrong
                                 self.reposition_srv([X_coord,Y_coord])
-                                img_L,_ = self.camera.video_Capture()
-                                print("got left img")
+                       
                                 #Take a new image in case the are moved
                                 img_L, img_R = self.camera.img_Capture()
                                 
