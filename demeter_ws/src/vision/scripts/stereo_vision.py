@@ -11,8 +11,8 @@ from mpl_toolkits.mplot3d import Axes3D
 #Stereo Vision calculations
 def stereo(img_L, img_R, coord):
 
-    base_Line = 232
-    focal_Length = 18
+    base_Line = 6
+    focal_Length = 0.5
     
     #Disparity map calculation 
     stereo = cv2.StereoSGBM_create(minDisparity = 16,
@@ -27,3 +27,5 @@ def stereo(img_L, img_R, coord):
                    [0, 0, 1, 0]])
     
     points = cv2.reprojectImageTo3D(disparity, Q)
+    print("q calc", point[200,100])
+    print("normal", (6*0.05)/disparity[200,100])
