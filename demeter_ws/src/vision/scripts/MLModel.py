@@ -15,7 +15,7 @@ import argparse
 import cv2
 
 def PredictPepperImage(req):
-    image = decompress(req.Left_Img)
+    imageArr = decompress(req.Left_Img)
     
     image = np.expand_dims(imageArr, axis=0)
     image = preprocess_input(imageArr)
