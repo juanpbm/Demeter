@@ -61,7 +61,7 @@ capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
 print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
 
 # Initialize the camera
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
 
 # Implementing calibration data
 print('Read calibration data and rectifying stereo pair...')
@@ -85,7 +85,8 @@ def stereo_depth_map(rectified_pair):
     disparity = sbm.compute(dmLeft, dmRight)
     local_max = disparity.max()
     local_min = disparity.min()
-    print("the point 100,100 is at: ", (6*0.05)/disparity[100,100])
+    print("the point 100,100 is at: ", 10000*((6*0.3)/disparity[120,220]))
+    print(disparity.shape)
     disparity_grayscale = (disparity-local_min)*(65535.0/(local_max-local_min))
     disparity_fixtype = cv2.convertScaleAbs(disparity_grayscale, alpha=(255.0/65535.0))
     disparity_color = cv2.applyColorMap(disparity_fixtype, cv2.COLORMAP_JET)
@@ -127,9 +128,10 @@ load_map_settings ("3dmap_set.txt")
 
 # capture frames from the camera
 while(True):
-    ret,frame=cap.read()
+    #ret,frame=cap.read()
+    image=cv2.imread('./scenes/photo.png')
     t1 = datetime.now()
-    pair_img = cv2.cvtColor (frame, cv2.COLOR_BGR2GRAY)
+    pair_img = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
     imgLeft = pair_img [0:img_height,0:int(img_width/2)] #Y+H and X+W
     imgRight = pair_img [0:img_height,int(img_width/2):img_width] #Y+H and X+W
     rectified_pair = calibration.rectify((imgLeft, imgRight))
