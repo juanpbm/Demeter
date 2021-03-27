@@ -15,10 +15,104 @@ from matplotlib import pyplot as plt
 import os 
 import subprocess 
 import time 
+import json
+from stereovision.calibration import StereoCalibrator
+from stereovision.calibration import StereoCalibration
+from datetime import datetime
 
 from vision.srv import * 
 from vision.msg import image_Pair
 from sensor_msgs.msg import CompressedImage
+
+class Stereo_Vision():
+    def __init__(self):
+        # Depth map default preset
+        self.SWS = 5
+        self.PFS = 5
+        self.PFC = 29
+        self.MDS = -30
+        self.NOD = 160
+        self.TTH = 100
+        self.UR = 10
+        self.SR = 14
+        self.SPWS = 100
+
+        # Camera settimgs
+        cam_width = 1280
+        cam_height = 480
+
+        # Final image capture settings
+        scale_ratio = 0.5
+
+        # Camera resolution height must be dividable by 16, and width by 32
+        cam_width = int((self.cam_width+31)/32)*32
+        cam_height = int((self.cam_height+15)/16)*16
+        print ("Used camera resolution: "+str(cam_width)+" x "+str(cam_height))
+
+        #TODO Buffer for captured image settings maybe remove 
+        self.img_width = int (cam_width * scale_ratio)
+        self.img_height = int (cam_height * scale_ratio)
+        self.capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
+        print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
+
+        # Initialize the camera
+        #cap = cv2.VideoCapture(0)
+
+        # Implementing calibration data
+        print('Read calibration data and rectifying stereo pair...')
+        calibration = StereoCalibration(input_folder='calib_result')
+
+        # TODO Initialize interface windows maybe remove
+        cv2.namedWindow("Image")
+        cv2.moveWindow("Image", 50,100)
+        cv2.namedWindow("left")
+        cv2.moveWindow("left", 450,100)
+        cv2.namedWindow("right")
+        cv2.moveWindow("right", 850,100)
+
+
+        self.disparity = np.zeros((img_width, img_height), np.uint8)
+        self.sbm = cv2.StereoBM_create(numDisparities=0, blockSize=21)
+        self.load_map_settings ("3dmap_set.txt")
+        
+    def stereo_depth_map(img_L, img_R,coord):
+        rectified_pair = calibration.rectify((img_L, img_R))
+        dmLeft = rectified_pair[0]
+        dmRight = rectified_pair[1]
+        self.disparity = sbm.compute(dmLeft, dmRight)
+        local_max = disparity.max()
+        local_min = disparity.min()
+        Z = (10000*6*0.3)/disparity[coord]
+        return (Z)
+
+    def load_map_settings( fName ):
+            
+        print('Loading parameters from file...')
+        f=open(fName, 'r')
+        data = json.load(f)
+        self.SWS=data['SADWindowSize']
+        self.PFS=data['preFilterSize']
+        self.PFC=data['preFilterCap']
+        self.MDS=data['minDisparity']
+        self.NOD=data['numberOfDisparities']
+        self.TTH=data['textureThreshold']
+        self.UR=data['uniquenessRatio']
+        self.SR=data['speckleRange']
+        self.SPWS=data['speckleWindowSize']    
+        
+        self.sbm.setSADWindowSize(SWS)
+        self.sbm.setPreFilterType(1)
+        self.sbm.setPreFilterSize(PFS)
+        self.sbm.setPreFilterCap(PFC)
+        self.sbm.setMinDisparity(MDS)
+        self.sbm.setNumDisparities(NOD)
+        self.sbm.setTextureThreshold(TTH)
+        self.sbm.setUniquenessRatio(UR)
+        self.sbm.setSpeckleRange(SR)
+        self.sbm.setSpeckleWindowSize(SPWS)
+        f.close()
+        print ('Parameters loaded from file '+fName)
+
 
 
 class Camera_Driver_node:
@@ -97,6 +191,7 @@ class Recognition:
         rospy.init_node("Recognition", anonymous = True)
 
         self.camera = Camera_Driver_node("camera_out/", "640x480")
+        self.stereo = Stereo_Vision()
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
         self.harvest_srv = rospy.ServiceProxy('harvest', Reposition)
@@ -187,8 +282,8 @@ class Recognition:
                                 #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
                                 #direction
                                 position.x = 0
-                                position.y = 0
-                                position.z = -10
+                                position.y = -10
+                                position.z = 0
                                 position_ack= self.reposition_srv(position)
                                 stop = True
                             else:
@@ -213,17 +308,21 @@ class Recognition:
                             print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
                             coordinates_of_BB = np.array(contours[mainContour])
                             #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
-                            send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
+                            #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
+                            #Stereo Vision
+                            #TODO where do calculate depth
+                            z = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
+                            #TODO harvest
                         else:
                             print('Full Pepper was unable to be found from this starting frame')
                     else:
                         print('Contour was not recognized as a pepper')
-                #TODO stereo srv call 
+         
             else:
                 #tell the arm to go back since it moved after possible pepper was found 
                 pass
       
-
+#TODO remove 
     def box_Finder(self, img, imgt):
         
         #Find edges
@@ -267,8 +366,7 @@ class Recognition:
 #        plt.show()
 
         
-        #TODO what are the return values and how to manage error 
-        #IDEA return count of peppers, and contours if more than on flag them in the other function
+        #TODO what here or do you just need the pepper count?
         if len(pepper_cont) <= 0:
             return pepper_cont
         elif len(pepper_cont) == 1:
