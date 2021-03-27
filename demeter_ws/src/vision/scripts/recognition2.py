@@ -45,15 +45,15 @@ class Stereo_Vision():
         scale_ratio = 0.5
 
         # Camera resolution height must be dividable by 16, and width by 32
-        cam_width = int((self.cam_width+31)/32)*32
-        cam_height = int((self.cam_height+15)/16)*16
+        cam_width = int((cam_width+31)/32)*32
+        cam_height = int((cam_height+15)/16)*16
         print ("Used camera resolution: "+str(cam_width)+" x "+str(cam_height))
 
         #TODO Buffer for captured image settings maybe remove 
         self.img_width = int (cam_width * scale_ratio)
         self.img_height = int (cam_height * scale_ratio)
-        self.capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
-        print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
+        #self.capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
+        #print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
 
         # Initialize the camera
         #cap = cv2.VideoCapture(0)
