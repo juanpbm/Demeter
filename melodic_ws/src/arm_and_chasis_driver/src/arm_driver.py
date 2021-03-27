@@ -4,9 +4,10 @@ import rospy
 import actionlib
 
 import kinova_msgs.msg
-import arm_and_chasis_driver.msg
-from arm_and_chasis_driver.srv import PepperInHand
-from arm_and_chasis_driver.srv import StopMovement
+#from vision import vision.msg
+import vision.msg
+from vision.srv import Action
+from vision.srv import Reposition
 import std_msgs.msg
 import geometry_msgs.msg
 from math import sqrt
@@ -14,16 +15,7 @@ from math import sqrt
 from tf.transformations import *
 
 import moveit_commander
-#from moveit.move_group_interface import *
-#from moveit.planning_scene_interface import *
 import moveit_msgs.msg 
-
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include <moveit_msgs/DisplayRobotState.h>
-#include <moveit_msgs/DisplayTrajectory.h>
-#include <moveit_msgs/AttachedCollisionObject.h>
-#include <moveit_msgs/CollisionObject.h>
 
 '''
 Globals, could be passed as arguments. Not implemented because this is designed for a specific arm
@@ -51,15 +43,19 @@ class jacoDriver():
 
         #helper variables
         self.bstop = False
+        self.bgripper = False
         self.btoBasket = False
         self.btoCut = False
+        self.bharvest = False
         self.bbyCamera = False
         self.bbyScan = True
+        self.finger_turn = 0
         self.goalLocation = [0,0,0]
-        self.basketLocation = [0,0,0]
+        self.basketLocation = [0,0,1]
         self.currentLocation = [0,0,0]
         self.lastCutLocation = [0,0,0]
         self.scanEndpoints = [[0.35, -0.6, 0.6],[0.35, -0.6, 0.1],[0.35, -0.35, 0.1],[0.35, -0.35, 0.6],[0.35, 0.35, 0.6],[0.35, 0.35, 0.1]]
+        self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
         self.scanLocation = 0
         self.thresholdDisplacement = .08
 
@@ -69,23 +65,23 @@ class jacoDriver():
 
         #services
         print'making services'
-        # self.stopService = rospy.Service('stop', arm_and_chasis_driver.srv.Action, self.handle_stop)
-        # self.repositionService = rospy.Service('reposition', arm_and_chasis_driver.srv.Reposition, self.handle_stop)
-        # self.harvestService = rospy.Service('harvest', arm_and_chasis_driver.srv.Reposition, self.handle_stop)
+        self.stopService = rospy.Service('stop', vision.srv.Action, self.handle_stop)
+        self.repositionService = rospy.Service('reposition', vision.srv.Reposition, self.handle_reposition)
+        self.harvestService = rospy.Service('harvest', vision.srv.Reposition, self.handle_harvest)
 
+        rospy.wait_for_service('start')
         #clients
         print'making clients'
-        # self.startClient = rospy.client('start', arm_and_chasis_driver.srv.Action)
+        self.startClient = rospy.ServiceProxy('start', vision.srv.Action)
 
         #test locations, wont be in final code
         #self.test_locations()
-
-        #change to call client and send start message then while. and break while once we get to end
-        print'starting movement'
+        
+    
         while 1:
             self.send_move_command()
             # rospy.sleep(1)
-        
+
     '''
     Stores the current location of the arm as our current location used when bootup
     '''
@@ -108,25 +104,39 @@ class jacoDriver():
             return False
 
     '''
-    Stores the location that the computer vision says we want to move to 
+    Stores the location that the computer vision says we want to move to and
+    changes booleans to move by camera
     '''
-    def handle_get_location(self, req):
-        self.goalLocation = req.location
-        return arm_and_chasis_driver.msg.CoordinateActionResponse()
+    def handle_reposition(self, req):
+        self.bbyCamera = True
+        self.bbyScan = False
+        self.goalLocation[0] = req.Location.x
+        self.goalLocation[1] = req.Location.y
+        self.goalLocation[2] = req.Location.z
+        return vision.srv.RepositionResponse(True)
 
     '''
     Sets internal value for stopping motion
     '''
     def handle_stop(self, req):
-        self.bstop = req.bstop
-        return arm_and_chasis_driver.srv.StopMovementResponse(bstop)
+        print 'handle stop'
+        self.bstop = req.Action
+        location = geometry_msgs.msg.Point(x = self.currentLocation[0], y = self.currentLocation[1], z = self.currentLocation[2])
+        return vision.srv.ActionResponse(True, location)
 
     '''
-    Sets boolean so we move to the basket
+    Sets boolean so we cut the pepper
     '''
-    def handle_pepper_in_hand(self, req):
-        btoBasket = True
-        return arm_and_chasis_driver.srv.PepperInHandResponse(True)
+    def handle_harvest(self, req):
+        self.bharvest = True
+        self.bbyCamera = True
+        self.bbyScan = False
+        self.finger_turn = 0
+        self.goalLocation[0] = req.Location.x
+        self.goalLocation[1] = req.Location.y
+        self.goalLocation[2] = req.Location.z
+        self.lastCutLocation = self.goalLocation
+        return vision.srv.RepositionResponse(True)
 
     '''
     Hold postion
@@ -140,7 +150,7 @@ class jacoDriver():
     def move_to_basket(self):
         #if at basket switch to stop and send client to drop pepper off
         if self.atLocation(self.basketLocation, self.currentLocation):
-            self.bstop = True
+            self.bgripper = True
             return self.currentLocation
         else:
             return self.basketLocation
@@ -151,15 +161,19 @@ class jacoDriver():
     def move_to_last_position(self):
         #if at location switch stop and send client to restart cv
         if self.atLocation(self.lastCutLocation, self.currentLocation):
-            self.bstop = True
+            self.btoCut = False
+            self.bbyCamera = True
             return self.currentLocation
         else: 
-            return selflastCutLocation
+            return self.lastCutLocation
 
     '''
     Move based on values coming from xyz ActionServer
     '''
     def move_by_camera(self):
+        if self.bharvest:
+            if self.atLocation(self.goalLocation,self.currentLocation):
+                self.bgripper = True
         return self.goalLocation
 
     '''
@@ -197,16 +211,11 @@ class jacoDriver():
     def send_move_command(self):
 
         #I think we want orientation to always be zero, need to play with control some first to see
-        orientation = quaternion_from_euler(1.31737184525,1.1596698761,-3.04842185974)
-#         ThetaX: 1.31737184525
-#         ThetaY: 1.1596698761
-#         ThetaZ: -3.04842185974
-
         bMove = False
         #stopped
         if self.bstop:
             position = self.moveMethod[0](self)
-            bMove = True
+            bMove = False
         #move to basket
         elif self.btoBasket:
             position = self.moveMethod[1](self)
@@ -225,58 +234,59 @@ class jacoDriver():
             bMove = True
 
         if bMove:
-            #send in client using location gotten above to move to the new location
-            bMove = False
-            #goal = kinova_msgs.msg.ArmPoseGoal()
-            #goal.pose.header = std_msgs.msg.Header(frame_id=(prefix + '_link_base'))
-            #goal.pose.pose.position = geometry_msgs.msg.Point(
-            #    x=position[0], y=position[1], z=position[2])
-            #goal.pose.pose.orientation = geometry_msgs.msg.Quaternion(
-            #    x=orientation[0], y=orientation[1], z=orientation[2], w=orientation[3])
-            goal = geometry_msgs.msg.Pose()
-            goal.position = geometry_msgs.msg.Point(
-                x=position[0], y=position[1], z=position[2])
-            goal.orientation = geometry_msgs.msg.Quaternion(
-                x=orientation[0], y=orientation[1], z=orientation[2], w=orientation[3])
+            if self.bgripper:
+                goal = kinova_msgs.msg.SetFingersPosition()
+                goal.fingers.finger1 = self.finger_turn
+                goal.fingers.finger2 = goal.fingers.finger1
+                goal.fingers.finger3 = goal.fingers.finger1
+                robot = moveit_commander.RobotCommander()
+                gripper_group = moveit_commander.MoveGroupCommander("gripper")
+                planning_scene_interface = moveit_commander.PlanningSceneInterface()  
 
-            # Moveit
-            robot = moveit_commander.RobotCommander()
+                gripper_group.set_pose_target(goal)
+                gripper_group.plan()
+                print "Attention: moving the gripper"
+                gripper_group.go()
+                self.bgripper = False
+                if finger_turn == finger_maxTurn:
+                    self.btoBasket = False
+                    self.btoCut = True
+                    self.finger_turn = 0
+                else:
+                    self.finger_turn = finger_maxTurn
+                    self.btoBasket = True
 
-            group = moveit_commander.MoveGroupCommander("arm")
 
-            #gripper_group = moveit.planning_interface.MoveGroupInterface("gripper")
-            
-            planning_scene_interface = moveit_commander.PlanningSceneInterface()  
+            else:
+                print position
+                #position = [0.451476633549,0.318827390671,0.655069053173]
+                orientation = quaternion_from_euler(self.orientationRPY[self.scanLocation][0], self.orientationRPY[self.scanLocation][1], self.orientationRPY[self.scanLocation][2])
+                
+                #send with Moveit using location gotten above to move to the new location
+                goal = geometry_msgs.msg.Pose()
+                goal.position = geometry_msgs.msg.Point(
+                    x=position[0], y=position[1], z=position[2])
+                goal.orientation = geometry_msgs.msg.Quaternion(
+                    x=orientation[0], y=orientation[1], z=orientation[2], w=orientation[3])
 
-            # Create a publisher for visualizing plans in Rviz.
-            #display_trajectory = moveit_msgs.DisplayTrajectory 
+                # Moveit
+                robot = moveit_commander.RobotCommander()
+                group = moveit_commander.MoveGroupCommander("arm")
+                planning_scene_interface = moveit_commander.PlanningSceneInterface()  
 
-            # Planning to a Pose goal
-            group.set_pose_target(goal)
+                # Planning to a Pose goal
+                group.set_pose_target(goal)
 
-            # Now, we call the planner to compute the plan and visualize it.
-            #my_plan = moveit_commander.MoveGroupCommander.plan 
-
-            group.plan()
-            # if group.plan() == moveit_commander.move_group.MoveItErrorCodes.Success:
-            #     success = True
-            # else:
-            #     success = False 
-            #ROS_INFO("Visualizing plan (pose goal) %s",success)  
-            
-            # move the robot 
-            print "Attention: moving the arm"
-            # gripper_action(0.0); // open the gripper
-            group.go()
-            # self.driverClient.wait_for_server()
-            # self.driverClient.send_goal(goal)
-
-            # if self.driverClient.wait_for_result(rospy.Duration(10.0)):
-            #     return self.driverClient.get_result()
-            # else:
-            #     self.driverClient.cancel_all_goals()
-            #     print 'the cartesian action timed-out'
-            #     return None
+                # Now, we call the planner to compute the plan and visualize it.
+                group.plan()
+                # if group.plan() == moveit_commander.move_group.MoveItErrorCodes.Success:
+                #     success = True
+                # else:
+                #     success = False 
+                
+                # move the robot 
+                print "Attention: moving the arm"
+                group.go()
 
     def test_locations(self):
         #get current location
@@ -335,8 +345,9 @@ class jacoDriver():
 
 
 if __name__ == '__main__':
+    print 'start'
     rospy.init_node('jacoDriver')
-    
+
     try:
         jaco = jacoDriver()
         rospy.spin()

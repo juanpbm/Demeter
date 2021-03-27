@@ -1,5 +1,0 @@
-#true if we want to stop, false if we want to move
-bool bstop
----
-#true if stopped, false if moving again
-bool bstopped
