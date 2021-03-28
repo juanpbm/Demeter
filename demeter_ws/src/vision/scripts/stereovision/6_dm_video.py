@@ -85,7 +85,7 @@ def stereo_depth_map(rectified_pair):
     disparity = sbm.compute(dmLeft, dmRight)
     local_max = disparity.max()
     local_min = disparity.min()
-    print("the point 100,100 is at: ", 10000*((6*0.3)/disparity[120,220]))
+    print("the point 100,100 is at: ", 10000*((6*0.3)/disparity[180,200]))
     print(disparity.shape)
     disparity_grayscale = (disparity-local_min)*(65535.0/(local_max-local_min))
     disparity_fixtype = cv2.convertScaleAbs(disparity_grayscale, alpha=(255.0/65535.0))

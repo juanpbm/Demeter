@@ -102,7 +102,7 @@ def stereo_depth_map(rectified_pair):
     local_min = disparity_visual.min()
     print ("MAX " + str(local_max))
     print ("MIN " + str(local_min))
-    #cv.Normalize(disparity, disparity_visual, 0, 255, cv.CV_MINMAX)
+    #cv.Normalize(disparity, disparity_visual, 0, 255, cv22.CV_MINMAX)
     #disparity_visual = np.array(disparity_visual)
     return disparity_visual
 
