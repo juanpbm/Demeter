@@ -45,47 +45,37 @@ class Stereo_Vision():
         scale_ratio = 0.5
 
         # Camera resolution height must be dividable by 16, and width by 32
-        cam_width = int((self.cam_width+31)/32)*32
-        cam_height = int((self.cam_height+15)/16)*16
+        cam_width = int((cam_width+31)/32)*32
+        cam_height = int((cam_height+15)/16)*16
         print ("Used camera resolution: "+str(cam_width)+" x "+str(cam_height))
 
         #TODO Buffer for captured image settings maybe remove 
         self.img_width = int (cam_width * scale_ratio)
         self.img_height = int (cam_height * scale_ratio)
-        self.capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
-        print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
+        #self.capture = np.zeros((img_height, img_width, 4), dtype=np.uint8)
+        #print ("Scaled image resolution: "+str(img_width)+" x "+str(img_height))
 
         # Initialize the camera
         #cap = cv2.VideoCapture(0)
 
         # Implementing calibration data
         print('Read calibration data and rectifying stereo pair...')
-        calibration = StereoCalibration(input_folder='calib_result')
+        self.calibration = StereoCalibration(input_folder='calib_result')
 
-        # TODO Initialize interface windows maybe remove
-        cv2.namedWindow("Image")
-        cv2.moveWindow("Image", 50,100)
-        cv2.namedWindow("left")
-        cv2.moveWindow("left", 450,100)
-        cv2.namedWindow("right")
-        cv2.moveWindow("right", 850,100)
-
-
-        self.disparity = np.zeros((img_width, img_height), np.uint8)
+        self.disparity = np.zeros((self.img_width, self.img_height), np.uint8)
         self.sbm = cv2.StereoBM_create(numDisparities=0, blockSize=21)
         self.load_map_settings ("3dmap_set.txt")
         
-    def stereo_depth_map(img_L, img_R,coord):
-        rectified_pair = calibration.rectify((img_L, img_R))
-        dmLeft = rectified_pair[0]
-        dmRight = rectified_pair[1]
-        self.disparity = sbm.compute(dmLeft, dmRight)
-        local_max = disparity.max()
-        local_min = disparity.min()
-        Z = (10000*6*0.3)/disparity[coord]
+    def stereo_depth_map(self, img_L, img_R,coord):
+        print(type(img_L))
+        rectified_pair = self.calibration.rectify((img_L, img_R))
+        #Left = rectified_pair[0]
+        #Right = rectified_pair[1]
+        self.disparity = self.sbm.compute(img_L,img_R)
+        Z = (10000*6*0.3)/self.disparity[coord]
         return (Z)
 
-    def load_map_settings( fName ):
+    def load_map_settings(self, fName ):
             
         print('Loading parameters from file...')
         f=open(fName, 'r')
@@ -100,16 +90,16 @@ class Stereo_Vision():
         self.SR=data['speckleRange']
         self.SPWS=data['speckleWindowSize']    
         
-        self.sbm.setSADWindowSize(SWS)
+        #self.sbm.setSADWindowSize(SWS)
         self.sbm.setPreFilterType(1)
-        self.sbm.setPreFilterSize(PFS)
-        self.sbm.setPreFilterCap(PFC)
-        self.sbm.setMinDisparity(MDS)
-        self.sbm.setNumDisparities(NOD)
-        self.sbm.setTextureThreshold(TTH)
-        self.sbm.setUniquenessRatio(UR)
-        self.sbm.setSpeckleRange(SR)
-        self.sbm.setSpeckleWindowSize(SPWS)
+        self.sbm.setPreFilterSize(self.PFS)
+        self.sbm.setPreFilterCap(self.PFC)
+        self.sbm.setMinDisparity(self.MDS)
+        self.sbm.setNumDisparities(self.NOD)
+        self.sbm.setTextureThreshold(self.TTH)
+        self.sbm.setUniquenessRatio(self.UR)
+        self.sbm.setSpeckleRange(self.SR)
+        self.sbm.setSpeckleWindowSize(self.SPWS)
         f.close()
         print ('Parameters loaded from file '+fName)
 
@@ -119,35 +109,34 @@ class Camera_Driver_node:
 
     def __init__(self, out_path, res):
         self.out_path = out_path 
-        self.res = res #in the from of #x#
-        self.command = "sudo fswebcam -q -r " + res + " -S 15 " + out_path 
+        self.res = res #in the from of #x# 
 
     def video_Capture(self):
         #Capture video and processing of each frame
         print("video Capture is On:") 
-        self.command += "video.jpg"
         red = 0
-        our_count = 0
+        cap = cv2.VideoCapture(0)
         while not red:
             print("-")
-            process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
-            output, error = process.communicate()
+            ret,frame=cap.read()
+            img = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+            #split 
+            img_L, img_R = self.split_Img(img)  
+            red,_ = self.red_Finder(img_L)
             
-            img = cv2.imread(self.out_path+"video.jpg")
-            img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            red = self.red_Finder(img)
-            
+        cap.release()
         print("Red Found in the Frame. End video capture")
-        #split 
-        img_L, img_R = self.split_Img(img)  
         return(img_L, img_R)
 
     def img_Capture(self):
-        #Capture image and senf it backi
-        self.command += "img.jpg"
-        process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
-        img = cv2.imread(self.out_path+"img.jpg")
+        #Capture image and send it back
+        cap = cv2.VideoCapture(0)
+        ret,frame = cap.read()
+        cap.release()
+        img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        print(img.shape)
+        plt.imshow(img)
+        plt.show()
         img_L, img_R = self.split_Img(img) 
         print("Image Capture Complete")
         return(img_L, img_R)
@@ -169,19 +158,19 @@ class Camera_Driver_node:
         thresh_img = cv2.cvtColor(thresh_img, cv2.COLOR_HSV2RGB)        
         #plt.imshow(result)    
         #plt.show()
-        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
+        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.1):
             print('there may be peppers')
             return(True, thresh_img)
         else:
-            #print("no red")
+            print("no red")
             return(False, thresh_img)   
     
     def split_Img(self,img):
-    
-        img_width = int(self.res.split('x')[0])//2
-        img_height = int(self.res.split('x')[1])
+        img_width =  int(self.res.split('x')[1])//2
+        img_height = int(self.res.split('x')[0])
         img_L = img[0:img_height,0:img_width] #Y+H and X+W
         img_R = img[0:img_height,img_width:img_width*2]
+        print ("hHH", img_L.shape,",", img_R.shape)
         return(img_L, img_R)
 
 
@@ -190,7 +179,7 @@ class Recognition:
     def __init__(self):
         rospy.init_node("Recognition", anonymous = True)
 
-        self.camera = Camera_Driver_node("camera_out/", "640x480")
+        self.camera = Camera_Driver_node("camera_out/", "240x640")
         self.stereo = Stereo_Vision()
         self.stop_srv = rospy.ServiceProxy('stop', Action)
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
@@ -210,19 +199,25 @@ class Recognition:
             print("got left img")
             
             #ask the arm to stop if it gets a false back keep asking until it stops
-            while (True):
-                if(self.stop_srv(True)):
-                    break 
-            
+            #while (True):
+             #   s = self.stop_srv(True)
+              #  if(s.Ack):
+               #     print("stop")
+                #    break 
+            print("next image")
             #Take a new image in case the are moved
             img_L, img_R = self.camera.img_Capture();      
             
             #Find if there is enough read in the frames
             treshold, thresh_img = self.camera.red_Finder(img_L)
          
-            if threshold:
+            if treshold:
+                print("!!!!!!!!!!!!!!!!!!!!!!if")
                 #!!!!!TODO: wrong syntax here - implement how to actually get the initial coordinates from the arm!!!!!
-                X_coord, Y_coord = coordinatesFromArm
+                X_coord =0 #s.Location.x
+                Y_coord =0 #s.Location.z
+                Z_coord =0 #s.Location.y
+                #print(s.Location, "  ,  ", X_coord) 
                 contour_BB, cutoff_pepper,BB_size = self.find_BoundingBox(img_L)
                 for contour_index in range(0,len(contour_BB)):
                     print(f'Contour {contour_index}:')
@@ -232,7 +227,7 @@ class Recognition:
                     size = BB_size[contour_index]   
                     #if the contour around the red object is deemed as cutoff or if it is > than a certain sizxe then we will
                     #treat the contoured object as a pepper and navigate toward it. If not we will ignore the contoured object
-                    if ((len(boundingBox)>0)&((size>750)|(sum(cutoff)>0))):
+                    if ((len(boundingBox)>0)&((size>50)|(sum(cutoff)>0))):
                         #increasing the bounding box size to help navigate towards the right contour
                         correctBoundingBox = boundingBox + [-11,-11,11,11]
                         initialCutoffs = np.array(cutoff)
@@ -248,60 +243,60 @@ class Recognition:
                             #we may need to change the movement magnitudes depending on the coordinates coming from the arm
                             if cutoff[0] ==True:
                                 print('left')
-                                movements[0] = -10
-                                movements[2] = -10
+                                movements[0] = -0.10
+                                movements[2] = -0.10
                             if  cutoff[1] == True:
                                 print('top')
-                                movements[1] = -10
-                                movements[3] = -10
+                                movements[1] = -0.10
+                                movements[3] = -0.10
                             if cutoff[2] == True:
                                 print('right')
-                                movements[2] = 10
-                                movements[0] = 10
+                                movements[2] = 0.10
+                                movements[0] = 0.10
                             if  cutoff[3] == True:
                                 print('bottom')
-                                movements[3] = 10
-                                movements[1] = 10
+                                movements[3] = 0.10
+                                movements[1] = 0.10
                             if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
                                 #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
                                 print('Zoom out')
                                 position.x = 0
-                                position.y = 0
-                                position.z = -10
-                                position_ack= self.reposition_srv(position)
+                                position.y = Z_coord + 0.10
+                                position.z = 0
+                                print('position_ack= self.reposition_srv(position)')
                             else:
                                 #!!!!TODO: implement how this will actually feedback to the coordinates the arm is tracking
                                 X_coord+=(movements[0]+movements[2])
                                 Y_coord+=(movements[1]+movements[3])
-                                position.x = X_coord
-                                position.y = Y_coord
-                                position.z = 0
-                                position_ack= self.reposition_srv(position)
                             if attempt>5:
                                 #!!!!!TODO: might be worth it to implement a zoom out system here as well since
                                 #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
                                 #direction
                                 position.x = 0
-                                position.y = -10
+                                position.y = Z_coord + 0.10
                                 position.z = 0
-                                position_ack= self.reposition_srv(position)
+                                print("position_ack= self.reposition_srv(position)")
                                 stop = True
                             else:
-                                #attempting to reposition arm based on coordinates take another image and go through the
+                                print("attempting to reposition arm based on coordinates take another image and go through the")
                                 #process again
                                 #!!!!!TODO: Syntax might be wrong here for commincation with the arm and camera
-                                #change if wrong
-                                self.reposition_srv([X_coord,Y_coord])
-                       
+                                #change if wrong 
+                                position.x = X_coord
+                                position.y = 0
+                                position.z = Y_coord
+                                print("attempt position_ack= self.reposition_srv(position)")
                                 #Take a new image in case the are moved
                                 img_L, img_R = self.camera.img_Capture()
                                 
                                 
-                                contours, cutoffs, BB_sizes = find_BoundingBox(imgL)
+                                contours, cutoffs, BB_sizes = self.find_BoundingBox(img_L)
                                 for contour_index in range(0,len(contours)):
+                                    print ("aqui")
                                     if np.array_equal((np.array(contours[contour_index])<correctBoundingBox),np.array([False,False,True,True])):
+                                        print("entro")
                                         mainContour = contour_index
-                                cutoff = np.array(cutoffs[mainContour])
+                                        cutoff = np.array(cutoffs[mainContour])
                                 correctBoundingBox = np.array(contours) + [-11,-11,11,11]
                                 fullPepperFound = (sum(cutoff)==0)
                         if fullPepperFound:
@@ -309,9 +304,13 @@ class Recognition:
                             coordinates_of_BB = np.array(contours[mainContour])
                             #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
                             #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
+                            
                             #Stereo Vision
-                            #TODO where do calculate depth
-                            z = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
+                            img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
+                            img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
+                            point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
+                            y = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
+                            print("z=",y)
                             #TODO harvest
                         else:
                             print('Full Pepper was unable to be found from this starting frame')
@@ -319,8 +318,10 @@ class Recognition:
                         print('Contour was not recognized as a pepper')
          
             else:
+                print('!!!!!!!!!!!!!!!!else')
                 #tell the arm to go back since it moved after possible pepper was found 
-                pass
+                print("else position_ack = self.reposition_srv (s.Location)")
+                
       
 #TODO remove 
     def box_Finder(self, img, imgt):
@@ -387,11 +388,15 @@ class Recognition:
         #Find contours
         if not(stop):
             pepper_cont = self.contour_Finder(imgt, [0,0,imgt.shape[1],imgt.shape[0]])
+            print('coont')
             try:
                 if len(pepper_cont) == 0:
                     stop = True
+                    print('00000000000000000')
+                else:
+                    print("contours found")
             except:
-                print('Contours found')
+                print('Contours not found')
 
         if not(stop):
             #depending on the number of contours found the data structure of the output of the contour function wil be different
@@ -472,8 +477,8 @@ if __name__ == '__main__':
         print("Welcmoe to Demeter the Bell Pepper Harvester")
         rec_system = Recognition()
         
-        print("Waiting for the arm driver to be online")
-        rospy.wait_for_service('stop')
+        #print("Waiting for the arm driver to be online")
+        #rospy.wait_for_service('stop')
         
         print("arm driver detected")
         rec_system.pepper_Finder()

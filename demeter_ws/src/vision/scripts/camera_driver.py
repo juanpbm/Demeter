@@ -23,18 +23,23 @@ class Camera_Driver_node:
         self.command += "video.jpg"
         red = 0
         our_count = 0
+        cap = cv2.VideoCapture(0)
+        cv2.namedWindow("Image")
+        cv2.moveWindow("Image", 50,100)
         while not red:
             print("-")
-            process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
-            output, error = process.communicate()
-            
-            img = cv2.imread(self.out_path+"video.jpg")
+            #process = subprocess.Popen(self.command.split(), stdout=subprocess.PIPE)
+            #output, error = process.communicate()
+            ret,img=cap.read()
+            cv2.imshow("Image",img)
+            #img = cv2.imread(self.out_path+"video.jpg")
             img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            red = self.red_Finder(img)
+
+            #split 
+            img_L, img_R = self.split_Img(img)
+            red = self.red_Finder(img_L)
             
-        print("Red Found in the Frame. End video capture")
-        #split 
-        img_L, img_R = self.split_Img(img)  
+        print("Red Found in the Frame. End video capture")  
         return(img_L, img_R)
 
     def img_Capture(self):
@@ -64,7 +69,7 @@ class Camera_Driver_node:
         thresh_img = cv2.cvtColor(thresh_img, cv2.COLOR_HSV2RGB)        
         #plt.imshow(result)    
         #plt.show()
-        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.2):
+        if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.4):
             print('there may be peppers')
             return(True)
         else:

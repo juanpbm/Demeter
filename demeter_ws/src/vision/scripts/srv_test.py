@@ -28,11 +28,13 @@ if __name__ == "__main__":
 
     print("telling the arm to stop")
     resp = stop_srv(True)   
+    print(resp)
     if resp.Ack:
         print("the arm sttoped")
     else:
         print("something went wrong with the arm")
     time.sleep(5);
+    
     print("telling the arm to cont")
     resp = stop_srv(False)   
     if resp.Ack:

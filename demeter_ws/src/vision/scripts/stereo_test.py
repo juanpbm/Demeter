@@ -1,13 +1,10 @@
 
 import recognition2 as r
-
+import cv2
 stereo = r.Stereo_Vision()
+camera = r.Camera_Driver_node("camera_out/", "240x640")
+img_L, img_R = camera.img_Capture()
+img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
+img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
 
-img=cv2.imread('./scenes/photo.png')
-img = cv2.cvtColor (image, cv2.COLOR_BGR2GRAY)
-img_width = 320
-img_height = 480
-img_L = img[0:img_height,0:img_width] #Y+H and X+W
-img_R = img[0:img_height,img_width:img_width*2]
-
-print (stereo.stereo_depth_map(img_L, img_R, (120,220)))
+print (stereo.stereo_depth_map(img_L, img_R, (100,150)))
