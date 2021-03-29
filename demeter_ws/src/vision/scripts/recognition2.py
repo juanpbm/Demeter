@@ -210,7 +210,7 @@ class Recognition:
             
             #Find if there is enough read in the frames
             treshold, thresh_img = self.camera.red_Finder(img_L)
-         
+            print(img_L.shape)
             if treshold:
                 print("!!!!!!!!!!!!!!!!!!!!!!if")
                 #!!!!!TODO: wrong syntax here - implement how to actually get the initial coordinates from the arm!!!!!
@@ -288,6 +288,7 @@ class Recognition:
                                 print("attempt position_ack= self.reposition_srv(position)")
                                 #Take a new image in case the are moved
                                 img_L, img_R = self.camera.img_Capture()
+                                print(img_L.shape)
                                 if (position.x == X_coord)&(position.z == Y_coord):
                                     hasntMoved = True
                                 else:
@@ -309,10 +310,11 @@ class Recognition:
                             coordinates_of_BB = np.array(contours[mainContour])
                             #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
                             #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
-                            
+                            print(img_L.shape)
                             #Stereo Vision
                             img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
                             img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
+                            print(coordinates_of_BB[2],coordinates_of_BB[0])
                             point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
                             y = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
                             print("z=",y)
