@@ -288,7 +288,10 @@ class Recognition:
                                 print("attempt position_ack= self.reposition_srv(position)")
                                 #Take a new image in case the are moved
                                 img_L, img_R = self.camera.img_Capture()
-                                
+                                if (position.x == X_coord)&(position.z == Y_coord):
+                                    hasntMoved = True
+                                else:
+                                    hasntMoved = False
                                 
                                 contours, cutoffs, BB_sizes = self.find_BoundingBox(img_L)
                                 for contour_index in range(0,len(contours)):
@@ -296,8 +299,10 @@ class Recognition:
                                     if np.array_equal((np.array(contours[contour_index])<correctBoundingBox),np.array([False,False,True,True])):
                                         print("entro")
                                         mainContour = contour_index
-                                        cutoff = np.array(cutoffs[mainContour])
-                                correctBoundingBox = np.array(contours) + [-11,-11,11,11]
+                                        break
+                                cutoff = np.array(cutoffs[mainContour])
+                                if hasntMoved == False:
+                                    correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
                                 fullPepperFound = (sum(cutoff)==0)
                         if fullPepperFound:
                             print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
