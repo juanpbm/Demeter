@@ -13,6 +13,8 @@ from keras.applications import VGG16
 import numpy as np
 import argparse
 import cv2
+import rospy
+from vision.srv import *
 
 def PredictPepperImage(req):
     imageArr = decompress(req.Left_Img)
@@ -25,9 +27,9 @@ def PredictPepperImage(req):
     for (i, (imagenetID, label, prob)) in enumerate(P[0]):
         if (i==0)&(label == 'bell_pepper')&(prob>.9):
             this_is_a_pepper = True
-    return this_is_a_pepper
+    return MLResponse(this_is_a_pepper)
 
- def decompress(Left_Img): 
+def decompress(Left_Img): 
     #to decompress the image from ros srv dont change
     array = np.frombuffer(Left_Img.data, np.uint8)
     img = cv2.imdecode(array,cv2.IMREAD_COLOR)
