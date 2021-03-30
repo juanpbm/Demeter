@@ -156,7 +156,7 @@ class Camera_Driver_node:
         
         thresh_img = cv2.bitwise_and(img_blured, img_blured, mask=mask)
         thresh_img = cv2.cvtColor(thresh_img, cv2.COLOR_HSV2RGB)        
-        #plt.imshow(result)    
+        #plt.imshow()
         #plt.show()
         if np.count_nonzero(thresh_img > 0) >= (len(thresh_img)*len(thresh_img[0])*0.1):
             print('there may be peppers')
@@ -196,7 +196,7 @@ class Recognition:
             
             #Captrure video and split images
             img_L,_ = self.camera.video_Capture()
-            print("got left img")
+            print("111111got left img")
             
             #ask the arm to stop if it gets a false back keep asking until it stops
             #while (True):
@@ -204,13 +204,12 @@ class Recognition:
               #  if(s.Ack):
                #     print("stop")
                 #    break 
-            print("next image")
             #Take a new image in case the are moved
             img_L, img_R = self.camera.img_Capture();      
             
             #Find if there is enough read in the frames
             treshold, thresh_img = self.camera.red_Finder(img_L)
-            print(img_L.shape)
+            print("213!!!!!!",img_L.shape)
             if treshold:
                 print("!!!!!!!!!!!!!!!!!!!!!!if")
                 #!!!!!TODO: wrong syntax here - implement how to actually get the initial coordinates from the arm!!!!!
@@ -288,7 +287,7 @@ class Recognition:
                                 print("attempt position_ack= self.reposition_srv(position)")
                                 #Take a new image in case the are moved
                                 img_L, img_R = self.camera.img_Capture()
-                                print(img_L.shape)
+                                print("291!!!!!!!",img_L.shape)
                                 if (position.x == X_coord)&(position.z == Y_coord):
                                     hasntMoved = True
                                 else:
@@ -304,13 +303,15 @@ class Recognition:
                                 cutoff = np.array(cutoffs[mainContour])
                                 if hasntMoved == False:
                                     correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
+                                print("BB306!!!!",correctBoundingBox)
                                 fullPepperFound = (sum(cutoff)==0)
+                                print('cont!!!!', contours[mainContour]) 
                         if fullPepperFound:
                             print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
                             coordinates_of_BB = np.array(contours[mainContour])
                             #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
                             #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
-                            print(img_L.shape)
+                            print("315!!!!!!",img_L.shape)
                             #Stereo Vision
                             img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
                             img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
@@ -368,10 +369,10 @@ class Recognition:
         threshold = (len(crop_img)*len(crop_img[0])*0.01)
         pepper_cont = [contours[i] for i in range (0,len(contours)) if (hierarchy[0,i,3] == -1 and cv2.contourArea(contours[i]) > threshold)]
         
-#        print(len(pepper_cont))       
-#        imga = cv2.drawContours(crop_img, pepper_cont, -1, (0,255,0), 3)
-#        plt.imshow(imga)
-#        plt.show()
+        print("#of cont",len(pepper_cont))       
+        imga = cv2.drawContours(crop_img, pepper_cont, -1, (0,255,0), 3)
+        plt.imshow(imga)
+        plt.show()
 
         
         #TODO what here or do you just need the pepper count?
