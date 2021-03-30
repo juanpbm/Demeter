@@ -54,7 +54,7 @@ class jacoDriver():
         self.basketLocation = [0,0,1]
         self.currentLocation = [0,0,0]
         self.lastCutLocation = [0,0,0]
-        self.scanEndpoints = [[0.35, -0.6, 0.6],[0.35, -0.6, 0.1],[0.35, -0.35, 0.1],[0.35, -0.35, 0.6],[0.35, 0.35, 0.6],[0.35, 0.35, 0.1]]
+        self.scanEndpoints = [[0.5, -0.6, 0.6],[0.5, -0.6, 0.1],[0.5, -0.35, 0.1],[0.5, -0.35, 0.6],[0.5, 0.35, 0.6],[0.5, 0.35, 0.1]]
         self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
         self.scanLocation = 0
         self.thresholdDisplacement = .08
@@ -62,6 +62,7 @@ class jacoDriver():
         #action clients
         print'making action client'
         self.driverClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.ArmPoseAction)
+        # self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.SetFingersPosition)
 
         #services
         print'making services'
@@ -121,6 +122,7 @@ class jacoDriver():
     def handle_stop(self, req):
         print 'handle stop'
         self.bstop = req.Action
+        print self.bstop
         location = geometry_msgs.msg.Point(x = self.currentLocation[0], y = self.currentLocation[1], z = self.currentLocation[2])
         return vision.srv.ActionResponse(True, location)
 
@@ -148,6 +150,7 @@ class jacoDriver():
     Move to the basket or place to put the peper when it has been cut
     '''
     def move_to_basket(self):
+        print 'move to basket'
         #if at basket switch to stop and send client to drop pepper off
         if self.atLocation(self.basketLocation, self.currentLocation):
             self.bgripper = True
@@ -159,6 +162,7 @@ class jacoDriver():
     Move to where the peper was picked to restart the CV
     '''
     def move_to_last_position(self):
+        print 'move to last cut location'
         #if at location switch stop and send client to restart cv
         if self.atLocation(self.lastCutLocation, self.currentLocation):
             self.btoCut = False
@@ -171,6 +175,7 @@ class jacoDriver():
     Move based on values coming from xyz ActionServer
     '''
     def move_by_camera(self):
+        print 'move by camera'
         if self.bharvest:
             if self.atLocation(self.goalLocation,self.currentLocation):
                 self.bgripper = True
