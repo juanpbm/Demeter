@@ -62,7 +62,7 @@ class jacoDriver():
         #action clients
         print'making action client'
         self.driverClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.ArmPoseAction)
-        # self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.SetFingersPosition)
+        self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.SetFingersPositionAction)
 
         #services
         print'making services'
@@ -90,7 +90,7 @@ class jacoDriver():
 
         currentCartesianCommand_str_list = str(feedback).split("\n")
 
-        for index in range(0,2):
+        for index in range(0,3):
             temp_str=currentCartesianCommand_str_list[index].split(": ")
             self.currentLocation[index] = float(temp_str[1])
 
@@ -109,8 +109,10 @@ class jacoDriver():
     changes booleans to move by camera
     '''
     def handle_reposition(self, req):
+        print 'handle repostion'
         self.bbyCamera = True
         self.bbyScan = False
+        self.bstop = False
         self.goalLocation[0] = req.Location.x
         self.goalLocation[1] = req.Location.y
         self.goalLocation[2] = req.Location.z
@@ -123,6 +125,9 @@ class jacoDriver():
         print 'handle stop'
         self.bstop = req.Action
         print self.bstop
+        if self.bstop == False:
+            self.bbyScan = True
+            self.bbyCamera = False
         location = geometry_msgs.msg.Point(x = self.currentLocation[0], y = self.currentLocation[1], z = self.currentLocation[2])
         return vision.srv.ActionResponse(True, location)
 
@@ -219,7 +224,7 @@ class jacoDriver():
         bMove = False
         #stopped
         if self.bstop:
-            position = self.moveMethod[0](self)
+            rospy.sleep(1)
             bMove = False
         #move to basket
         elif self.btoBasket:
@@ -240,20 +245,24 @@ class jacoDriver():
 
         if bMove:
             if self.bgripper:
-                goal = kinova_msgs.msg.SetFingersPosition()
+                #make new message
+                goal = kinova_msgs.msg.SetFingersPositionGoal()
                 goal.fingers.finger1 = self.finger_turn
                 goal.fingers.finger2 = goal.fingers.finger1
-                goal.fingers.finger3 = goal.fingers.finger1
-                robot = moveit_commander.RobotCommander()
-                gripper_group = moveit_commander.MoveGroupCommander("gripper")
-                planning_scene_interface = moveit_commander.PlanningSceneInterface()  
+                goal.fingers.finger3 = goal.fingers.finger1 
+                print goal
 
-                gripper_group.set_pose_target(goal)
-                gripper_group.plan()
+                #send through client
+                self.fingerClient.send_goal(goal)
                 print "Attention: moving the gripper"
-                gripper_group.go()
+                if self.fingerClient.wait_for_result(rospy.Duration(20.0)):
+                    print 'Success'
+                else:
+                    self.fingerClient.cancel_all_goals()
+                    print' Error: the cartesian action timed-out'
+        
                 self.bgripper = False
-                if finger_turn == finger_maxTurn:
+                if self.finger_turn == finger_maxTurn:
                     self.btoBasket = False
                     self.btoCut = True
                     self.finger_turn = 0
@@ -266,7 +275,7 @@ class jacoDriver():
                 print position
                 #position = [0.451476633549,0.318827390671,0.655069053173]
                 orientation = quaternion_from_euler(self.orientationRPY[self.scanLocation][0], self.orientationRPY[self.scanLocation][1], self.orientationRPY[self.scanLocation][2])
-                
+                print orientation
                 #send with Moveit using location gotten above to move to the new location
                 goal = geometry_msgs.msg.Pose()
                 goal.position = geometry_msgs.msg.Point(
