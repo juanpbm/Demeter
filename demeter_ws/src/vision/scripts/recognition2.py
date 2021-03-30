@@ -218,113 +218,122 @@ class Recognition:
                 Z_coord =0 #s.Location.y
                 #print(s.Location, "  ,  ", X_coord) 
                 contour_BB, cutoff_pepper,BB_size = self.find_BoundingBox(img_L)
-                for contour_index in range(0,len(contour_BB)):
-                    print(f'Contour {contour_index}:')
-                    #bounding box dimensions based on pixels within frame [left, top, right bottom]
-                    boundingBox = np.array(contour_BB[contour_index])
-                    cutoff = cutoff_pepper[contour_index]
-                    size = BB_size[contour_index]   
-                    #if the contour around the red object is deemed as cutoff or if it is > than a certain sizxe then we will
-                    #treat the contoured object as a pepper and navigate toward it. If not we will ignore the contoured object
-                    if ((len(boundingBox)>0)&((size>50)|(sum(cutoff)>0))):
-                        #increasing the bounding box size to help navigate towards the right contour
-                        correctBoundingBox = boundingBox + [-11,-11,11,11]
-                        initialCutoffs = np.array(cutoff)
-                        print(initialCutoffs)
-                        attempt = 0
-                        stop = False
-                        fullPepperFound = False
-                        movements = np.array([0,0,0,0])
-                        while(((sum(movements!=0)>=1)|(attempt == 0))&((stop == False)&(fullPepperFound==False))):
+                if len(contour_BB)>0:
+                    for contour_index in range(0,len(contour_BB)):
+                        print(f'Contour {contour_index}:')
+                        #bounding box dimensions based on pixels within frame [left, top, right bottom]
+                        boundingBox = np.array(contour_BB[contour_index])
+                        cutoff = cutoff_pepper[contour_index]
+                        size = BB_size[contour_index]   
+                        #if the contour around the red object is deemed as cutoff or if it is > than a certain sizxe then we will
+                        #treat the contoured object as a pepper and navigate toward it. If not we will ignore the contoured object
+                        if ((len(boundingBox)>0)&((size>50)|(sum(cutoff)>0))):
+                            #increasing the bounding box size to help navigate towards the right contour
+                            correctBoundingBox = boundingBox + [-11,-11,11,11]
+                            initialCutoffs = np.array(cutoff)
+                            print(initialCutoffs)
+                            attempt = 0
+                            stop = False
+                            fullPepperFound = False
                             movements = np.array([0,0,0,0])
-                            attempt+=1
-                            print(f'Attempt {attempt}:')
-                            #we may need to change the movement magnitudes depending on the coordinates coming from the arm
-                            if cutoff[0] ==True:
-                                print('left')
-                                movements[0] = -0.10
-                                movements[2] = -0.10
-                            if  cutoff[1] == True:
-                                print('top')
-                                movements[1] = -0.10
-                                movements[3] = -0.10
-                            if cutoff[2] == True:
-                                print('right')
-                                movements[2] = 0.10
-                                movements[0] = 0.10
-                            if  cutoff[3] == True:
-                                print('bottom')
-                                movements[3] = 0.10
-                                movements[1] = 0.10
-                            if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
-                                #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
-                                print('Zoom out')
-                                position.x = 0
-                                position.y = Z_coord + 0.10
-                                position.z = 0
-                                print('position_ack= self.reposition_srv(position)')
-                            else:
-                                #!!!!TODO: implement how this will actually feedback to the coordinates the arm is tracking
-                                X_coord+=(movements[0]+movements[2])
-                                Y_coord+=(movements[1]+movements[3])
-                            if attempt>5:
-                                #!!!!!TODO: might be worth it to implement a zoom out system here as well since
-                                #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
-                                #direction
-                                position.x = 0
-                                position.y = Z_coord + 0.10
-                                position.z = 0
-                                print("position_ack= self.reposition_srv(position)")
-                                stop = True
-                            else:
-                                print("attempting to reposition arm based on coordinates take another image and go through the")
-                                #process again
-                                #!!!!!TODO: Syntax might be wrong here for commincation with the arm and camera
-                                #change if wrong 
-                                position.x = X_coord
-                                position.y = 0
-                                position.z = Y_coord
-                                print("attempt position_ack= self.reposition_srv(position)")
-                                #Take a new image in case the are moved
-                                img_L, img_R = self.camera.img_Capture()
-                                print("291!!!!!!!",img_L.shape)
-                                if (position.x == X_coord)&(position.z == Y_coord):
-                                    hasntMoved = True
+                            while(((sum(movements!=0)>=1)|(attempt == 0))&((stop == False)&(fullPepperFound==False))):
+                                movements = np.array([0,0,0,0])
+                                attempt+=1
+                                print(f'Attempt {attempt}:')
+                                #we may need to change the movement magnitudes depending on the coordinates coming from the arm
+                                if cutoff[0] ==True:
+                                    print('left')
+                                    movements[0] = -0.10
+                                    movements[2] = -0.10
+                                if  cutoff[1] == True:
+                                    print('top')
+                                    movements[1] = -0.10
+                                    movements[3] = -0.10
+                                if cutoff[2] == True:
+                                    print('right')
+                                    movements[2] = 0.10
+                                    movements[0] = 0.10
+                                if  cutoff[3] == True:
+                                    print('bottom')
+                                    movements[3] = 0.10
+                                    movements[1] = 0.10
+                                if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
+                                    #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
+                                    print('Zoom out')
+                                    position.x = 0
+                                    position.y = Z_coord + 0.10
+                                    position.z = 0
+                                    print('position_ack= self.reposition_srv(position)')
                                 else:
-                                    hasntMoved = False
-                                
-                                contours, cutoffs, BB_sizes = self.find_BoundingBox(img_L)
-                                for contour_index in range(0,len(contours)):
-                                    print ("aqui")
-                                    if np.array_equal((np.array(contours[contour_index])<correctBoundingBox),np.array([False,False,True,True])):
-                                        print("entro")
-                                        mainContour = contour_index
-                                        break
-                                cutoff = np.array(cutoffs[mainContour])
-                                if hasntMoved == False:
-                                    correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
-                                print("BB306!!!!",correctBoundingBox)
-                                fullPepperFound = (sum(cutoff)==0)
-                                print('cont!!!!', contours[mainContour]) 
-                        if fullPepperFound:
-                            print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
-                            coordinates_of_BB = np.array(contours[mainContour])
-                            #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
-                            #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
-                            print("315!!!!!!",img_L.shape)
-                            #Stereo Vision
-                            img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
-                            img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
-                            print(coordinates_of_BB[2],coordinates_of_BB[0])
-                            point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
-                            y = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
-                            print("z=",y)
-                            #TODO harvest
+                                    #!!!!TODO: implement how this will actually feedback to the coordinates the arm is tracking
+                                    X_coord+=(movements[0]+movements[2])
+                                    Y_coord+=(movements[1]+movements[3])
+                                if attempt>5:
+                                    #!!!!!TODO: might be worth it to implement a zoom out system here as well since
+                                    #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
+                                    #direction
+                                    position.x = 0
+                                    position.y = Z_coord + 0.10
+                                    position.z = 0
+                                    print("position_ack= self.reposition_srv(position)")
+                                    stop = True
+                                else:
+                                    print("attempting to reposition arm based on coordinates take another image and go through the")
+                                    #process again
+                                    #!!!!!TODO: Syntax might be wrong here for commincation with the arm and camera
+                                    #change if wrong 
+                                    position.x = X_coord
+                                    position.y = 0
+                                    position.z = Y_coord
+                                    print("attempt position_ack= self.reposition_srv(position)")
+                                    #Take a new image in case the are moved
+                                    img_L, img_R = self.camera.img_Capture()
+                                    print("291!!!!!!!",img_L.shape)
+                                    if (position.x == X_coord)&(position.z == Y_coord):
+                                        hasntMoved = True
+                                    else:
+                                        hasntMoved = False
+
+                                    contours, cutoffs, BB_sizes = self.find_BoundingBox(img_L)
+                                    for contour_index in range(0,len(contours)):
+                                        print ("aqui")
+                                        if np.array_equal((np.array(contours[contour_index])<correctBoundingBox),np.array([False,False,True,True])):
+                                            print("entro")
+                                            mainContour = contour_index
+                                            break
+                                    cutoff = np.array(cutoffs[mainContour])
+                                    if hasntMoved == False:
+                                        correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
+                                    print("BB306!!!!",correctBoundingBox)
+                                    fullPepperFound = (sum(cutoff)==0)
+                                    print('cont!!!!', contours[mainContour]) 
+                            if fullPepperFound:
+                                print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
+                                coordinates_of_BB = np.array(contours[mainContour])
+                                #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
+                                #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
+                                print("315!!!!!!",img_L.shape)
+                                #Stereo Vision
+                                #show original image plus bounding box -> unsure if the bounding box is being initialized with the correct coordinates
+                                fig, ax = plt.subplots()
+                                ax.imshow(imgL)
+                                rect = patches.Rectangle((coordinates_of_BB[0], coordinates_of_BB[1]), coordinates_of_BB[2]-coordinates_of_BB[0], coordinates_of_BB[3]-coordinates_of_BB[1], linewidth=1, edgecolor='r', facecolor='none')
+                                ax.add_patch(rect)
+                                plt.show()
+
+                                img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
+                                img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
+                                print(coordinates_of_BB[2],coordinates_of_BB[0])
+                                point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
+                                y = self.stereo.stereo_depth_map(img_L,img_R,point_coord)
+                                print("z=",y)
+                                #TODO harvest
+                            else:
+                                print('Full Pepper was unable to be found from this starting frame')
                         else:
-                            print('Full Pepper was unable to be found from this starting frame')
-                    else:
-                        print('Contour was not recognized as a pepper')
-         
+                            print('Contour was not recognized as a pepper')
+                else:
+                    print('No Contours were found')
             else:
                 print('!!!!!!!!!!!!!!!!else')
                 #tell the arm to go back since it moved after possible pepper was found 
