@@ -127,9 +127,9 @@ class Camera_Driver_node:
             red,_ = self.red_Finder(img_L)
             
         cap.release()
-        rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
-        img_L = rectified_pair[0]
-        img_R = rectified_pair[1]
+        #rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
+        #img_L = rectified_pair[0]
+        #img_R = rectified_pair[1]
         print("Red Found in the Frame. End video capture")
         return(img_L, img_R)
 
@@ -152,9 +152,9 @@ class Camera_Driver_node:
         #plt.imshow(img)
         #plt.show()
         img_L, img_R = self.split_Img(img) 
-        rectified_pair = slef.stereo.calibration.rectify((img_L, img_R))
-        img_L = rectified_pair[0]
-        img_R = rectified_pair[1]
+        #rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
+        #img_L = rectified_pair[0]
+        #img_R = rectified_pair[1]
         plt.imshow(img_L)
         plt.show()
         print("Image Capture Complete")
@@ -204,6 +204,7 @@ class Recognition:
         self.reposition_srv = rospy.ServiceProxy('reposition', Reposition)
         self.harvest_srv = rospy.ServiceProxy('harvest', Reposition)
         self.s = rospy.Service('start', Action, self.start)
+        self.ml_srv = rospy.ServiceProxy('ML_req', ML)
         print ("Recognition Node has been setup")
 
     def pepper_Finder(self):
@@ -236,6 +237,7 @@ class Recognition:
                 Z_coord = s.Location.z
                 print(s.Location) 
                 contour_BB, cutoff_pepper,BB_size = self.find_BoundingBox(img_L)
+                print(" lenlenlen", len(contour_BB))
                 if len(contour_BB)>0:
                     for contour_index in range(0,len(contour_BB)):
                         print(f'Contour {contour_index}:')
@@ -263,26 +265,26 @@ class Recognition:
                                     print('left')
                                     movements[0] = -0.10
                                     movements[2] = -0.10
-                                    Y_coord += 0.1
+                                    Y_coord += 0.05
                                 if  cutoff[1] == True:
                                     print('top')
                                     movements[1] = -0.10
                                     movements[3] = -0.10
-                                    Z_coord += 0.1
+                                    Z_coord += 0.05
                                 if cutoff[2] == True:
                                     print('right')
                                     movements[2] = 0.10
                                     movements[0] = 0.10
-                                    Y_coord -= 0.1
+                                    Y_coord -= 0.05
                                 if  cutoff[3] == True:
                                     print('bottom')
                                     movements[3] = 0.10
                                     movements[1] = 0.10
-                                    Z_coord -= 0.1
+                                    Z_coord -= 0.05
                                 if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
                                     #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
                                     print('Zoom out')
-                                    position.x = X_coord -0.1
+                                    position.x = X_coord -0.05
                                     position.y = Y_coord 
                                     position.z = Z_coord   
                                     position_ack= self.reposition_srv(position)
@@ -296,7 +298,7 @@ class Recognition:
                                     #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
                                     #direction
                                     print("movinggg out")
-                                    position.x = X_cooed - 0.1
+                                    position.x = X_cooed - 0.05
                                     position.y = Y_coord 
                                     position.z = Z_coord 
                                     position_ack= self.reposition_srv(position)
@@ -323,14 +325,25 @@ class Recognition:
                                         if np.array_equal((np.array(contours[contour_index])<correctBoundingBox),np.array([False,False,True,True])):
                                             mainContour = contour_index
                                             break
-                                    cutoff = np.array(cutoffs[mainContour])
-                                    if hasntMoved == False:
-                                        correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
-                                    fullPepperFound = (sum(cutoff)==0)
+                                    if len(contours)==0:
+                                        stop = True
+                                    else:
+                                        cutoff = np.array(cutoffs[mainContour])
+                                        if (hasntMoved == False):
+                                            correctBoundingBox = np.array(contours[mainContour]) + [-11,-11,11,11]
+                                        fullPepperFound = (sum(cutoff)==0)
                             if fullPepperFound:
                                 print(f'Full Pepper Found Here is the Bounding Box: {np.array(contours[mainContour])+[-5,-5,5,5]}')
                                 coordinates_of_BB = np.array(contours[mainContour])
                                 #!!!!TODO: implement send_toMLModel function and check if this is extracting the right bounding box
+                                img_ML = img_L[coordinates_of_BB[1]:coordinates_of_BB[3], coordinates_of_BB[0]:coordinates_of_BB[2]]
+                                
+                                images = CompressedImage()
+                                images.header.stamp = rospy.Time.now()
+                                images.format = 'jpg'
+                                images.data = np.array(cv2.imencode('.jpg',img_ML)[1]).tostring()
+                                prob = self.ml_srv(images)
+                                print('prob',prob)
                                 #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
                                 
                                 #Stereo Vision
@@ -346,7 +359,12 @@ class Recognition:
                                 print(coordinates_of_BB[2],coordinates_of_BB[0])
                                 point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
                                 disp_map = self.stereo.stereo_depth_map(img_L,img_R)
-                                print("z=",y)
+                                stereo_BB = disp_map[coordinates_of_BB[1]:coordinates_of_BB[3], coordinates_of_BB[0]:coordinates_of_BB[2]]
+                                stereo_BB = (100*5.7*0.3)/stereo_BB
+                                stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.7)])
+                                print('stereo')
+                                print(np.median(stereo_BB_Norm))
+
                                 #TODO harvest
                             else:
                                 print('Full Pepper was unable to be found from this starting frame')
