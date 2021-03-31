@@ -4,7 +4,6 @@ import rospy
 import actionlib
 
 import kinova_msgs.msg
-#from vision import vision.msg
 import vision.msg
 from vision.srv import Action
 from vision.srv import Reposition
@@ -22,6 +21,7 @@ Globals, could be passed as arguments. Not implemented because this is designed 
 '''
 finger_maxDist = 18.9/2/1000  # max distance for one finger
 finger_maxTurn = 6800  # max thread rotation for one finger
+finger_minTurn = 0
 robot_category = 'j'
 robot_category_version = 2
 wrist_type = 'n'
@@ -31,6 +31,27 @@ finger_number = 3
 prefix = "j2n6s300"
 
 #arguments i want, thresholdDisplacement, 
+
+'''
+Creates Quaternion from Euler
+'''
+def EulerXYZ2Quaternion(EulerXYZ_):
+    tx_, ty_, tz_ = EulerXYZ_[0:3]
+    sx = math.sin(0.5 * tx_)
+    cx = math.cos(0.5 * tx_)
+    sy = math.sin(0.5 * ty_)
+    cy = math.cos(0.5 * ty_)
+    sz = math.sin(0.5 * tz_)
+    cz = math.cos(0.5 * tz_)
+
+    qx_ = sx * cy * cz + cx * sy * sz
+    qy_ = -sx * cy * sz + cx * sy * cz
+    qz_ = sx * sy * cz + cx * cy * sz
+    qw_ = -sx * sy * sz + cx * cy * cz
+
+    Q_ = [qx_, qy_, qz_, qw_]
+    return Q_
+    
 
 class jacoDriver():
 
@@ -49,10 +70,12 @@ class jacoDriver():
         self.bharvest = False
         self.bbyCamera = False
         self.bbyScan = True
+        self.bupdateXYZ = True
         self.finger_turn = 0
         self.goalLocation = [0,0,0]
-        self.basketLocation = [0,0,1]
+        self.basketLocation = [0.2,-0.2,0.85]
         self.currentLocation = [0,0,0]
+        self.currentRPY = [0,0,0]
         self.lastCutLocation = [0,0,0]
         self.scanEndpoints = [[0.5, -0.6, 0.6],[0.5, -0.6, 0.1],[0.5, -0.35, 0.1],[0.5, -0.35, 0.6],[0.5, 0.35, 0.6],[0.5, 0.35, 0.1]]
         self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
@@ -62,7 +85,7 @@ class jacoDriver():
         #action clients
         print'making action client'
         self.driverClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.ArmPoseAction)
-        self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.SetFingersPositionAction)
+        self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/fingers_action/finger_positions', kinova_msgs.msg.SetFingersPositionAction)
 
         #services
         print'making services'
@@ -70,7 +93,7 @@ class jacoDriver():
         self.repositionService = rospy.Service('reposition', vision.srv.Reposition, self.handle_reposition)
         self.harvestService = rospy.Service('harvest', vision.srv.Reposition, self.handle_harvest)
 
-        rospy.wait_for_service('start')
+        #rospy.wait_for_service('start')
         #clients
         print'making clients'
         self.startClient = rospy.ServiceProxy('start', vision.srv.Action)
@@ -93,6 +116,14 @@ class jacoDriver():
         for index in range(0,3):
             temp_str=currentCartesianCommand_str_list[index].split(": ")
             self.currentLocation[index] = float(temp_str[1])
+
+        if (self.bupdateXYZ):
+            self.bupdateXYZ = False
+            i = 0
+            for index2 in range(3,6):
+                temp_str=currentCartesianCommand_str_list[index2].split(": ")
+                self.currentRPY[i] = float(temp_str[1])
+                i += 1
 
     '''
     Compares a to b and returns 1 if they are within a certain distance from each other
@@ -138,12 +169,12 @@ class jacoDriver():
         self.bharvest = True
         self.bbyCamera = True
         self.bbyScan = False
-        self.finger_turn = 0
+        self.finger_turn = finger_maxTurn
         self.goalLocation[0] = req.Location.x
         self.goalLocation[1] = req.Location.y
         self.goalLocation[2] = req.Location.z
         self.lastCutLocation = self.goalLocation
-        return vision.srv.RepositionResponse(True)
+        #return vision.srv.RepositionResponse(True)
 
     '''
     Hold postion
@@ -172,6 +203,7 @@ class jacoDriver():
         if self.atLocation(self.lastCutLocation, self.currentLocation):
             self.btoCut = False
             self.bbyCamera = True
+            vision.srv.RepositionResponse(True)
             return self.currentLocation
         else: 
             return self.lastCutLocation
@@ -184,6 +216,7 @@ class jacoDriver():
         if self.bharvest:
             if self.atLocation(self.goalLocation,self.currentLocation):
                 self.bgripper = True
+                self.bharvest = False
         return self.goalLocation
 
     '''
@@ -255,26 +288,27 @@ class jacoDriver():
                 #send through client
                 self.fingerClient.send_goal(goal)
                 print "Attention: moving the gripper"
-                if self.fingerClient.wait_for_result(rospy.Duration(20.0)):
+                if self.fingerClient.wait_for_result(rospy.Duration(5.0)):
                     print 'Success'
                 else:
                     self.fingerClient.cancel_all_goals()
                     print' Error: the cartesian action timed-out'
         
                 self.bgripper = False
-                if self.finger_turn == finger_maxTurn:
+                if self.finger_turn == finger_minTurn:
                     self.btoBasket = False
                     self.btoCut = True
-                    self.finger_turn = 0
-                else:
                     self.finger_turn = finger_maxTurn
+                else:
+                    self.finger_turn = finger_minTurn
                     self.btoBasket = True
 
 
             else:
                 print position
                 #position = [0.451476633549,0.318827390671,0.655069053173]
-                orientation = quaternion_from_euler(self.orientationRPY[self.scanLocation][0], self.orientationRPY[self.scanLocation][1], self.orientationRPY[self.scanLocation][2])
+                orientation = EulerXYZ2Quaternion(self.currentRPY)
+                #orientation = quaternion_from_euler(self.currentRPY[0], self.currentRPY[1], self.currentRPY[2])
                 print orientation
                 #send with Moveit using location gotten above to move to the new location
                 goal = geometry_msgs.msg.Pose()
