@@ -77,10 +77,10 @@ class jacoDriver():
         self.currentLocation = [0,0,0]
         self.currentRPY = [0,0,0]
         self.lastCutLocation = [0,0,0]
-        self.scanEndpoints = [[0.5, -0.6, 0.6],[0.5, -0.6, 0.1],[0.5, -0.35, 0.1],[0.5, -0.35, 0.6],[0.5, 0.35, 0.6],[0.5, 0.35, 0.1]]
-        self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
+        self.scanEndpoints = [[0.5, -0.6, 0.6],[0.5, -0.6, 0.6],[0.5, -0.6, 0.35],[0.5, -0.6, 0.1],[0.5, -0.35, 0.1],[0.5, -0.35, 0.35],[0.5, -0.35, 0.6],[0.5, 0.1, 0.6],[0.5, 0.1, 0.35],[0.5, 0.1, 0.1]]
+        #self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
         self.scanLocation = 0
-        self.thresholdDisplacement = .08
+        self.thresholdDisplacement = .04
 
         #action clients
         print'making action client'
@@ -93,7 +93,10 @@ class jacoDriver():
         self.repositionService = rospy.Service('reposition', vision.srv.Reposition, self.handle_reposition)
         self.harvestService = rospy.Service('harvest', vision.srv.Reposition, self.handle_harvest)
 
-        #rospy.wait_for_service('start')
+        while self.scanLocation == 0:
+            self.send_move_command()
+
+        rospy.wait_for_service('start')
         #clients
         print'making clients'
         self.startClient = rospy.ServiceProxy('start', vision.srv.Action)
@@ -101,7 +104,8 @@ class jacoDriver():
         #test locations, wont be in final code
         #self.test_locations()
         
-    
+        rospy.sleep(3)
+
         while 1:
             self.send_move_command()
             # rospy.sleep(1)
