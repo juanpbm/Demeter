@@ -155,8 +155,8 @@ class Camera_Driver_node:
         #rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
         #img_L = rectified_pair[0]
         #img_R = rectified_pair[1]
-        plt.imshow(img_L)
-        plt.show()
+        #plt.imshow(img_L)
+        #plt.show()
         print("Image Capture Complete")
         return(img_L, img_R)
 
@@ -265,26 +265,26 @@ class Recognition:
                                     print('left')
                                     movements[0] = -0.10
                                     movements[2] = -0.10
-                                    Y_coord += 0.05
+                                    Y_coord += 0.03
                                 if  cutoff[1] == True:
                                     print('top')
                                     movements[1] = -0.10
                                     movements[3] = -0.10
-                                    Z_coord += 0.05
+                                    Z_coord += 0.03
                                 if cutoff[2] == True:
                                     print('right')
                                     movements[2] = 0.10
                                     movements[0] = 0.10
-                                    Y_coord -= 0.05
+                                    Y_coord -= 0.03
                                 if  cutoff[3] == True:
                                     print('bottom')
                                     movements[3] = 0.10
                                     movements[1] = 0.10
-                                    Z_coord -= 0.05
+                                    Z_coord -= 0.03
                                 if ((movements[0]!=0) &(movements[2]!=0))|((movements[1]!=0) &(movements[3]!=0)):
                                     #TODO: implement a way to zoom out -> move camera back on z axis, and feedback for getting new movement coordinates
                                     print('Zoom out')
-                                    position.x = X_coord -0.05
+                                    position.x = X_coord - 0.03
                                     position.y = Y_coord 
                                     position.z = Z_coord   
                                     position_ack= self.reposition_srv(position)
@@ -298,7 +298,7 @@ class Recognition:
                                     #if the attempts reach 6 it likely means that the magnitude is too large and we keep over correcting in each
                                     #direction
                                     print("movinggg out")
-                                    position.x = X_cooed - 0.05
+                                    position.x = X_cooed - 0.03
                                     position.y = Y_coord 
                                     position.z = Z_coord 
                                     position_ack= self.reposition_srv(position)
@@ -343,29 +343,36 @@ class Recognition:
                                 images.format = 'jpg'
                                 images.data = np.array(cv2.imencode('.jpg',img_ML)[1]).tostring()
                                 prob = self.ml_srv(images)
-                                print('prob',prob)
+                                print('prob',prob.Percentage)
                                 #send_toMLModel(imgL[coordinates_of_BB[0]:coordinates_of_BB[2],coordinates_of_BB[1]:coordinates_of_BB[3]])
                                 
-                                #Stereo Vision
+                                
                                 #show original image plus bounding box -> unsure if the bounding box is being initialized with the correct coordinates
                                 fig, ax = plt.subplots()
                                 ax.imshow(img_L)
                                 rect = patches.Rectangle((coordinates_of_BB[0], coordinates_of_BB[1]), coordinates_of_BB[2]-coordinates_of_BB[0], coordinates_of_BB[3]-coordinates_of_BB[1], linewidth=1, edgecolor='r', facecolor='none')
                                 ax.add_patch(rect)
                                 plt.show()
+                                
 
-                                img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
-                                img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
-                                print(coordinates_of_BB[2],coordinates_of_BB[0])
-                                point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
-                                disp_map = self.stereo.stereo_depth_map(img_L,img_R)
-                                stereo_BB = disp_map[coordinates_of_BB[1]:coordinates_of_BB[3], coordinates_of_BB[0]:coordinates_of_BB[2]]
-                                stereo_BB = (100*5.7*0.3)/stereo_BB
-                                stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.7)])
-                                print('stereo')
-                                print(np.median(stereo_BB_Norm))
-
-                                #TODO harvest
+                                if prob.Percentage >= 0.0:
+                                    print("prob > 85")
+                                    #Stereo Vision
+                                    img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
+                                    img_R = cv2.cvtColor(img_R, cv2.COLOR_RGB2GRAY)
+                                    print(coordinates_of_BB[2],coordinates_of_BB[0])
+                                    point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
+                                    disp_map = self.stereo.stereo_depth_map(img_L,img_R)
+                                    stereo_BB = disp_map[coordinates_of_BB[1]:coordinates_of_BB[3], coordinates_of_BB[0]:coordinates_of_BB[2]]
+                                    stereo_BB = (100*6*0.3)/stereo_BB
+                                    stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.7)])
+                                    z = np.median(stereo_BB_Norm)
+                                    x = (((((coordinates_of_BB[0]+coordinates_of_BB[2])/2)-160)*z)/0.3)/100
+                                    y = (((((coordinates_of_BB[1]+coordinates_of_BB[3])/2)-120)*z)/0.3)/100
+                                    
+                                    harvest_pos = geometry_msgs.msg.Point(x = X_coord + z, y = Y_coord - x , z = Z_coord + y)
+                                    print("harvest",harvest_pos)
+                                    print(self.harvest_srv(harvest_pos))
                             else:
                                 print('Full Pepper was unable to be found from this starting frame')
                         else:
@@ -377,8 +384,10 @@ class Recognition:
                 #tell the arm to go back since it moved after possible pepper was found 
                 print("movingggg")
                 position_ack = self.reposition_srv (s.Location)
-            s = self.stop_srv(False)
+            
             x = input("next round")
+            s = self.stop_srv(False)
+    
       
 #TODO remove 
     def box_Finder(self, img, imgt):
