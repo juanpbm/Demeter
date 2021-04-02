@@ -152,9 +152,9 @@ class Camera_Driver_node:
         #plt.imshow(img)
         #plt.show()
         img_L, img_R = self.split_Img(img) 
-        #rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
-        #img_L = rectified_pair[0]
-        #img_R = rectified_pair[1]
+        rectified_pair = self.stereo.calibration.rectify((img_L, img_R))
+        img_L = rectified_pair[0]
+        img_R = rectified_pair[1]
         #plt.imshow(img_L)
         #plt.show()
         print("Image Capture Complete")
@@ -364,12 +364,12 @@ class Recognition:
                                     point_coord = (coordinates_of_BB[1],((coordinates_of_BB[2]+coordinates_of_BB[0])//2))
                                     disp_map = self.stereo.stereo_depth_map(img_L,img_R)
                                     stereo_BB = disp_map[coordinates_of_BB[1]:coordinates_of_BB[3], coordinates_of_BB[0]:coordinates_of_BB[2]]
-                                    stereo_BB = (100*6*0.3)/stereo_BB
-                                    stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.7)])
+                                    stereo_BB = (6*0.3)/stereo_BB
+                                    stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.5)])
                                     z = np.median(stereo_BB_Norm)
                                     x = (((((coordinates_of_BB[0]+coordinates_of_BB[2])/2)-160)*z)/0.3)/100
-                                    y = (((((coordinates_of_BB[1]+coordinates_of_BB[3])/2)-120)*z)/0.3)/100
-                                    
+                                    y = (((((coordinates_of_BB[1])/2)-120)*z)/0.3)/100
+                                    print("X",x,"y",y,"Z",z)
                                     harvest_pos = geometry_msgs.msg.Point(x = X_coord + z, y = Y_coord - x , z = Z_coord + y)
                                     print("harvest",harvest_pos)
                                     print(self.harvest_srv(harvest_pos))
