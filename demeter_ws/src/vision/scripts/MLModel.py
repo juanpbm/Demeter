@@ -35,9 +35,6 @@ def PredictPepperImage(req):
         this_is_a_pepper = P[bp_exists.index(True)][2]
     else:
         this_is_a_pepper = 0
-    #for (i, (imagenetID, label, prob)) in enumerate(P[0]):
-        #if (i==0)&(label == 'bell_pepper')&(prob>.9):
-            #this_is_a_pepper = prob
     return MLResponse(this_is_a_pepper)
 
 def decompress(Left_Img): 
