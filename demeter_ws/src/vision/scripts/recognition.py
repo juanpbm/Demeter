@@ -347,8 +347,8 @@ class Recognition:
                                 ax.add_patch(rect)
                                 plt.show()
                                 
-
-                                if prob.Percentage >= 0.06:
+                                print("Prob= ", prob)
+                                if prob.Percentage >= 0.5:
                                     #print("prob > 80")
                                     #Stereo Vision
                                     img_L = cv2.cvtColor(img_L, cv2.COLOR_RGB2GRAY)
@@ -360,9 +360,9 @@ class Recognition:
                                     stereo_BB = ((6*0.3)/stereo_BB)*100
                                     stereo_BB_Norm =np.array([j for i in stereo_BB for j in i if (j > 0 and j < 0.5)])
                                     
-                                    camera_to_blade = 0.06
+                                    camera_to_blade = 0.05
                                     camera_to_blade_height = 0.12
-                                    camera_to_center = 0.03
+                                    camera_to_center = 0.01
                                     z = np.median(stereo_BB_Norm)
                                     x = (((((coordinates_of_BB[0]+coordinates_of_BB[2])/2)-160)*z)/0.3)/1000
                                     y = ((((-coordinates_of_BB[1])+120)*z)/0.3)/1000
