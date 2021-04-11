@@ -3,7 +3,7 @@
 """
 Created on Fri Mar 26 11:55:13 2021
 
-@author: amieramie
+@authors: amieramie and Juan Pablo Bernal
 """
 
 from keras.preprocessing import image as image_utils
