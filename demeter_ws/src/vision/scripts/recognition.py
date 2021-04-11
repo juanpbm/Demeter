@@ -3,7 +3,7 @@
 """
 Created on Fri Mar 26 10:37:47 2021
 
-@author: amieramie
+@authors: amieramie and Juan Pablo Bernal
 """
 
 #!/usr/bin/env python3
