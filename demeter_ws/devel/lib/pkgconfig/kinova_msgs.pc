@@ -1,8 +1,0 @@
-prefix=/home/juanpbm/capstone/Demeter/demeter_ws/devel
-
-Name: kinova_msgs
-Description: Description of kinova_msgs
-Version: 0.0.1
-Cflags: -I/home/juanpbm/capstone/Demeter/demeter_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: actionlib_msgs geometry_msgs message_runtime
