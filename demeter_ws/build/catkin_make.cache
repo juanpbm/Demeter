@@ -1,2 +1,0 @@
-kinova_msgs:vision
--DCATKIN_DEVEL_PREFIX=/home/juanpbm/capstone/Demeter/demeter_ws/devel -DCMAKE_INSTALL_PREFIX=/home/juanpbm/capstone/Demeter/demeter_ws/install -G Unix Makefiles

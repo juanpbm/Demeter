@@ -1,0 +1,13 @@
+<launch>
+		
+	<include file="$(find kinova_bringup)/launch/kinova_robot.launch" />
+	<include file="$(find j2n6s300_moveit_config)/launch/j2n6s300_demo.launch" />	
+
+	<node pkg="tf" type="static_transform_publisher" 
+        name="base_link_to_endeffector_default" 
+        args="0.0 0.0 0.0 -1.57 0.0 3.14 /root /endeffector_default 100" />	
+
+	<node name="state_relay" pkg="topic_tools" type="relay" 
+			args="/j2n6s300_driver/out/joint_state joint_states"/>
+
+</launch>
