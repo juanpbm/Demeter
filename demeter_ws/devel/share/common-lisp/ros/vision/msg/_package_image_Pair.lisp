@@ -1,10 +1,6 @@
 (cl:in-package vision-msg)
-(cl:export '(CENTER-VAL
-          CENTER
-          TOP-VAL
-          TOP
-          BOTTOM-VAL
-          BOTTOM
+(cl:export '(COORDINATES-VAL
+          COORDINATES
           LEFT_IMG-VAL
           LEFT_IMG
           RIGHT_IMG-VAL

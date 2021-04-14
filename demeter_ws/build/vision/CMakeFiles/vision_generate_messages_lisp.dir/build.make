@@ -54,17 +54,41 @@ CMAKE_BINARY_DIR = /home/juanpbm/capstone/Demeter/demeter_ws/build
 include vision/CMakeFiles/vision_generate_messages_lisp.dir/progress.make
 
 vision/CMakeFiles/vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp
+vision/CMakeFiles/vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Action.lisp
+vision/CMakeFiles/vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Reposition.lisp
+vision/CMakeFiles/vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp
 
 
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg
-/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
 /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from vision/image_Pair.msg"
 	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg/image_Pair.msg -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg
 
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Action.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Action.lisp: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Action.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Lisp code from vision/Action.srv"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Action.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv
+
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Reposition.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Reposition.lisp: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Reposition.srv
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Reposition.lisp: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Lisp code from vision/Reposition.srv"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/Reposition.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv
+
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp: /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/ML.srv
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp: /opt/ros/noetic/share/sensor_msgs/msg/CompressedImage.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/juanpbm/capstone/Demeter/demeter_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Lisp code from vision/ML.srv"
+	cd /home/juanpbm/capstone/Demeter/demeter_ws/build/vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/juanpbm/capstone/Demeter/demeter_ws/src/vision/srv/ML.srv -Ivision:/home/juanpbm/capstone/Demeter/demeter_ws/src/vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p vision -o /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv
+
 vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp
 vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/msg/image_Pair.lisp
+vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Action.lisp
+vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/Reposition.lisp
+vision_generate_messages_lisp: /home/juanpbm/capstone/Demeter/demeter_ws/devel/share/common-lisp/ros/vision/srv/ML.lisp
 vision_generate_messages_lisp: vision/CMakeFiles/vision_generate_messages_lisp.dir/build.make
 
 .PHONY : vision_generate_messages_lisp

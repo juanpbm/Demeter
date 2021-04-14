@@ -26,47 +26,29 @@ struct image_Pair_
   typedef image_Pair_<ContainerAllocator> Type;
 
   image_Pair_()
-    : center()
-    , top()
-    , bottom()
-    , left_Img()
-    , right_Img()  {
-      center.assign(0.0);
-
-      top.assign(0.0);
-
-      bottom.assign(0.0);
+    : coordinates()
+    , Left_Img()
+    , Right_Img()  {
+      coordinates.assign(0.0);
   }
   image_Pair_(const ContainerAllocator& _alloc)
-    : center()
-    , top()
-    , bottom()
-    , left_Img(_alloc)
-    , right_Img(_alloc)  {
+    : coordinates()
+    , Left_Img(_alloc)
+    , Right_Img(_alloc)  {
   (void)_alloc;
-      center.assign(0.0);
-
-      top.assign(0.0);
-
-      bottom.assign(0.0);
+      coordinates.assign(0.0);
   }
 
 
 
-   typedef boost::array<float, 2>  _center_type;
-  _center_type center;
+   typedef boost::array<float, 4>  _coordinates_type;
+  _coordinates_type coordinates;
 
-   typedef boost::array<float, 2>  _top_type;
-  _top_type top;
+   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _Left_Img_type;
+  _Left_Img_type Left_Img;
 
-   typedef boost::array<float, 2>  _bottom_type;
-  _bottom_type bottom;
-
-   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _left_Img_type;
-  _left_Img_type left_Img;
-
-   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _right_Img_type;
-  _right_Img_type right_Img;
+   typedef  ::sensor_msgs::CompressedImage_<ContainerAllocator>  _Right_Img_type;
+  _Right_Img_type Right_Img;
 
 
 
@@ -97,11 +79,9 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::vision::image_Pair_<ContainerAllocator1> & lhs, const ::vision::image_Pair_<ContainerAllocator2> & rhs)
 {
-  return lhs.center == rhs.center &&
-    lhs.top == rhs.top &&
-    lhs.bottom == rhs.bottom &&
-    lhs.left_Img == rhs.left_Img &&
-    lhs.right_Img == rhs.right_Img;
+  return lhs.coordinates == rhs.coordinates &&
+    lhs.Left_Img == rhs.Left_Img &&
+    lhs.Right_Img == rhs.Right_Img;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -158,12 +138,12 @@ struct MD5Sum< ::vision::image_Pair_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "b1eeb80bf925ed72664782dd8a9603fe";
+    return "3be3bcf9d563c8bf7eb1783df2858352";
   }
 
   static const char* value(const ::vision::image_Pair_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xb1eeb80bf925ed72ULL;
-  static const uint64_t static_value2 = 0x664782dd8a9603feULL;
+  static const uint64_t static_value1 = 0x3be3bcf9d563c8bfULL;
+  static const uint64_t static_value2 = 0x7eb1783df2858352ULL;
 };
 
 template<class ContainerAllocator>
@@ -182,12 +162,9 @@ struct Definition< ::vision::image_Pair_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "float32[2] center\n"
-"float32[2] top\n"
-"float32[2] bottom\n"
-"sensor_msgs/CompressedImage left_Img\n"
-"sensor_msgs/CompressedImage right_Img\n"
-"\n"
+    return "float32[4] coordinates\n"
+"sensor_msgs/CompressedImage Left_Img\n"
+"sensor_msgs/CompressedImage Right_Img\n"
 "\n"
 "================================================================================\n"
 "MSG: sensor_msgs/CompressedImage\n"
@@ -238,11 +215,9 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.center);
-      stream.next(m.top);
-      stream.next(m.bottom);
-      stream.next(m.left_Img);
-      stream.next(m.right_Img);
+      stream.next(m.coordinates);
+      stream.next(m.Left_Img);
+      stream.next(m.Right_Img);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -261,30 +236,18 @@ struct Printer< ::vision::image_Pair_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::vision::image_Pair_<ContainerAllocator>& v)
   {
-    s << indent << "center[]" << std::endl;
-    for (size_t i = 0; i < v.center.size(); ++i)
+    s << indent << "coordinates[]" << std::endl;
+    for (size_t i = 0; i < v.coordinates.size(); ++i)
     {
-      s << indent << "  center[" << i << "]: ";
-      Printer<float>::stream(s, indent + "  ", v.center[i]);
+      s << indent << "  coordinates[" << i << "]: ";
+      Printer<float>::stream(s, indent + "  ", v.coordinates[i]);
     }
-    s << indent << "top[]" << std::endl;
-    for (size_t i = 0; i < v.top.size(); ++i)
-    {
-      s << indent << "  top[" << i << "]: ";
-      Printer<float>::stream(s, indent + "  ", v.top[i]);
-    }
-    s << indent << "bottom[]" << std::endl;
-    for (size_t i = 0; i < v.bottom.size(); ++i)
-    {
-      s << indent << "  bottom[" << i << "]: ";
-      Printer<float>::stream(s, indent + "  ", v.bottom[i]);
-    }
-    s << indent << "left_Img: ";
+    s << indent << "Left_Img: ";
     s << std::endl;
-    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.left_Img);
-    s << indent << "right_Img: ";
+    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.Left_Img);
+    s << indent << "Right_Img: ";
     s << std::endl;
-    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.right_Img);
+    Printer< ::sensor_msgs::CompressedImage_<ContainerAllocator> >::stream(s, indent + "  ", v.Right_Img);
   }
 };
 

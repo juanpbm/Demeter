@@ -16,114 +16,81 @@
 
 (defclass vision::image_Pair
   :super ros::object
-  :slots (_center _top _bottom _left_Img _right_Img ))
+  :slots (_coordinates _Left_Img _Right_Img ))
 
 (defmethod vision::image_Pair
   (:init
    (&key
-    ((:center __center) (make-array 2 :initial-element 0.0 :element-type :float))
-    ((:top __top) (make-array 2 :initial-element 0.0 :element-type :float))
-    ((:bottom __bottom) (make-array 2 :initial-element 0.0 :element-type :float))
-    ((:left_Img __left_Img) (instance sensor_msgs::CompressedImage :init))
-    ((:right_Img __right_Img) (instance sensor_msgs::CompressedImage :init))
+    ((:coordinates __coordinates) (make-array 4 :initial-element 0.0 :element-type :float))
+    ((:Left_Img __Left_Img) (instance sensor_msgs::CompressedImage :init))
+    ((:Right_Img __Right_Img) (instance sensor_msgs::CompressedImage :init))
     )
    (send-super :init)
-   (setq _center __center)
-   (setq _top __top)
-   (setq _bottom __bottom)
-   (setq _left_Img __left_Img)
-   (setq _right_Img __right_Img)
+   (setq _coordinates __coordinates)
+   (setq _Left_Img __Left_Img)
+   (setq _Right_Img __Right_Img)
    self)
-  (:center
-   (&optional __center)
-   (if __center (setq _center __center)) _center)
-  (:top
-   (&optional __top)
-   (if __top (setq _top __top)) _top)
-  (:bottom
-   (&optional __bottom)
-   (if __bottom (setq _bottom __bottom)) _bottom)
-  (:left_Img
-   (&rest __left_Img)
-   (if (keywordp (car __left_Img))
-       (send* _left_Img __left_Img)
+  (:coordinates
+   (&optional __coordinates)
+   (if __coordinates (setq _coordinates __coordinates)) _coordinates)
+  (:Left_Img
+   (&rest __Left_Img)
+   (if (keywordp (car __Left_Img))
+       (send* _Left_Img __Left_Img)
      (progn
-       (if __left_Img (setq _left_Img (car __left_Img)))
-       _left_Img)))
-  (:right_Img
-   (&rest __right_Img)
-   (if (keywordp (car __right_Img))
-       (send* _right_Img __right_Img)
+       (if __Left_Img (setq _Left_Img (car __Left_Img)))
+       _Left_Img)))
+  (:Right_Img
+   (&rest __Right_Img)
+   (if (keywordp (car __Right_Img))
+       (send* _Right_Img __Right_Img)
      (progn
-       (if __right_Img (setq _right_Img (car __right_Img)))
-       _right_Img)))
+       (if __Right_Img (setq _Right_Img (car __Right_Img)))
+       _Right_Img)))
   (:serialization-length
    ()
    (+
-    ;; float32[2] _center
-    (* 4    2)
-    ;; float32[2] _top
-    (* 4    2)
-    ;; float32[2] _bottom
-    (* 4    2)
-    ;; sensor_msgs/CompressedImage _left_Img
-    (send _left_Img :serialization-length)
-    ;; sensor_msgs/CompressedImage _right_Img
-    (send _right_Img :serialization-length)
+    ;; float32[4] _coordinates
+    (* 4    4)
+    ;; sensor_msgs/CompressedImage _Left_Img
+    (send _Left_Img :serialization-length)
+    ;; sensor_msgs/CompressedImage _Right_Img
+    (send _Right_Img :serialization-length)
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; float32[2] _center
-     (dotimes (i 2)
-       (sys::poke (elt _center i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
+     ;; float32[4] _coordinates
+     (dotimes (i 4)
+       (sys::poke (elt _coordinates i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
        )
-     ;; float32[2] _top
-     (dotimes (i 2)
-       (sys::poke (elt _top i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
-       )
-     ;; float32[2] _bottom
-     (dotimes (i 2)
-       (sys::poke (elt _bottom i) (send s :buffer) (send s :count) :float) (incf (stream-count s) 4)
-       )
-     ;; sensor_msgs/CompressedImage _left_Img
-       (send _left_Img :serialize s)
-     ;; sensor_msgs/CompressedImage _right_Img
-       (send _right_Img :serialize s)
+     ;; sensor_msgs/CompressedImage _Left_Img
+       (send _Left_Img :serialize s)
+     ;; sensor_msgs/CompressedImage _Right_Img
+       (send _Right_Img :serialize s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; float32[2] _center
-   (dotimes (i (length _center))
-     (setf (elt _center i) (sys::peek buf ptr- :float)) (incf ptr- 4)
+   ;; float32[4] _coordinates
+   (dotimes (i (length _coordinates))
+     (setf (elt _coordinates i) (sys::peek buf ptr- :float)) (incf ptr- 4)
      )
-   ;; float32[2] _top
-   (dotimes (i (length _top))
-     (setf (elt _top i) (sys::peek buf ptr- :float)) (incf ptr- 4)
-     )
-   ;; float32[2] _bottom
-   (dotimes (i (length _bottom))
-     (setf (elt _bottom i) (sys::peek buf ptr- :float)) (incf ptr- 4)
-     )
-   ;; sensor_msgs/CompressedImage _left_Img
-     (send _left_Img :deserialize buf ptr-) (incf ptr- (send _left_Img :serialization-length))
-   ;; sensor_msgs/CompressedImage _right_Img
-     (send _right_Img :deserialize buf ptr-) (incf ptr- (send _right_Img :serialization-length))
+   ;; sensor_msgs/CompressedImage _Left_Img
+     (send _Left_Img :deserialize buf ptr-) (incf ptr- (send _Left_Img :serialization-length))
+   ;; sensor_msgs/CompressedImage _Right_Img
+     (send _Right_Img :deserialize buf ptr-) (incf ptr- (send _Right_Img :serialization-length))
    ;;
    self)
   )
 
-(setf (get vision::image_Pair :md5sum-) "b1eeb80bf925ed72664782dd8a9603fe")
+(setf (get vision::image_Pair :md5sum-) "3be3bcf9d563c8bf7eb1783df2858352")
 (setf (get vision::image_Pair :datatype-) "vision/image_Pair")
 (setf (get vision::image_Pair :definition-)
-      "float32[2] center
-float32[2] top
-float32[2] bottom
-sensor_msgs/CompressedImage left_Img
-sensor_msgs/CompressedImage right_Img
-
+      "float32[4] coordinates
+sensor_msgs/CompressedImage Left_Img
+sensor_msgs/CompressedImage Right_Img
 
 ================================================================================
 MSG: sensor_msgs/CompressedImage
@@ -161,6 +128,6 @@ string frame_id
 
 
 
-(provide :vision/image_Pair "b1eeb80bf925ed72664782dd8a9603fe")
+(provide :vision/image_Pair "3be3bcf9d563c8bf7eb1783df2858352")
 
 

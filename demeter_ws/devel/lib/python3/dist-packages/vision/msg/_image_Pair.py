@@ -10,15 +10,12 @@ import sensor_msgs.msg
 import std_msgs.msg
 
 class image_Pair(genpy.Message):
-  _md5sum = "b1eeb80bf925ed72664782dd8a9603fe"
+  _md5sum = "3be3bcf9d563c8bf7eb1783df2858352"
   _type = "vision/image_Pair"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """float32[2] center
-float32[2] top
-float32[2] bottom
-sensor_msgs/CompressedImage left_Img
-sensor_msgs/CompressedImage right_Img
-
+  _full_text = """float32[4] coordinates
+sensor_msgs/CompressedImage Left_Img
+sensor_msgs/CompressedImage Right_Img
 
 ================================================================================
 MSG: sensor_msgs/CompressedImage
@@ -52,8 +49,8 @@ time stamp
 #Frame this data is associated with
 string frame_id
 """
-  __slots__ = ['center','top','bottom','left_Img','right_Img']
-  _slot_types = ['float32[2]','float32[2]','float32[2]','sensor_msgs/CompressedImage','sensor_msgs/CompressedImage']
+  __slots__ = ['coordinates','Left_Img','Right_Img']
+  _slot_types = ['float32[4]','sensor_msgs/CompressedImage','sensor_msgs/CompressedImage']
 
   def __init__(self, *args, **kwds):
     """
@@ -63,7 +60,7 @@ string frame_id
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       center,top,bottom,left_Img,right_Img
+       coordinates,Left_Img,Right_Img
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -72,22 +69,16 @@ string frame_id
     if args or kwds:
       super(image_Pair, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.center is None:
-        self.center = [0.] * 2
-      if self.top is None:
-        self.top = [0.] * 2
-      if self.bottom is None:
-        self.bottom = [0.] * 2
-      if self.left_Img is None:
-        self.left_Img = sensor_msgs.msg.CompressedImage()
-      if self.right_Img is None:
-        self.right_Img = sensor_msgs.msg.CompressedImage()
+      if self.coordinates is None:
+        self.coordinates = [0.] * 4
+      if self.Left_Img is None:
+        self.Left_Img = sensor_msgs.msg.CompressedImage()
+      if self.Right_Img is None:
+        self.Right_Img = sensor_msgs.msg.CompressedImage()
     else:
-      self.center = [0.] * 2
-      self.top = [0.] * 2
-      self.bottom = [0.] * 2
-      self.left_Img = sensor_msgs.msg.CompressedImage()
-      self.right_Img = sensor_msgs.msg.CompressedImage()
+      self.coordinates = [0.] * 4
+      self.Left_Img = sensor_msgs.msg.CompressedImage()
+      self.Right_Img = sensor_msgs.msg.CompressedImage()
 
   def _get_types(self):
     """
@@ -101,24 +92,22 @@ string frame_id
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_get_struct_2f().pack(*self.center))
-      buff.write(_get_struct_2f().pack(*self.top))
-      buff.write(_get_struct_2f().pack(*self.bottom))
+      buff.write(_get_struct_4f().pack(*self.coordinates))
       _x = self
-      buff.write(_get_struct_3I().pack(_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs))
-      _x = self.left_Img.header.frame_id
+      buff.write(_get_struct_3I().pack(_x.Left_Img.header.seq, _x.Left_Img.header.stamp.secs, _x.Left_Img.header.stamp.nsecs))
+      _x = self.Left_Img.header.frame_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.left_Img.format
+      _x = self.Left_Img.format
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.left_Img.data
+      _x = self.Left_Img.data
       length = len(_x)
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -126,20 +115,20 @@ string frame_id
       else:
         buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       _x = self
-      buff.write(_get_struct_3I().pack(_x.right_Img.header.seq, _x.right_Img.header.stamp.secs, _x.right_Img.header.stamp.nsecs))
-      _x = self.right_Img.header.frame_id
+      buff.write(_get_struct_3I().pack(_x.Right_Img.header.seq, _x.Right_Img.header.stamp.secs, _x.Right_Img.header.stamp.nsecs))
+      _x = self.Right_Img.header.frame_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.right_Img.format
+      _x = self.Right_Img.format
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.right_Img.data
+      _x = self.Right_Img.data
       length = len(_x)
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -156,76 +145,70 @@ string frame_id
     """
     codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.left_Img is None:
-        self.left_Img = sensor_msgs.msg.CompressedImage()
-      if self.right_Img is None:
-        self.right_Img = sensor_msgs.msg.CompressedImage()
+      if self.Left_Img is None:
+        self.Left_Img = sensor_msgs.msg.CompressedImage()
+      if self.Right_Img is None:
+        self.Right_Img = sensor_msgs.msg.CompressedImage()
       end = 0
       start = end
-      end += 8
-      self.center = _get_struct_2f().unpack(str[start:end])
-      start = end
-      end += 8
-      self.top = _get_struct_2f().unpack(str[start:end])
-      start = end
-      end += 8
-      self.bottom = _get_struct_2f().unpack(str[start:end])
+      end += 16
+      self.coordinates = _get_struct_4f().unpack(str[start:end])
       _x = self
       start = end
       end += 12
-      (_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      (_x.Left_Img.header.seq, _x.Left_Img.header.stamp.secs, _x.Left_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.left_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        self.Left_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.left_Img.header.frame_id = str[start:end]
+        self.Left_Img.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.left_Img.format = str[start:end].decode('utf-8', 'rosmsg')
+        self.Left_Img.format = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.left_Img.format = str[start:end]
+        self.Left_Img.format = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
-      self.left_Img.data = str[start:end]
+      self.Left_Img.data = str[start:end]
       _x = self
       start = end
       end += 12
-      (_x.right_Img.header.seq, _x.right_Img.header.stamp.secs, _x.right_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      (_x.Right_Img.header.seq, _x.Right_Img.header.stamp.secs, _x.Right_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.right_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        self.Right_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.right_Img.header.frame_id = str[start:end]
+        self.Right_Img.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.right_Img.format = str[start:end].decode('utf-8', 'rosmsg')
+        self.Right_Img.format = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.right_Img.format = str[start:end]
+        self.Right_Img.format = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
-      self.right_Img.data = str[start:end]
+      self.Right_Img.data = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -238,24 +221,22 @@ string frame_id
     :param numpy: numpy python module
     """
     try:
-      buff.write(self.center.tostring())
-      buff.write(self.top.tostring())
-      buff.write(self.bottom.tostring())
+      buff.write(self.coordinates.tostring())
       _x = self
-      buff.write(_get_struct_3I().pack(_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs))
-      _x = self.left_Img.header.frame_id
+      buff.write(_get_struct_3I().pack(_x.Left_Img.header.seq, _x.Left_Img.header.stamp.secs, _x.Left_Img.header.stamp.nsecs))
+      _x = self.Left_Img.header.frame_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.left_Img.format
+      _x = self.Left_Img.format
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.left_Img.data
+      _x = self.Left_Img.data
       length = len(_x)
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -263,20 +244,20 @@ string frame_id
       else:
         buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
       _x = self
-      buff.write(_get_struct_3I().pack(_x.right_Img.header.seq, _x.right_Img.header.stamp.secs, _x.right_Img.header.stamp.nsecs))
-      _x = self.right_Img.header.frame_id
+      buff.write(_get_struct_3I().pack(_x.Right_Img.header.seq, _x.Right_Img.header.stamp.secs, _x.Right_Img.header.stamp.nsecs))
+      _x = self.Right_Img.header.frame_id
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.right_Img.format
+      _x = self.Right_Img.format
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
         length = len(_x)
       buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.right_Img.data
+      _x = self.Right_Img.data
       length = len(_x)
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -294,76 +275,70 @@ string frame_id
     """
     codecs.lookup_error("rosmsg").msg_type = self._type
     try:
-      if self.left_Img is None:
-        self.left_Img = sensor_msgs.msg.CompressedImage()
-      if self.right_Img is None:
-        self.right_Img = sensor_msgs.msg.CompressedImage()
+      if self.Left_Img is None:
+        self.Left_Img = sensor_msgs.msg.CompressedImage()
+      if self.Right_Img is None:
+        self.Right_Img = sensor_msgs.msg.CompressedImage()
       end = 0
       start = end
-      end += 8
-      self.center = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
-      start = end
-      end += 8
-      self.top = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
-      start = end
-      end += 8
-      self.bottom = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=2)
+      end += 16
+      self.coordinates = numpy.frombuffer(str[start:end], dtype=numpy.float32, count=4)
       _x = self
       start = end
       end += 12
-      (_x.left_Img.header.seq, _x.left_Img.header.stamp.secs, _x.left_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      (_x.Left_Img.header.seq, _x.Left_Img.header.stamp.secs, _x.Left_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.left_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        self.Left_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.left_Img.header.frame_id = str[start:end]
+        self.Left_Img.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.left_Img.format = str[start:end].decode('utf-8', 'rosmsg')
+        self.Left_Img.format = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.left_Img.format = str[start:end]
+        self.Left_Img.format = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
-      self.left_Img.data = str[start:end]
+      self.Left_Img.data = str[start:end]
       _x = self
       start = end
       end += 12
-      (_x.right_Img.header.seq, _x.right_Img.header.stamp.secs, _x.right_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
+      (_x.Right_Img.header.seq, _x.Right_Img.header.stamp.secs, _x.Right_Img.header.stamp.nsecs,) = _get_struct_3I().unpack(str[start:end])
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.right_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
+        self.Right_Img.header.frame_id = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.right_Img.header.frame_id = str[start:end]
+        self.Right_Img.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
       if python3:
-        self.right_Img.format = str[start:end].decode('utf-8', 'rosmsg')
+        self.Right_Img.format = str[start:end].decode('utf-8', 'rosmsg')
       else:
-        self.right_Img.format = str[start:end]
+        self.Right_Img.format = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
       start = end
       end += length
-      self.right_Img.data = str[start:end]
+      self.Right_Img.data = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -372,15 +347,15 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
-_struct_2f = None
-def _get_struct_2f():
-    global _struct_2f
-    if _struct_2f is None:
-        _struct_2f = struct.Struct("<2f")
-    return _struct_2f
 _struct_3I = None
 def _get_struct_3I():
     global _struct_3I
     if _struct_3I is None:
         _struct_3I = struct.Struct("<3I")
     return _struct_3I
+_struct_4f = None
+def _get_struct_4f():
+    global _struct_4f
+    if _struct_4f is None:
+        _struct_4f = struct.Struct("<4f")
+    return _struct_4f
