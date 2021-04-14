@@ -16,24 +16,21 @@ from tf.transformations import *
 import moveit_commander
 import moveit_msgs.msg 
 
+from scipy import signal
+import numpy as np
+
 '''
 Globals, could be passed as arguments. Not implemented because this is designed for a specific arm
 '''
-finger_maxDist = 18.9/2/1000  # max distance for one finger
-finger_maxTurn = 6800  # max thread rotation for one finger
-finger_minTurn = 0
-robot_category = 'j'
-robot_category_version = 2
-wrist_type = 'n'
-arm_joint_number = 6
-robot_mode = 's'
-finger_number = 3
+finger_maxTurn = 6800   #closed
+finger_minTurn = 0      #all the way open
 prefix = "j2n6s300"
 
-#arguments i want, thresholdDisplacement, 
+#should be added as and argument displacementThreshold for 
+#how much displacement from spot is considered there
 
 '''
-Creates Quaternion from Euler
+Creates Quaternion from Euler angles
 '''
 def EulerXYZ2Quaternion(EulerXYZ_):
     tx_, ty_, tz_ = EulerXYZ_[0:3]
@@ -70,45 +67,59 @@ class jacoDriver():
         self.bharvest = False
         self.bbyCamera = False
         self.bbyScan = True
-        self.bupdateXYZ = True
+        self.bupdateXYZ = False
+        self.depth = 0.3
         self.finger_turn = 0
         self.goalLocation = [0,0,0]
-        self.basketLocation = [0.2,-0.2,0.85]
+        self.basketLocation = [0.28455504179,-0.630760550499,0.219844207168]
         self.currentLocation = [0,0,0]
-        self.currentRPY = [0,0,0]
+        self.currentRPY = [1.45472896099,1.25785517693,0.216061984897]
+        self.basketRPY = [1.29518580437,-0.0317357964814,0.23147310019]
         self.lastCutLocation = [0,0,0]
-        self.scanEndpoints = [[0.5, -0.6, 0.6],[0.5, -0.6, 0.6],[0.5, -0.6, 0.35],[0.5, -0.6, 0.1],[0.5, -0.35, 0.1],[0.5, -0.35, 0.35],[0.5, -0.35, 0.6],[0.5, 0.1, 0.6],[0.5, 0.1, 0.35],[0.5, 0.1, 0.1]]
-        #self.orientationRPY = [[2.58831644058, 1.38926029205, -1.23999965191],[-2.99477958679,1.39808034897, -1.22968423367],[-2.14679527283, 1.4113227129, -1.24613773823],[2.6834628582,1.38840186596,-1.20909225941],[-0.882254958153, 1.43556320667,-1.47972130775],[ -2.29393768311,1.43471097946, -1.11946737766]]
+        self.scanEndpoints = []
+        self.scan = [[0.35, -0.55, 0.4],[0.35, -0.55, 0],[0.35, -0.35, 0],[0.35, -0.35, 0.4],[0.35, 0.1, 0.4],[0.35, 0.1, 0]]
+        for i in range(0,len(self.scan)-1):
+            if self.scan[i][2] != self.scan[i+1][2]:
+                for j in np.linspace(self.scan[i][2],self.scan[i+1][2],10):
+                    self.scanEndpoints.append([self.scan[i][0],self.scan[i][1],round(j,2)])
+            else:
+                for j in np.linspace(self.scan[i][1],self.scan[i+1][1],10):
+                    self.scanEndpoints.append([self.scan[i][0],round(j,2),self.scan[i][2]])
+        self.scanEndpoints.insert(0,self.scan[0])
         self.scanLocation = 0
-        self.thresholdDisplacement = .04
+        self.thresholdDisplacement = .05
+        self.topic_address = '/' + prefix + '_driver/out/cartesian_command'
 
         #action clients
         print'making action client'
-        self.driverClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.ArmPoseAction)
+        #arm client not needed since using MoveIt
+        #self.driverClient = actionlib.SimpleActionClient('/' + prefix + '_driver/pose_action/tool_pose', kinova_msgs.msg.ArmPoseAction)
         self.fingerClient = actionlib.SimpleActionClient('/' + prefix + '_driver/fingers_action/finger_positions', kinova_msgs.msg.SetFingersPositionAction)
 
         #services
         print'making services'
-        self.stopService = rospy.Service('stop', vision.srv.Action, self.handle_stop)
         self.repositionService = rospy.Service('reposition', vision.srv.Reposition, self.handle_reposition)
         self.harvestService = rospy.Service('harvest', vision.srv.Reposition, self.handle_harvest)
 
+        #get into starting location, self.scanLocation will be 1 once that happens
         while self.scanLocation == 0:
             self.send_move_command()
 
+        #create stop serivce which the recongition node is waiting for. this allows for node sycronization
+        self.stopService = rospy.Service('stop', vision.srv.Action, self.handle_stop)
         rospy.wait_for_service('start')
+        
         #clients
         print'making clients'
         self.startClient = rospy.ServiceProxy('start', vision.srv.Action)
 
-        #test locations, wont be in final code
+        #test locations moves arm back and forth with action client. used in early testing
         #self.test_locations()
         
         rospy.sleep(3)
 
         while 1:
             self.send_move_command()
-            # rospy.sleep(1)
 
     '''
     Stores the current location of the arm as our current location used when bootup
@@ -154,7 +165,7 @@ class jacoDriver():
         return vision.srv.RepositionResponse(True)
 
     '''
-    Sets internal value for stopping motion
+    Sets internal value for stopping motion, and returns our current location
     '''
     def handle_stop(self, req):
         print 'handle stop'
@@ -167,31 +178,42 @@ class jacoDriver():
         return vision.srv.ActionResponse(True, location)
 
     '''
-    Sets boolean so we cut the pepper
+    Sets boolean so we move to pepper then cut the pepper
     '''
     def handle_harvest(self, req):
+        print'harvest'
         self.bharvest = True
         self.bbyCamera = True
         self.bbyScan = False
+        self.depth = self.currentLocation[0]
         self.finger_turn = finger_maxTurn
         self.goalLocation[0] = req.Location.x
         self.goalLocation[1] = req.Location.y
         self.goalLocation[2] = req.Location.z
-        self.lastCutLocation = self.goalLocation
-        #return vision.srv.RepositionResponse(True)
+        self.lastCutLocation = self.currentLocation
+        return vision.srv.RepositionResponse(True)
 
     '''
     Hold postion
     '''
     def move_nowhere(self):
+        
+        #get new currentLocation
+        rospy.Subscriber(self.topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
+        rospy.wait_for_message(self.topic_address, kinova_msgs.msg.KinovaPose)
         return self.currentLocation
 
     '''
     Move to the basket or place to put the peper when it has been cut
     '''
     def move_to_basket(self):
+
         print 'move to basket'
-        #if at basket switch to stop and send client to drop pepper off
+        #get new currentLocation
+        rospy.Subscriber(self.topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
+        rospy.wait_for_message(self.topic_address, kinova_msgs.msg.KinovaPose)
+        
+        #if at basket move set gripper to open
         if self.atLocation(self.basketLocation, self.currentLocation):
             self.bgripper = True
             return self.currentLocation
@@ -199,40 +221,55 @@ class jacoDriver():
             return self.basketLocation
 
     '''
-    Move to where the peper was picked to restart the CV
+    Move to where the peper was picked to restart the recognition system
     '''
     def move_to_last_position(self):
+
         print 'move to last cut location'
-        #if at location switch stop and send client to restart cv
+        #get new currentLocation
+        rospy.Subscriber(self.topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
+        rospy.wait_for_message(self.topic_address, kinova_msgs.msg.KinovaPose)
+
+        #if at location switch to by camera for more peppers
+        #recognition is currently manually reset. with and action client/server it wouldnt need to be
         if self.atLocation(self.lastCutLocation, self.currentLocation):
             self.btoCut = False
             self.bbyCamera = True
-            vision.srv.RepositionResponse(True)
             return self.currentLocation
         else: 
             return self.lastCutLocation
 
     '''
-    Move based on values coming from xyz ActionServer
+    Move based on values coming from reposition service, and harvest service
     '''
     def move_by_camera(self):
+        
         print 'move by camera'
+        #get new currentLocation
+        rospy.Subscriber(self.topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
+        rospy.wait_for_message(self.topic_address, kinova_msgs.msg.KinovaPose)
+
         if self.bharvest:
             if self.atLocation(self.goalLocation,self.currentLocation):
                 self.bgripper = True
                 self.bharvest = False
+            if abs(self.currentLocation[2] - self.goalLocation[2]) < .1 and abs(self.currentLocation[1]-self.goalLocation[1] < .1):
+                return self.goalLocation
+            else:
+                return [self.depth,self.goalLocation[1],self.goalLocation[2]]
         return self.goalLocation
 
     '''
     Move to scan the plant for peppers
     '''
     def move_by_scan(self):
-        #check if we reached end point
-        print 'move by scan'
-        topic_address = '/' + prefix + '_driver/out/cartesian_command'
-        rospy.Subscriber(topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
-        rospy.wait_for_message(topic_address, kinova_msgs.msg.KinovaPose)
         
+        print 'move by scan'
+        #get new currentLocation
+        rospy.Subscriber(self.topic_address, kinova_msgs.msg.KinovaPose, self.setcurrentCartesianCommand)
+        rospy.wait_for_message(self.topic_address, kinova_msgs.msg.KinovaPose)
+        
+        #check if we reached end point
         if self.atLocation(self.currentLocation, self.scanEndpoints[self.scanLocation]):
             self.scanLocation = self.scanLocation + 1
             print 'next location'
@@ -257,7 +294,7 @@ class jacoDriver():
     '''
     def send_move_command(self):
 
-        #I think we want orientation to always be zero, need to play with control some first to see
+        #We want orientation to always be the same
         bMove = False
         #stopped
         if self.bstop:
@@ -281,6 +318,7 @@ class jacoDriver():
             bMove = True
 
         if bMove:
+            print position 
             if self.bgripper:
                 #make new message
                 goal = kinova_msgs.msg.SetFingersPositionGoal()
@@ -297,23 +335,25 @@ class jacoDriver():
                 else:
                     self.fingerClient.cancel_all_goals()
                     print' Error: the cartesian action timed-out'
-        
+    
                 self.bgripper = False
                 if self.finger_turn == finger_minTurn:
+                    #if we just opened fingers return to last cut location
                     self.btoBasket = False
                     self.btoCut = True
                     self.finger_turn = finger_maxTurn
                 else:
+                    #if we just closed to fngers move to basket
                     self.finger_turn = finger_minTurn
                     self.btoBasket = True
 
 
             else:
-                print position
-                #position = [0.451476633549,0.318827390671,0.655069053173]
+                #basket has a different orientation
                 orientation = EulerXYZ2Quaternion(self.currentRPY)
-                #orientation = quaternion_from_euler(self.currentRPY[0], self.currentRPY[1], self.currentRPY[2])
-                print orientation
+                if self.btoBasket:
+                    orientation = EulerXYZ2Quaternion(self.basketRPY)
+                
                 #send with Moveit using location gotten above to move to the new location
                 goal = geometry_msgs.msg.Pose()
                 goal.position = geometry_msgs.msg.Point(
@@ -331,15 +371,15 @@ class jacoDriver():
 
                 # Now, we call the planner to compute the plan and visualize it.
                 group.plan()
-                # if group.plan() == moveit_commander.move_group.MoveItErrorCodes.Success:
-                #     success = True
-                # else:
-                #     success = False 
+                # we should add something hear to handle failures 
                 
                 # move the robot 
                 print "Attention: moving the arm"
                 group.go()
 
+    '''
+    Used for early testing, moves to a location, back and there again
+    '''
     def test_locations(self):
         #get current location
         topic_address = '/' + prefix + '_driver/out/cartesian_command'
