@@ -28,5 +28,5 @@ This also proved that the stereo vision gives accurate depth and the hardware ca
 Demeter was able to do everything successfully except cut the stem because the fingers of the Jaco arm did not have enough strength. 
 
 
-#How To Run
+# How To Run
 This code was run on three computers, a raspberry Pi 4 model B ran the recognition.py in ROS noetic, a computer ran ROS noetic for the MLmodel.py, and a computer connected to the arm ran arm_and_chasis_driver.py using ROS melodic. The two noetic computer were used becuase we couldnt get the pi to use tensorflow need for the ML script, and the computer was running linux on vm that couldnt use the ports to connect to the camera.
